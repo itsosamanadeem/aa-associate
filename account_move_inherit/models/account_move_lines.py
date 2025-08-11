@@ -1,11 +1,13 @@
 # models/account_move_line.py
-from odoo import models, api
+from odoo import models, api, _
+from odoo.exceptions import UserError
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
     def action_open_attribute_wizard(self):
         line = self.invoice_line_ids.filtered(lambda l: l.product_id and l.product_id.product_tmpl_id.attribute_line_ids)[:1]
+        raise UserError(_(f"Please select a product with attributes to configure. {line.product_id.product_tmpl_id.attribute_line_ids if line else 'No product selected'}."))
         if not line:
             return
         return {
