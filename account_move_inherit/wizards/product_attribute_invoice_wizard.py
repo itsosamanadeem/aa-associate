@@ -10,6 +10,12 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
         'product.attribute.value',
         string="Attributes",
     )
+    
+    allowed_attribute_ids = fields.Many2many(
+        'product.attribute',
+        string='Allowed Attributes',
+        readonly=True,
+    )
     @api.model
     def default_get(self, fields):
         res = super().default_get(fields)
@@ -22,11 +28,6 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
             res['attribute_value_ids'] = [(6, 0, invoice_line.product_id.attribute_value_ids.ids)]
         return res
  
-    allowed_attribute_ids = fields.Many2many(
-        'product.attribute',
-        string='Allowed Attributes',
-        readonly=True,
-    )
     @api.model
     def default_get(self, fields):
         res = super().default_get(fields)
