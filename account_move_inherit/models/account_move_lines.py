@@ -5,7 +5,7 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     def action_open_attribute_wizard(self):
-        line = self.invoice_line_ids.filtered(lambda l: l.product_id)
+        line = self.invoice_line_ids.filtered(lambda l: l.product_id and l.product_id.product_tmpl_id.attribute_line_ids)[:1]
         if not line:
             return
         return {
