@@ -1,0 +1,15 @@
+name: Restart 180-web1-1 Container
+
+on:
+  push:
+    branches:
+      - main  # or your deployment branch
+
+jobs:
+  restart:
+    runs-on: self-hosted
+    steps:
+      - name: Restart Docker container
+        run: |
+          echo "Restarting Docker container..."
+          docker restart 180-web1-1
