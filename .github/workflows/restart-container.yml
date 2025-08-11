@@ -1,4 +1,4 @@
-name: Restart 180-web1-1 Container
+name: Deploy and Restart 180-web1-1 Container
 
 on:
   push:
@@ -6,9 +6,27 @@ on:
       - main  # or your deployment branch
 
 jobs:
-  restart:
+  deploy:
     runs-on: self-hosted
     steps:
+      - name: Ensure repo is initialized
+        run: |
+          echo "Checking if repository exists..."
+          TARGET_DIR=~/demo1_odoo_instance/18.0/custom-addons
+          REPO_URL=git@github.com:itsosamanadeem/aa-associate.git
+
+          if [ ! -d "$TARGET_DIR/.git" ]; then
+            echo "Repository not found. Cloning for the first time..."
+            mkdir -p "$TARGET_DIR"
+            git clone "$REPO_URL" "$TARGET_DIR"
+          else
+            echo "Repository already exists. Pulling latest changes..."
+            cd "$TARGET_DIR"
+            git reset --hard
+            git clean -fd
+            git pull origin main
+          fi
+
       - name: Restart Docker container
         run: |
           echo "Restarting Docker container..."
