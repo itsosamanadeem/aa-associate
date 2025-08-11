@@ -20,6 +20,7 @@ the Sale Order product configurator.
     ],
     'data': [
         'security/ir.model.access.csv',
+        'views/account_move_line_views.xml',
         'wizards/product_attribute_invoice_wizard.xml',
     ],
     'installable': True,

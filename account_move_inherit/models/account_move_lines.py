@@ -4,8 +4,7 @@ from odoo import models, api
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
-    @api.onchange('product_id')
-    def _onchange_product_id_open_wizard(self):
+    def action_open_attribute_wizard(self):
         if self.product_id and self.product_id.product_tmpl_id.attribute_line_ids:
             return {
                 'type': 'ir.actions.act_window',
