@@ -5,7 +5,7 @@
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
             <xpath expr="//button[@name='action_reload_ai_data']" position="after" >
-                <button string="Configure" name="action_open_attribute_wizard"/>
+                <button string="Configure" name="action_open_attribute_wizard" type="object"/>
             </xpath>
         </field>
     </record>
