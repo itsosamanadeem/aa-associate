@@ -8,7 +8,7 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
     invoice_line_id = fields.Many2one('account.move.line', required=True)
     product_tmpl_id = fields.Many2one('product.template', required=True)
     attribute_value_ids = fields.Many2many(
-        'product.template.attribute.lines',
+        'product.template.attribute.line',
         string="Attributes"
     )
 
