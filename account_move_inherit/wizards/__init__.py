@@ -1,0 +1,1 @@
+from . import product_attribute_invoice_wizard
