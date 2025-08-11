@@ -8,7 +8,8 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
     product_tmpl_id = fields.Many2one('product.template', required=True)
     attribute_value_ids = fields.Many2many(
         'product.attribute.value',
-        string="Attributes"
+        string="Attributes",
+        domain="[('attribute_id', 'in', product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids)]"
     )
 
     @api.model
