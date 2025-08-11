@@ -1,4 +1,3 @@
-# models/product_attribute_invoice_wizard.py
 from odoo import models, fields
 
 class ProductAttributeInvoiceWizard(models.TransientModel):
@@ -9,6 +8,9 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
     product_tmpl_id = fields.Many2one('product.template', required=True)
     attribute_value_ids = fields.Many2many(
         'product.template.attribute.line',
+        'product_attr_inv_wizard_rel',
+        'wizard_id',
+        'attribute_line_id',
         string="Attributes"
     )
 
