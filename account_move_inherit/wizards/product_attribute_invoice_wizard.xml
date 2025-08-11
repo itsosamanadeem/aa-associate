@@ -7,7 +7,7 @@
             <form string="Select Product Attributes">
                 <group>
                     <field name="product_tmpl_id"/>
-                    <field name="attribute_value_ids" widget="many2many_tags" domain="[('attribute_id', 'in', allowed_attribute_ids)]"/>
+                    <field name="attribute_value_ids" widget="many2many_tags" />
                 </group>
                 <footer>
                     <button name="action_confirm" type="object" string="Confirm" class="btn-primary"/>

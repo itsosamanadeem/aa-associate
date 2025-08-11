@@ -10,24 +10,17 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
         'product.attribute.value',
         string="Attributes",
     )
-
-    allowed_attribute_ids = fields.Many2many(
-        'product.attribute',
-        string='Allowed Attributes',
-        readonly=True,
-    )
+    
     @api.model
     def default_get(self, fields):
         res = super().default_get(fields)
         invoice_line = self.env['account.move.line'].browse(res.get('invoice_line_id'))
         if invoice_line and invoice_line.product_id:
-            product_tmpl = invoice_line.product_id.product_tmpl_id
-            allowed_attribute_ids = product_tmpl.attribute_line_ids.mapped('attribute_id').ids
-            res['product_tmpl_id'] = product_tmpl.id
-            res['allowed_attribute_ids'] = allowed_attribute_ids
+            # Pre-fill the product template and selected attribute values of current variant
+            res['product_tmpl_id'] = invoice_line.product_id.product_tmpl_id.id
             res['attribute_value_ids'] = [(6, 0, invoice_line.product_id.attribute_value_ids.ids)]
         return res
- 
+
     def action_confirm(self):
         self.ensure_one()
         # Find variant for selected attribute values
