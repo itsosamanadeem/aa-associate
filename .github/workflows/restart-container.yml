@@ -28,7 +28,7 @@ jobs:
             git pull origin main
           fi
 
-      - name: Restart Docker container 180-web1
+      - name: Restart Docker container 180-web1-1
         run: |
           echo "Restarting Docker container..."
           docker restart 180-web1-1
