@@ -12,8 +12,10 @@ class AccountMoveLine(models.Model):
                 'res_model': 'product.attribute.invoice.wizard',
                 'view_mode': 'form',
                 'target': 'new',
-                'context': {
-                    'default_invoice_line_id': self.id,
-                    'default_product_tmpl_id': self.product_id.product_tmpl_id.id,
-                }
+                'context': {'default_product_id': self.product_id.id},
+
+                # 'context': {
+                #     'default_invoice_line_id': self.id,
+                #     'default_product_tmpl_id': self.product_id.product_tmpl_id.id,
+                # }
             }
