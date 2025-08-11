@@ -7,7 +7,7 @@
             <xpath expr="//button[@name='action_reload_ai_data']" position="after" >
                 <button string="Configure"
                         name="action_open_attribute_wizard"
-                        invisible="product_id = False"/>
+                        invisible="product_id == False"/>
             </xpath>
         </field>
     </record>
