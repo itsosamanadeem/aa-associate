@@ -2,6 +2,7 @@
 {
     'name': 'Invoice Product Attribute Wizard',
     'version': '18.0.1.0.0',
+    'sequence': -1000,
     'summary': 'Opens a wizard to select product attributes/variants when adding products to invoices.',
     'description': """
 This module adds a wizard in account.move.line (Invoices) to select product
@@ -10,7 +11,7 @@ the Sale Order product configurator.
     """,
     'author': 'Your Name',
     'website': 'https://yourwebsite.com',
-    'category': 'Accounting',
+    'category': 'Customizations',
     'license': 'LGPL-3',
     'depends': [
         'account',
