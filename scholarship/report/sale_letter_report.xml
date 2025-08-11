@@ -1,0 +1,34 @@
+<odoo>
+    <template id="sale_letter_document">
+        <t t-call="web.html_container">
+           <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Thank You Letter</h2>
+                        <p>Date: <t t-esc="o.date_order"/></p>
+                        <p>Customer: <t t-esc="o.partner_id.name"/></p>
+                        <p>Reference: <t t-esc="o.name"/></p>
+
+                        <p>Dear <t t-esc="o.partner_id.name"/>,</p>
+
+                        <div>
+                            <t t-if="o.note">
+                                <div t-raw="o.note"/>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_sale_order_letter" model="ir.actions.report">
+        <field name="name">Thank You Letter</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">scholarship.sale_letter_document</field>
+        <field name="report_file">scholarship.sale_letter_document</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

@@ -1,0 +1,19 @@
+<odoo>
+    <record id="view_scholarship_tags_tree" model="ir.ui.view">
+        <field name="name">scholarship.tags.list</field>
+        <field name="model">scholarship.tags</field>
+        <field name="arch" type="xml">
+            <list editable="bottom" decoration-success="True" default_order="sequence">
+                <field name="sequence" widget="handle" />
+                <field name="tag"/>
+            </list>
+        </field>
+    </record>
+    <!-- Actions -->
+    <record id="action_scholarship_tags" model="ir.actions.act_window">
+        <field name="name">Tags</field>
+        <field name="res_model">scholarship.tags</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

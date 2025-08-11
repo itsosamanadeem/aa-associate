@@ -1,0 +1,15 @@
+<!-- <odoo>
+    <record id="view_scholarship_line_tree" model="ir.ui.view">
+        <field name="name">scholarship.line.list</field>
+        <field name="model">scholarship.line</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="date"/>
+                <field name="funds"/>
+                <field name="description"/>
+                <field name="fee"/>
+                <field name="status"/>
+            </list>
+        </field>
+    </record>
+</odoo> -->

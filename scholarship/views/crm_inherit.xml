@@ -1,0 +1,12 @@
+<odoo>
+    <record id="view_crm_case_form_inherit_rm_representative" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit.rm.representative</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="string">RM representative</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

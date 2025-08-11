@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_donor_group" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.donor.group</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="open_scholarship_view"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-graduation-cap">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Scholarships</span>
+                    </div>
+                </button>
+            </div>
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="grn_no"/>
+                <field name="campus_id"/>
+                <field name="class_id"/>
+                <field name="section_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

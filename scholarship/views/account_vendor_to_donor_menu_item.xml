@@ -1,0 +1,6 @@
+<odoo>
+    <data>
+        <menuitem id="account.menu_finance_payables" name="Donors"/>
+        <menuitem id="account.menu_account_supplier" name="Donors"/>
+    </data>
+</odoo>

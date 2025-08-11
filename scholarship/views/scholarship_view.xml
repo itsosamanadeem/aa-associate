@@ -1,0 +1,190 @@
+<odoo>
+    <!-- Search and Group By -->
+    <record id="scholarship_search_filters" model="ir.ui.view">
+        <field name="name">scholarship.search</field>
+        <field name="model">scholarship.scholarship</field>
+        <field name="arch" type="xml">
+            <search string="Search Scholarships">
+                <field name="student_id"/>
+                <field name="grn_cid"/>
+                <field name="campus_id"/>
+                <field name="class_id"/>
+                <field name="section_id"/>
+                <field name="category_id"/>
+                <field name="staff_category_id"/>
+                <field name="monthly_fee"/>
+                <field name="annual_discount"/>
+                <field name="donor_group"/>
+                <field name="donor_sub_category"/>
+                <!-- Filter: Approved Only -->
+                <filter name="state" string="Approved" domain="[('state', '=', 'approved')]" />
+                <filter name="state" string="Rejected" domain="[('state', '=', 'rejected')]" />
+                <filter name="state" string="Partial Approved" domain="[('state', '=', 'partial rejected')]" />
+                <filter name="state" string="Draft" domain="[('state', '=', 'draft')]" />
+                <filter name="state" string="New" domain="[('state', '=', 'new')]" />
+
+                <!-- Group By -->
+                <group expand="1" string="Group By">
+                    <filter name="group_by_donor" string="Donor Group" context="{'group_by': 'donor_group'}"/>
+                    <filter name="group_by_donor_sub_category" string="Donor Sub Category" context="{'group_by': 'donor_sub_category'}"/>
+                    <filter name="group_by_donor_id" string="Donor" context="{'group_by': 'donor_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <!-- Tree View -->
+    <record id="scholarship_action_view_tree" model="ir.ui.view">
+        <field name="name">scholarship.scholarship.list</field>
+        <field name="model">scholarship.scholarship</field>
+        <field name="arch" type="xml">
+            <list string="Scholarship">
+                <field name="name"/>
+                <field name="student_id"/>
+                <field name="campus_id"/>
+                <field name="class_id"/>
+                <field name="category_id"/>
+                <field name="state" widget="badge" decoration-info="state == 'new'" decoration-success="state == 'approved'" decoration-danger="state == 'rejected'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="scholarship_action_view_form" model="ir.ui.view">
+        <field name="name">scholarship.scholarship.form</field>
+        <field name="model">scholarship.scholarship</field>
+        <field name="arch" type="xml">
+            <form string="Scholarship">
+                <header>
+                   <button name="action_calculate_lines" type="object" string="Calculate Lines"
+                            class="btn-primary" invisible="state not in ['draft']"
+                            groups="scholarship.group_scholarship_user,scholarship.group_scholarship_manager"/>
+
+                    <button name="approve_scholarship" type="object" string="Approve"
+                            class="btn-primary" invisible="state not in ['new']"
+                            groups="scholarship.group_scholarship_manager"/>
+
+                    <button name="reject_scholarship" type="object" string="Reject"
+                            class="btn-primary" invisible="state not in ['new']"
+                            groups="scholarship.group_scholarship_manager"/>
+
+                    <button name="reset_scholarship" type="object" string="Reset to Draft"
+                            class="btn-primary" invisible="state not in ['approved','rejected','partial rejected']"
+                            groups="scholarship.group_scholarship_manager"/>
+
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <h1>
+                                <field name="name" readonly="state == 'approved'"/>
+                            </h1>
+                            <field name="form_no" readonly="state == 'approved'"/>
+                            <field name="student_id" readonly="state == 'approved'"/>
+                            <field name="grn_cid" readonly="state == 'approved'"/>
+                            <field name="campus_id" readonly="state == 'approved'"/>
+                            <field name="class_id" readonly="state == 'approved'"/>
+                            <field name="section_id" readonly="state == 'approved'"/>
+                            <field name="category_id" readonly="state == 'approved'"/>
+                            <field name="staff_category_id" readonly="state == 'approved'"/>
+                            <div class="o_row gap-4 align-items-center" style="width: 150px;">
+                                <span class="o_form_label"><strong>Dates</strong></span>
+                                <div class="form-group">
+                                    <field name="date_from" widget="datetime" class="form-control form-control-sm" readonly="state == 'approved'"/>
+                                </div>
+                                <h2 class="o_form_label mb-0"><strong>→</strong></h2>
+                                <div class="form-group">
+                                    <field name="date_to" widget="datetime" class="form-control form-control-sm" readonly="state == 'approved'"/>
+                                </div>
+                            </div>
+                        </group>
+
+                        <group>
+                            <field name="donor_group" readonly="state == 'approved'"/>
+                            <field name="donor_sub_category" readonly="state == 'approved'"/>
+                            <field name="donor_id" domain="[('customer_rank', '&gt;', 0), ('donor_group', '=', donor_group)]" readonly="state == 'approved'"/>
+                            <field name="monthly_fee" readonly="state == 'approved'"/>
+                            <field name="discount" readonly="state == 'approved'"/>
+                            <field name="annual_discount" readonly="1"/>
+                            <field name="currency_id" readonly="state == 'approved'"/>
+                            <field name="result" readonly="state == 'approved'"/>
+                            <field name="tag_ids" widget="many2many_tags" readonly="state == 'approved'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Details">
+                            <field name="line_ids">
+                                <list create="false" delete="false">
+                                    <field name="date"/>
+                                    <field name="funds"/>
+                                    <field name="description"/>
+                                    <field name="fee"/>
+                                    <field name="status" widget="badge" decoration-danger="status == 'rejected'" decoration-success="status == 'approved'"/>
+                                    <field name="remarks" required="status == 'rejected'" invisible="status == 'approved'"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_compute_scholarship_lines" model="ir.actions.server"> 
+        <field name="name">Bulk Calculate Scholarship Lines</field> 
+        <field name="model_id" ref="scholarship.model_scholarship_scholarship"/> 
+        <field name="binding_model_id" ref="scholarship.model_scholarship_scholarship"/> 
+        <field name="sequence">1</field> 
+        <field name="state">code</field> 
+        <field name="code"> 
+            if records: 
+            action = records.bulk_computes_scholarship_lines() 
+        </field> 
+    </record>
+    
+    <record id="action_reject_scholarship_lines" model="ir.actions.server"> 
+        <field name="name">Partial Reject Scholarship Lines</field> 
+        <field name="model_id" ref="scholarship.model_scholarship_scholarship"/> 
+        <field name="binding_model_id" ref="scholarship.model_scholarship_scholarship"/> 
+        <field name="sequence">2</field> 
+        <field name="state">code</field> 
+        <field name="code"> 
+            if records: 
+            action = records.reject_scholarship_lines() 
+        </field> 
+    </record>
+    
+    <record id="action_approve_scholarship_lines" model="ir.actions.server"> 
+        <field name="name">Bulk Approve Scholarship Lines</field> 
+        <field name="model_id" ref="scholarship.model_scholarship_scholarship"/> 
+        <field name="binding_model_id" ref="scholarship.model_scholarship_scholarship"/> 
+        <field name="sequence">3</field> 
+        <field name="state">code</field> 
+        <field name="code"> 
+            if records: 
+            action = records.bulk_approve_scholarship() 
+        </field> 
+    </record>
+    
+    <record id="action_reject_scholarship_lines" model="ir.actions.server"> 
+        <field name="name">Bulk Reject Scholarship Lines</field> 
+        <field name="model_id" ref="scholarship.model_scholarship_scholarship"/> 
+        <field name="binding_model_id" ref="scholarship.model_scholarship_scholarship"/> 
+        <field name="sequence">4</field> 
+        <field name="state">code</field> 
+        <field name="code"> 
+            if records: 
+            action = records.bulk_reject_scholarship() 
+        </field> 
+    </record>
+    <!-- Action -->
+    <record id="scholarship_action_view" model="ir.actions.act_window">
+        <field name="name">Scholarships</field>
+        <field name="res_model">scholarship.scholarship</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first scholarship record</p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,106 @@
+<odoo>
+    <!-- Search and Group By -->
+    <record id="scholarship_action_view_search" model="ir.ui.view">
+        <field name="name">scholarship.line.search</field>
+        <field name="model">scholarship.line</field>
+        <field name="arch" type="xml">
+            <search string="Search Scholarships Line">
+                <field name="scholarship_id"/>
+                <field name="student_name"/>
+                <field name="donor_name"/>
+                <field name="date"/>
+
+                <!-- Filter: Approved Only -->
+                <filter name="status" string="Approved" domain="[('status', '=', 'approved')]" />
+
+                <!-- Group By -->
+                <group expand="1" string="Group By">
+                    <filter name="group_by_donor" string="Donor" context="{'group_by': 'donor_name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <!-- Bar Graph View -->
+    <record id="scholarship_line_graph_bar_view" model="ir.ui.view">
+        <field name="name">scholarship.line.graph.bar</field>
+        <field name="model">scholarship.line</field>
+        <field name="arch" type="xml">
+            <graph string="Scholarship Line - Bar Chart" type="bar">
+                <field name="fee" type="measure"/>
+                <field name="status" type="row"/>
+                <field name="funds" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Line Graph View -->
+    <record id="scholarship_line_graph_line_view" model="ir.ui.view">
+        <field name="name">scholarship.line.graph.line</field>
+        <field name="model">scholarship.line</field>
+        <field name="arch" type="xml">
+            <graph string="Scholarship Line - Line Chart" type="line">
+                <field name="fee" type="measure"/>
+                <field name="date" type="row"/>
+                <field name="funds" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pie Graph View -->
+    <record id="scholarship_line_graph_pie_view" model="ir.ui.view">
+        <field name="name">scholarship.line.graph.pie</field>
+        <field name="model">scholarship.line</field>
+        <field name="arch" type="xml">
+            <graph string="Scholarship Line - Pie Chart" type="pie">
+                <field name="fee" type="measure"/>
+                <field name="status" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- list View (Read-only) -->
+    <record id="scholarship_line_list_view" model="ir.ui.view">
+        <field name="name">scholarship.line.list</field>
+        <field name="model">scholarship.line</field>
+        <field name="arch" type="xml">
+            <list string="Scholarship Lines" create="false" edit="false">
+                <field name="scholarship_id"/>
+                <field name="student_name"/>
+                <field name="donor_name"/>
+                <field name="date"/>
+                <field name="funds"/>
+                <field name="description"/>
+                <field name="fee"/>
+                <field name="status" widget="badge" decoration-success="status == 'approved'" decoration-danger="status == 'rejected'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Pivot View (Read-only by default, no need to set create/edit false) -->
+    <record id="scholarship_line_pivot_view" model="ir.ui.view">
+        <field name="name">scholarship.line.pivot</field>
+        <field name="model">scholarship.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Scholarship Line Analysis">
+                <field name="fee" type="measure"/>
+                <field name="date" type="row"/>
+                <field name="funds" type="col"/>
+                <field name="status" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_scholarship_line" model="ir.actions.act_window">
+        <field name="name">Scholarship Lines</field>
+        <field name="res_model">scholarship.line</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="search_view_id" ref="scholarship_action_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                View scholarship lines generated from scholarships.
+            </p>
+        </field>
+    </record>
+
+</odoo>
