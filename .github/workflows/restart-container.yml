@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Ensure repo is initialized
         run: |
-          echo "Pulling Changes..."
+          echo "Pulling Changes...."
           REPO_URL=git@github.com:itsosamanadeem/aa-associate.git
           cd ~/demo1_odoo_instance/18.0/custom-addons
           git pull origin main
