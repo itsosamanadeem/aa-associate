@@ -1,4 +1,3 @@
-/** static/src/js/product_variant_dialog.js **/
 /** odoo-module **/
 import { Component } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
