@@ -29,12 +29,13 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
                 rec.attribute_value_ids = False
 
     def action_confirm(self):
-        self.ensure_one()
-        # Find variant for selected attribute values
+        pass
+        # self.ensure_one()
+        # # Find variant for selected attribute values
 
-        # product_variant = self.product_tmpl_id._get_variant_for_combination(self.attribute_value_ids)
-        raise UserError(_("Please select at least one attribute value.")) if not self.attribute_value_ids else None
-        if not product_variant:
-            raise UserError("No product variant matches the selected attributes.")
-        self.invoice_line_id.product_id = product_variant.id
-        return {'type': 'ir.actions.act_window_close'}
+        # # product_variant = self.product_tmpl_id._get_variant_for_combination(self.attribute_value_ids)
+        # raise UserError(_("Please select at least one attribute value.")) if not self.attribute_value_ids else None
+        # if not product_variant:
+        #     raise UserError("No product variant matches the selected attributes.")
+        # self.invoice_line_id.product_id = product_variant.id
+        # return {'type': 'ir.actions.act_window_close'}
