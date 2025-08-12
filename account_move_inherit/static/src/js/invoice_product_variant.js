@@ -7,7 +7,7 @@ import {
     productLabelSectionAndNoteField,
 } from "@account/components/product_label_section_and_note_field/product_label_section_and_note_field";
 
-export class AccountMoveLineProductField extends SaleOrderLineProductField {
+export class AccountMoveLineProductField extends ProductLabelSectionAndNoteField {
     static template = "account_move_inherit.InvoiceProductField";
     static props = {
         ...ProductLabelSectionAndNoteField.props,

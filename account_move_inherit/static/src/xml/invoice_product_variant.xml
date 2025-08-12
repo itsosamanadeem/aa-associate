@@ -2,19 +2,9 @@
 
 <templates xml:space="preserve">
 
-    <t t-name="account_move_inherit.InvoiceProductField" t-inherit="sale.SaleProductField" t-inherit-mode="primary">
-        <!-- Show configuration button for custom lines/products -->
-        <xpath expr="//button[@t-if='hasExternalButton']" position="before">
-            <t t-if="hasConfigurationButton">
-                <button
-                    type="button"
-                    class="btn btn-secondary fa fa-pencil px-2"
-                    tabindex="-1"
-                    draggable="false"
-                    t-att-aria-label="configurationButtonHelp"
-                    t-att-data-tooltip="configurationButtonHelp"
-                    t-on-click="onEditConfiguration"/>
-            </t>
+    <t t-name="account_move_inherit.InvoiceProductField" t-inherit="account.ProductLabelSectionAndNoteField" t-inherit-mode="primary">
+        <xpath expr="//div[@class='o_field_product_label_section_and_note_cell']" position="before">
+            <button type="button" class="btn btn-secondary fa fa-pencil px-2"/>
         </xpath>
     </t>
 
