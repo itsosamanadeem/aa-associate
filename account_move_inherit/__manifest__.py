@@ -22,6 +22,7 @@ the Sale Order product configurator.
     'data': [
         'security/ir.model.access.csv',
         'views/account_move_lines.xml',
+        'wizards/product_attribute_invoice_wizard_line.xml',
         'wizards/product_attribute_invoice_wizard.xml',
     ],
     'assets': {
