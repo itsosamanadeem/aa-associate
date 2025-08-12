@@ -8,15 +8,16 @@ class ProductVariantController(http.Controller):
     def get_product_variants(self, product_tmpl_id):
         if not product_tmpl_id:
             return []
-        variants = request.env['product.product'].sudo().search([
+        product = request.env['product.product'].sudo().search([
             ('product_tmpl_id', '=', product_tmpl_id)
-        ])
+        ]).attribute_line_ids.mapped('value_ids')
+
+        variants = request.env['product.template.attribute.value'].sudo().search([('attribute_id','in', product.ids)])
+
         return [
             {
-                "id": v.id,
-                "name": v.display_name,
-                "default_code": v.default_code or "",
-                "price": v.list_price,
+                "name": v.name,
+                "price": v.price_extra,
             }
             for v in variants
         ]
