@@ -15,7 +15,8 @@ export class AccountMoveLineProductField extends ProductLabelSectionAndNoteField
     };
     setup() {
         super.setup()
-        console.log("AccountMoveLineProductField setup called", this.props.record.data.id);
+        console.log("AccountMoveLineProductField setup called", this.props.record.data);
+        console.log("AccountMoveLineProductField setup called", this.props);
         
     }
 
