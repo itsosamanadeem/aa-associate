@@ -1,4 +1,4 @@
-<!-- static/src/xml/product_variant_dialog.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="account_move_inherit.ProductVariantDialog">
         <Dialog title="Product Variants" size="'lg'" confirmLabel="Close">
