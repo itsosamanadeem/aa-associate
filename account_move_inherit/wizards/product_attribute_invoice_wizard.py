@@ -7,7 +7,7 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
     invoice_line_id = fields.Many2one('account.move.line', required=True)
     product_id = fields.Many2one('product.product', string="Product", required=True,)
     product_tmpl_id = fields.Many2one('product.template', required=True)
-    attribute_id = fields.Many2one('product.template.attribute.line', string="Attribute", required=True)
+    # attribute_id = fields.Many2one('product.template.attribute.line', string="Attribute", required=True)
     attribute_value_ids = fields.Many2many(
         comodel_name='product.attribute.custom.value', 
         inverse_name='invoice_line_id',
@@ -18,9 +18,9 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
     @api.depends('product_tmpl_id')
     def _compute_attribute_values(self):
         for rec in self:    
-            variants= rec.env['product.attribute.custom.value'].search([('attribute_id', '=', rec.attribute_id.id)])
+            variants= rec.env['product.attribute.custom.value'].search([('attribute_id', '=', rec.product_tmpl_id.attribute_line_ids.attribute_id.id)])
             rec.attribute_value_ids = variants
-            
+
     def action_confirm(self):
         self.ensure_one()
         # Find variant for selected attribute values
