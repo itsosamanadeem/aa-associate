@@ -9,9 +9,9 @@
                     class="btn btn-secondary fa fa-pencil ms-2"
                     t-on-click="onShowVariants"/>
         </div>
-        <Dialog size="'lg'">
-            <t t-esc="props.record.data.product_tmpl_id?.[0]"/>
-        </Dialog>
+        <t t-esc="props.record.data.product_tmpl_id?.[0]"/>
+        <!-- <Dialog size="'lg'">
+        </Dialog> -->
     </t>
 
 </templates>
