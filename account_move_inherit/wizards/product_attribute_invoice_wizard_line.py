@@ -8,3 +8,5 @@ class ProductAttributeInvoiceWizardLine(models.TransientModel):
     wizard_id = fields.Many2one('product.attribute.invoice.wizard', required=True, ondelete='cascade')
     attribute_value_id = fields.Many2one('product.template.attribute.value', required=True)
     is_selected = fields.Boolean("Selected")
+
+    variant_price = fields.Float("Variant Price", compute="_compute_variant_price", store=True)

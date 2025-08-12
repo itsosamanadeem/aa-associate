@@ -15,6 +15,8 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
         string="Attributes"
     )
 
+    variant_price = fields.Float("Variant Price", compute="_compute_variant_price", store=True)
+
     @api.onchange('product_tmpl_id')
     def _onchange_product_tmpl_id(self):
         if self.product_tmpl_id:
@@ -23,7 +25,10 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
                 ('attribute_id', 'in', attribute_ids)
             ])
             self.attribute_line_ids = [
-                (0, 0, {'attribute_value_id': v.id}) for v in variants
+                (0, 0, {
+                    'attribute_value_id': v.id,
+                    'variant_price': v.price_extra,
+                }) for v in variants
             ]
         else:
             self.attribute_line_ids = [(5, 0, 0)]
