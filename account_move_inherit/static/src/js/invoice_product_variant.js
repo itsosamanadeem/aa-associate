@@ -8,7 +8,7 @@ import { Dialog } from "@web/core/dialog/dialog";
 
 export class AccountMoveLineProductField extends Many2OneField {
     static template = "account_move_inherit.InvoiceProductVariantField";
-
+    static components = { Dialog };
     setup() {
         super.setup();
         this.actionService = useService("action");
