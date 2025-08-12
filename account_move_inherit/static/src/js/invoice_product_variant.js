@@ -7,8 +7,8 @@ import { useService } from "@web/core/utils/hooks";
 import { Dialog } from "@web/core/dialog/dialog";
 
 export class AccountMoveLineProductField extends Many2OneField {
-    static template = "account_move_inherit.InvoiceProductVariantField";
-    static components = { Dialog };
+    static template = "account_move_inherit.InvoiceProductField";
+    static components = { Dialog , Many2XAutocomplete};
     setup() {
         super.setup();
         this.actionService = useService("action");
@@ -18,9 +18,9 @@ export class AccountMoveLineProductField extends Many2OneField {
 
     async onEditConfiguration() {
         const product_tmpl_id = this.props.record.data.product_tmpl_id?.[0];
-        // this.dialog.add(Dialog,{
+        // this.dialog.add(Dialog{
         //     product_tmpl_id: this.props.record.data.product_tmpl_id?.[0]
-        // });
+        // })
         if (!product_tmpl_id) {
             console.warn("No product template selected for configuration.");
             return;
