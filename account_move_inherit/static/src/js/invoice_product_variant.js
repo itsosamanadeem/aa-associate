@@ -8,7 +8,7 @@ import { Dialog } from "@web/core/dialog/dialog";
 import { Many2XAutocomplete } from "@web/views/fields/relational_utils";
 
 export class AccountMoveLineProductField extends Many2OneField {
-    static template = "account_move_inherit.InvoiceProductVariantField";
+    static template = "account_move_inherit.InvoiceProductField";
     static components = { Dialog , Many2XAutocomplete};
     setup() {
         super.setup();

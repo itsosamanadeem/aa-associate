@@ -2,16 +2,11 @@
 
 <templates xml:space="preserve">
 
-    <t t-name="account_move_inherit.InvoiceProductVariantField">
-        <div class="d-flex align-items-center">
-            <t t-call="web.Many2OneField"/>
-            <button type="button"
-                    class="btn btn-secondary fa fa-pencil ms-2"
-                    t-on-click="onShowVariants"/>
-        </div>
-        <t t-esc="props.record.data.product_tmpl_id?.[0]"/>
-        <!-- <Dialog size="'lg'">
-        </Dialog> -->
+    <t t-name="account_move_inherit.InvoiceProductField" >
+        <button type="button" class="btn btn-secondary fa fa-pencil px-2" t-on-click="onEditConfiguration"/>
+        <span class="ml-2">
+            <t t-esc="(props.record.data.product_id and props.record.data.product_id[1]) or ''"/>
+        </span>
     </t>
 
 </templates>
