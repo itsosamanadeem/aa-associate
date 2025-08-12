@@ -4,17 +4,19 @@ from odoo.http import request
 
 class ProductVariantController(http.Controller):
 
-    @http.route('/open_product_variants', type='json', auth='user')
-    def open_product_variants(self, product_tmpl_id):
+    @http.route('/get_product_variants', type='json', auth='user')
+    def get_product_variants(self, product_tmpl_id):
         if not product_tmpl_id:
-            return False
-
-        return {
-            "type": "ir.actions.act_window",
-            "name": "Product Variants",
-            "res_model": "product.product",
-            "view_mode": "tree,form",
-            "domain": [("product_tmpl_id", "=", product_tmpl_id)],
-            "target": "new",  # opens in a dialog
-            "context": {"default_product_tmpl_id": product_tmpl_id},
-        }
+            return []
+        variants = request.env['product.product'].sudo().search([
+            ('product_tmpl_id', '=', product_tmpl_id)
+        ])
+        return [
+            {
+                "id": v.id,
+                "name": v.display_name,
+                "default_code": v.default_code or "",
+                "price": v.list_price,
+            }
+            for v in variants
+        ]

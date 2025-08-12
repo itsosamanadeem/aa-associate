@@ -2,13 +2,35 @@
 
 <templates xml:space="preserve">
 
-    <t t-name="account_move_inherit.InvoiceProductField" >
-        <button type="button" class="btn btn-secondary fa fa-pencil px-2" t-on-click="onEditConfiguration"/>
-        <span class="mx-3">
-            <t t-esc="(props.record.data.product_id and props.record.data.product_id[1]) or ''"/>
-        </span>
-        
-        
+    <t t-name="account_move_inherit.InvoiceProductVariantField">
+        <div class="d-flex align-items-center">
+            <t t-call="web.Many2OneField"/>
+            <button type="button"
+                    class="btn btn-secondary fa fa-pencil ms-2"
+                    t-on-click="onShowVariants"/>
+        </div>
+    </t>
+
+    <!-- Dialog Table -->
+    <t t-name="account_move_inherit.ProductVariantDialogTable">
+        <table class="table table-sm table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="props.variants" t-as="v" t-key="v.id">
+                    <tr>
+                        <td><t t-esc="v.name"/></td>
+                        <td><t t-esc="v.default_code"/></td>
+                        <td><t t-esc="v.price"/></td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
     </t>
 
 </templates>
