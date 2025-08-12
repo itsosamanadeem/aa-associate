@@ -15,6 +15,11 @@ export class AccountMoveLineProductField extends ProductLabelSectionAndNoteField
     };
     setup() {
         super.setup()
+        console.log("AccountMoveLineProductField setup called", this.props);
+        
+    }
+
+    onEditConfiguration() {
     }
 }
 export const accountMoveLineProductField = {
