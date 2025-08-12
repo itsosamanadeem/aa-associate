@@ -39,6 +39,7 @@ class AccountMove(models.Model):
             'target': 'new',
             'context': {
                 'default_invoice_line_id': line.id,
+                'default_product_id': line.product_id.id,
                 'default_product_tmpl_id': line.product_id.product_tmpl_id.id,
             },
         }
