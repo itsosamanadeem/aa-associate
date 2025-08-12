@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <templates xml:space="preserve">
-    <t t-name="account_move_inherit.InvoiceProductField">
-        <div class="d-flex align-items-center">
-            <t t-call="web.Many2OneField"/> <!-- Original field -->
-            <button type="button"
-                    class="btn btn-secondary fa fa-pencil ms-2"
-                    t-on-click="onEditConfiguration"/>
-        </div>
+
+    <t t-name="account_move_inherit.InvoiceProductField" >
+        <button type="button" class="btn btn-secondary fa fa-pencil px-2" t-on-click="onEditConfiguration"/>
+        <span class="mx-3">
+            <t t-esc="(props.record.data.product_id and props.record.data.product_id[1]) or ''"/>
+        </span>
+        
+        
     </t>
+
 </templates>
