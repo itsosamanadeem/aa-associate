@@ -17,14 +17,14 @@ export class AccountMoveLineProductField extends ProductLabelSectionAndNoteField
     };
     setup() {
         super.setup()
-        console.log("AccountMoveLineProductField setup called", this.props.record.data.product_id);
+        console.log("AccountMoveLineProductField setup called", this.props.record.data.product_id[0]);
         // console.log("AccountMoveLineProductField setup called", this.props);
         this.actionService = useService("action");
 
     }
 
     async onEditConfiguration() {
-        const product_id = this.props.record.data.product_id;
+        const product_id = this.props.record.data.product_id[0];
         const action = await rpc("/open_variant_price_wizard", { product_id: product_id });
         this.actionService.doAction(action);
     }
