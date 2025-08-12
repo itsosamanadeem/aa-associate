@@ -6,6 +6,8 @@ import {
     ProductLabelSectionAndNoteField,
     productLabelSectionAndNoteField,
 } from "@account/components/product_label_section_and_note_field/product_label_section_and_note_field";
+import { rpc } from "@web/core/network/rpc";
+import { useService } from "@web/core/utils/hooks";
 
 export class AccountMoveLineProductField extends ProductLabelSectionAndNoteField {
     static template = "account_move_inherit.InvoiceProductField";
@@ -17,10 +19,14 @@ export class AccountMoveLineProductField extends ProductLabelSectionAndNoteField
         super.setup()
         console.log("AccountMoveLineProductField setup called", this.props.record.data.sequence);
         // console.log("AccountMoveLineProductField setup called", this.props);
-        
+        this.actionService = useService("action");
+
     }
 
-    onEditConfiguration() {
+    async onEditConfiguration() {
+        const moveLineId = this.props.record.data.sequence;
+        const action = await rpc("/open_variant_price_wizard", { move_line_id: moveLineId });
+        this.actionService.doAction(action);
     }
 }
 export const accountMoveLineProductField = {
