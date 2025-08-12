@@ -18,9 +18,9 @@ export class AccountMoveLineProductField extends Many2OneField {
 
     async onEditConfiguration() {
         const product_tmpl_id = this.props.record.data.product_tmpl_id?.[0];
-        this.dialog.add(Dialog,{
-            product_tmpl_id: this.props.record.data.product_tmpl_id?.[0]
-        });
+        // this.dialog.add(Dialog,{
+        //     product_tmpl_id: this.props.record.data.product_tmpl_id?.[0]
+        // });
         if (!product_tmpl_id) {
             console.warn("No product template selected for configuration.");
             return;
