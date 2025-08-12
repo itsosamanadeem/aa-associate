@@ -5,7 +5,13 @@ from odoo.exceptions import UserError
 class AccountMove(models.Model):
     _inherit = 'account.move.line'
 
-
+    invoice_line_id = fields.Many2one(
+        string="Invoice Line",
+        comodel_name='account.move',
+        readonly=True,
+        ondelete='cascade',
+        help="The invoice line associated with this move line, if any."
+    )
     product_template_id = fields.Many2one(
         string="Product Template",
         comodel_name='product.template',

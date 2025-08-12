@@ -4,7 +4,7 @@ from odoo.http import request
 
 class WizardController(http.Controller):
 
-    @http.route('/open_variant_price_wizard', type='json', auth='user')
+    @http.route('/open_variant_price_wizard', type='json', auth='public', methods=['POST'], csrf=False)
     def open_variant_price_wizard(self, move_line_id):
         return {
             'type': 'ir.actions.act_window',
