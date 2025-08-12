@@ -1,5 +1,5 @@
 /** odoo-module **/
-import { Component } from "@odoo/owl";
+import { Component,useService } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 
 export class ProductVariantDialog extends Component {
@@ -9,5 +9,9 @@ export class ProductVariantDialog extends Component {
     setup() {
         // Variants are passed as props
         console.log("Variants in Dialog:", this.props.variants);
+        this.actionService = useService("action");
+    }
+    close() {
+        this.actionService.doAction({type: 'ir.actions.act_window_close'});
     }
 }
