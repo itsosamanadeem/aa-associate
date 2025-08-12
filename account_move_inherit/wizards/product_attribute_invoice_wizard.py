@@ -1,5 +1,6 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+
 class ProductAttributeInvoiceWizard(models.TransientModel):
     _name = "product.attribute.invoice.wizard"
     _description = "Invoice Line Product Configurator"
@@ -9,7 +10,7 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
     product_tmpl_id = fields.Many2one('product.template', required=True)
     # attribute_id = fields.Many2one('product.template.attribute.line', string="Attribute", required=True)
     attribute_value_ids = fields.One2many(
-        comodel_name='product.attribute.custom.value', 
+        comodel_name='product.template.attribute.value', 
         inverse_name="attribute_id",
         compute='_compute_attribute_values',
         string="Attributes",
@@ -20,7 +21,7 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
         for rec in self:
             if rec.product_tmpl_id:
                 attribute_ids = rec.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
-                variants = rec.env['product.attribute.custom.value'].search([
+                variants = rec.env['product.template.attribute.value'].search([
                     ('attribute_id', 'in', attribute_ids)
                 ])
                 rec.attribute_value_ids = variants
