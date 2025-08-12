@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="account_move_inherit.ProductVariantDialog">
-        <Dialog title="Product Variants" size="'lg'" confirmLabel="Close">
+        <Dialog title="'Product Variants'" size="'lg'" confirmLabel="'Close'">
             <table class="table table-bordered table-sm">
                 <thead>
                     <tr>
@@ -21,3 +21,4 @@
         </Dialog>
     </t>
 </templates>
+
