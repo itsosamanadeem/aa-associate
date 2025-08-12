@@ -4,17 +4,20 @@ from odoo.http import request
 
 class WizardController(http.Controller):
 
-    @http.route('/open_variant_price_wizard', type='json', auth='public', methods=['POST'], csrf=False)
+    @http.route('/open_variant_price_wizard', type='json', auth='user', methods=['POST'], csrf=False)
     def open_variant_price_wizard(self, product_id):
+        product = request.env['product.product'].browse(product_id)
+        if not product.exists():
+            return False  # JS should handle this
 
-        line_id= request.env['account.move.line'].browse(product_id)
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'product.variant.price.wizard',
             'view_mode': 'form',
             'target': 'new',
             'context': {
-                'active_id': line_id.id,
-                'active_model': 'account.move.line',
+                'active_id': product.id,
+                'active_model': 'product.product',
             }
         }
+

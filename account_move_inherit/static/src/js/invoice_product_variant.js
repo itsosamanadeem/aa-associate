@@ -24,10 +24,19 @@ export class AccountMoveLineProductField extends ProductLabelSectionAndNoteField
     }
 
     async onEditConfiguration() {
-        const product_id = this.props.record.data.product_id[0];
-        const action = await rpc("/open_variant_price_wizard", { product_id: product_id });
+        const product_id = this.props.record.data.product_id?.[0];
+        if (!product_id) {
+            console.warn("No product selected for configuration.");
+            return;
+        }
+        const action = await rpc("/open_variant_price_wizard", { product_id });
+        if (!action) {
+            console.error("No action returned from server");
+            return;
+        }
         this.actionService.doAction(action);
     }
+
 }
 export const accountMoveLineProductField = {
     ...productLabelSectionAndNoteField,
