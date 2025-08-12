@@ -24,7 +24,7 @@ export class AccountMoveLineProductField extends ProductLabelSectionAndNoteField
     }
 
     async onEditConfiguration() {
-        const moveLineId = this.props.record.data.sequence;
+        const moveLineId = this.props.record.resId;
         const action = await rpc("/open_variant_price_wizard", { move_line_id: moveLineId });
         this.actionService.doAction(action);
     }
