@@ -28,7 +28,7 @@ export class AccountMoveLineProductField extends Many2OneField {
             console.warn("No product template selected for configuration.");
             return;
         }
-        const action = await rpc("/open_product_variants", { product_tmpl_id });
+        const action = await rpc("/get_product_variants", { product_tmpl_id });
         if (!action) {
             console.error("No action returned from server");
             return;
