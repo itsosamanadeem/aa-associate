@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <form string="Select Product Attributes">
                 <group>
+                    <field name="product_id"/>
                     <field name="product_tmpl_id"/>
                     <field name="attribute_value_ids" widget="many2many_tags" />
                 </group>
