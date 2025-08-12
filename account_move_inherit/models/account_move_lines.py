@@ -1,5 +1,5 @@
 # models/account_move_line.py
-from odoo import models, api, _, fields
+from odoo import models, api, _ , fields
 from odoo.exceptions import UserError
 
 class AccountMove(models.Model):
@@ -12,9 +12,6 @@ class AccountMove(models.Model):
         compute='_compute_product_template_id',
         readonly=False,
         search='_search_product_template_id',
-        # previously related='product_id.product_tmpl_id'
-        # not anymore since the field must be considered editable for product configurator logic
-        # without modifying the related product_id when updated.
         domain=[('sale_ok', '=', True)])
 
 
@@ -25,3 +22,23 @@ class AccountMove(models.Model):
 
     def _search_product_template_id(self, operator, value):
         return [('product_id.product_tmpl_id', operator, value)]
+    
+class AccountMove(models.Model):
+    _inherit = 'account.move'
+
+    def action_open_attribute_wizard(self):
+        # Find first invoice line with a product having variants
+        line = self.invoice_line_ids.filtered(lambda l: l.product_id and l.product_id.product_tmpl_id.attribute_line_ids)[:1]
+        if not line:
+            raise UserError("Please select a product with variants to configure.")
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Configure Product Variants',
+            'res_model': 'product.attribute.invoice.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_invoice_line_id': line.id,
+                'default_product_tmpl_id': line.product_id.product_tmpl_id.id,
+            },
+        }

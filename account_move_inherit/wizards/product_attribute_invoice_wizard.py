@@ -11,16 +11,6 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
         string="Attributes",
     )
     
-    # @api.model
-    # def default_get(self, fields):
-    #     res = super().default_get(fields)
-    #     invoice_line = self.env['account.move.line'].browse(res.get('invoice_line_id'))
-    #     if invoice_line and invoice_line.product_id:
-    #         # Pre-fill the product template and selected attribute values of current variant
-    #         res['product_tmpl_id'] = invoice_line.product_id.product_tmpl_id.id
-    #         res['attribute_value_ids'] = [(6, 0, invoice_line.product_id.attribute_value_ids.ids)]
-    #     return res
-
     def action_confirm(self):
         self.ensure_one()
         # Find variant for selected attribute values
