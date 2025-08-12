@@ -1,32 +1,39 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+class ProductAttributeInvoiceWizardLine(models.TransientModel):
+    _name = "product.attribute.invoice.wizard.line"
+    _description = "Wizard Line for Attribute Selection"
+
+    wizard_id = fields.Many2one('product.attribute.invoice.wizard', required=True, ondelete='cascade')
+    attribute_value_id = fields.Many2one('product.template.attribute.value', required=True)
+    is_selected = fields.Boolean("Selected")
 
 class ProductAttributeInvoiceWizard(models.TransientModel):
     _name = "product.attribute.invoice.wizard"
     _description = "Invoice Line Product Configurator"
 
     invoice_line_id = fields.Many2one('account.move.line', required=True)
-    product_id = fields.Many2one('product.product', string="Product", required=True,)
+    product_id = fields.Many2one('product.product', string="Product", required=True)
     product_tmpl_id = fields.Many2one('product.template', required=True)
-    # attribute_id = fields.Many2one('product.template.attribute.line', string="Attribute", required=True)
-    attribute_value_ids = fields.One2many(
-        comodel_name='product.template.attribute.value', 
-        inverse_name="attribute_id",
-        compute='_compute_attribute_values',
-        string="Attributes",
-        store=True, readonly=False, precompute=True, copy=True)
 
-    @api.depends('product_tmpl_id')
-    def _compute_attribute_values(self):
-        for rec in self:
-            if rec.product_tmpl_id:
-                attribute_ids = rec.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
-                variants = rec.env['product.template.attribute.value'].search([
-                    ('attribute_id', 'in', attribute_ids)
-                ])
-                rec.attribute_value_ids = variants
-            else:
-                rec.attribute_value_ids = False
+    attribute_line_ids = fields.One2many(
+        'product.attribute.invoice.wizard.line',
+        'wizard_id',
+        string="Attributes"
+    )
+
+    @api.onchange('product_tmpl_id')
+    def _onchange_product_tmpl_id(self):
+        if self.product_tmpl_id:
+            attribute_ids = self.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
+            variants = self.env['product.template.attribute.value'].search([
+                ('attribute_id', 'in', attribute_ids)
+            ])
+            self.attribute_line_ids = [
+                (0, 0, {'attribute_value_id': v.id}) for v in variants
+            ]
+        else:
+            self.attribute_line_ids = [(5, 0, 0)]
 
     def action_confirm(self):
         pass
