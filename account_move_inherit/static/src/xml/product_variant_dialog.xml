@@ -10,7 +10,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <t t-foreach="props.variants" t-as="variant" t-key="variant.name">
+                    <t t-foreach="props.variants" t-as="variant" t-key="variant.id">
                         <tr>
                             <td><t t-esc="variant.name" /></td>
                             <td><t t-esc="variant.price" /></td>

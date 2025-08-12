@@ -15,7 +15,7 @@ class ProductVariantController(http.Controller):
         variants = request.env['product.template.attribute.value'].sudo().search([('attribute_id','in', product)])
 
         return [
-            {
+            {   'id': v.id,
                 "name": v.name,
                 "price": v.price_extra,
             }
