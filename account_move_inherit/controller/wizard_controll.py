@@ -10,9 +10,9 @@ class ProductVariantController(http.Controller):
             return []
         product = request.env['product.product'].sudo().search([
             ('product_tmpl_id', '=', product_tmpl_id)
-        ]).attribute_line_ids.mapped('value_ids')
+        ]).attribute_line_ids.mapped('attribute_id').ids
 
-        variants = request.env['product.template.attribute.value'].sudo().search([('attribute_id','in', product.ids)])
+        variants = request.env['product.template.attribute.value'].sudo().search([('attribute_id','in', product)])
 
         return [
             {
