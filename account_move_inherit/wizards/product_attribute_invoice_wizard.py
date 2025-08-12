@@ -8,12 +8,11 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
     product_id = fields.Many2one('product.product', string="Product", required=True,)
     product_tmpl_id = fields.Many2one('product.template', required=True)
     # attribute_id = fields.Many2one('product.template.attribute.line', string="Attribute", required=True)
-    attribute_value_ids = fields.Many2many(
-        comodel_name='product.attribute.custom.value', 
-        inverse_name='invoice_line_id',
+    attribute_value_ids = fields.Many2one(
+        'product.attribute.custom.value', 
         compute='_compute_attribute_values',
         string="Attributes",
-        store=True, readonly=False, precompute=True, copy=True)
+        )
 
     @api.depends('product_tmpl_id')
     def _compute_attribute_values(self):
