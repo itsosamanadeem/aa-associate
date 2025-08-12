@@ -14,7 +14,7 @@ class WizardController(http.Controller):
             'view_mode': 'form',
             'target': 'new',
             'context': {
-                'active_id': product_id,
+                'active_id': line_id.id,
                 'active_model': 'account.move.line',
             }
         }
