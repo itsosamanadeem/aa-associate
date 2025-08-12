@@ -33,7 +33,9 @@ export class AccountMoveLineProductField extends Many2OneField {
             console.error("No action returned from server");
             return;
         }
-        this.actionService.doAction(action);
+        console.log(action);
+        
+        // this.actionService.doAction(action);
     }
 }
 
