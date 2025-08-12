@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 class ProductAttributeInvoiceWizard(models.TransientModel):
     _name = "product.attribute.invoice.wizard"
@@ -25,6 +25,7 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
         self.ensure_one()
         # Find variant for selected attribute values
         product_variant = self.product_tmpl_id._get_variant_for_combination(self.attribute_value_ids)
+        raise UserError(_("Please select at least one attribute value.")) if not self.attribute_value_ids else None
         if not product_variant:
             raise UserError("No product variant matches the selected attributes.")
         self.invoice_line_id.product_id = product_variant.id

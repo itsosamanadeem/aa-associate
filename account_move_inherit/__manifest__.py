@@ -20,10 +20,16 @@ the Sale Order product configurator.
         'test_sale_product_configurators',
     ],
     'data': [
-        'security/ir.model.access.csv',
+        # 'security/ir.model.access.csv',
         'views/account_move_lines.xml',
-        'wizards/product_attribute_invoice_wizard.xml',
+        # 'wizards/product_attribute_invoice_wizard.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'account_move_inherit/static/src/**/*.js',
+            'account_move_inherit/static/src/**/*.xml',
+        ],
+    },
     'installable': True,
     'application': False,
     'auto_install': False,
