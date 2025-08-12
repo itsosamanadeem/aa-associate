@@ -1,25 +1,20 @@
-# controllers/wizard_controller.py
+# my_module/controllers/main.py
 from odoo import http
 from odoo.http import request
-from odoo.exceptions import UserError
 
-class WizardController(http.Controller):
+class ProductVariantController(http.Controller):
 
-    @http.route('/open_variant_price_wizard', type='json', auth='user', methods=['POST'], csrf=False)
-    def open_variant_price_wizard(self, product_id):
-        product = request.env['product.product'].browse(product_id)
-        # raise UserError(product)
-        if not product.exists():
-            return False  # JS should handle this
+    @http.route('/open_product_variants', type='json', auth='user')
+    def open_product_variants(self, product_tmpl_id):
+        if not product_tmpl_id:
+            return False
 
         return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'product.variant.price.wizard',
-            'view_mode': 'form',
-            'target': 'new',
-            'context': {
-                'active_id': product.id,
-                'active_model': 'product.product',
-            }
+            "type": "ir.actions.act_window",
+            "name": "Product Variants",
+            "res_model": "product.product",
+            "view_mode": "tree,form",
+            "domain": [("product_tmpl_id", "=", product_tmpl_id)],
+            "target": "new",  # opens in a dialog
+            "context": {"default_product_tmpl_id": product_tmpl_id},
         }
-
