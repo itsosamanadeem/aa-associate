@@ -2,7 +2,7 @@
 
 <templates xml:space="preserve">
 
-    <t t-name="account_move_inherit.InvoiceProductField" t-inherit="account.ProductLabelSectionAndNoteField" t-inherit-mode="primary">
+    <t t-name="account_move_inherit.InvoiceProductField" t-inherit="sale.SaleProductField" t-inherit-mode="primary">
         <!-- Show configuration button for custom lines/products -->
         <xpath expr="//button[@t-if='hasExternalButton']" position="before">
             <t t-if="hasConfigurationButton">
@@ -16,17 +16,6 @@
                     t-on-click="onEditConfiguration"/>
             </t>
         </xpath>
-        <!-- Show the product quantity next to the product name for combo lines. -->
-        <t t-out="productName" position="after">
-            <t t-if="isCombo">
-                x <t t-out="props.record.data.product_uom_qty"/>
-            </t>
-        </t>
-        <span t-esc="productName" class="text-truncate" position="after">
-            <t t-if="isCombo">
-                x <t t-out="props.record.data.product_uom_qty"/>
-            </t>
-        </span>
     </t>
 
 </templates>
