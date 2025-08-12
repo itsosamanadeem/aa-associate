@@ -4,6 +4,9 @@
 
     <t t-name="account_move_inherit.InvoiceProductField" >
         <button type="button" class="btn btn-secondary fa fa-pencil px-2" t-on-click="onEditConfiguration"/>
+        <span class="ml-2">
+            <t t-esc="product_template_id.display_name"/>
+        </span>
     </t>
 
 </templates>
