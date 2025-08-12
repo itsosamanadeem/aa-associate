@@ -17,7 +17,7 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
     @api.depends('product_tmpl_id')
     def _compute_attribute_values(self):
         for rec in self:    
-            variants= rec.env['product.attribute.custom.value'].search([('attribute_id', '=', rec.product_tmpl_id.attribute_line_ids.attribute_id.id)])
+            variants= rec.env['product.attribute.custom.value'].search([('attribute_id.id', '=', rec.product_tmpl_id.attribute_line_ids.attribute_id.id)])
             rec.attribute_value_ids = variants
 
     def action_confirm(self):
