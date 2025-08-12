@@ -2,10 +2,8 @@
 
 <templates xml:space="preserve">
 
-    <t t-name="account_move_inherit.InvoiceProductField" t-inherit="account.ProductLabelSectionAndNoteField" t-inherit-mode="primary">
-        <xpath expr="//div[@class='o_field_product_label_section_and_note_cell']" position="before">
-            <button type="button" class="btn btn-secondary fa fa-pencil px-2" t-on-click="onEditConfiguration"/>
-        </xpath>
+    <t t-name="account_move_inherit.InvoiceProductField" >
+        <button type="button" class="btn btn-secondary fa fa-pencil px-2" t-on-click="onEditConfiguration"/>
     </t>
 
 </templates>

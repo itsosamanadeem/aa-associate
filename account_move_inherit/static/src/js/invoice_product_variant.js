@@ -2,18 +2,14 @@
 
 import { SaleOrderLineProductField } from "@sale/js/sale_product_field";
 import { registry } from "@web/core/registry";
-import {
-    ProductLabelSectionAndNoteField,
-    productLabelSectionAndNoteField,
-} from "@account/components/product_label_section_and_note_field/product_label_section_and_note_field";
 import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
+import { Many2OneField, many2OneField } from "@web/views/fields/many2one/many2one_field";
 
-export class AccountMoveLineProductField extends ProductLabelSectionAndNoteField {
+export class AccountMoveLineProductField extends Many2OneField {
     static template = "account_move_inherit.InvoiceProductField";
-    static props = {
-        ...ProductLabelSectionAndNoteField.props,
-        readonlyField: { type: Boolean, optional: true },
+    static components = {
+        ...Many2OneField.components,
     };
     setup() {
         super.setup()
@@ -39,12 +35,8 @@ export class AccountMoveLineProductField extends ProductLabelSectionAndNoteField
 
 }
 export const accountMoveLineProductField = {
-    ...productLabelSectionAndNoteField,
+    ...many2OneField,
+    listViewWidth: [240, 400],
     component: AccountMoveLineProductField,
-    extractProps(fieldInfo, dynamicInfo) {
-        const props = productLabelSectionAndNoteField.extractProps(...arguments);
-        props.readonlyField = dynamicInfo.readonly;
-        return props;
-    },
 };
 registry.category("fields").add("invoice_product_many2one", accountMoveLineProductField);
