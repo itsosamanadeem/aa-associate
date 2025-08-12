@@ -20,7 +20,7 @@ export class AccountMoveLineProductField extends Many2OneField {
     }
 
     async onEditConfiguration() {
-        const product_tmpl_id = this.props.record.data.product_tmpl_id?.[0];
+        const product_tmpl_id = this.props.record.data.product_template_id?.[0];
         // this.dialog.add(Dialog{
         //     product_tmpl_id: this.props.record.data.product_tmpl_id?.[0]
         // })
