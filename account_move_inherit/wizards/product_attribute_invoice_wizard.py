@@ -15,7 +15,7 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
         string="Attributes"
     )
 
-    variant_price = fields.Float("Variant Price", compute="_compute_variant_price", store=True)
+    variant_price = fields.Float("Variant Price", store=True)
 
     @api.onchange('product_tmpl_id')
     def _onchange_product_tmpl_id(self):
