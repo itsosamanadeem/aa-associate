@@ -1,7 +1,7 @@
 /** odoo-module **/
-import { Component,useService } from "@odoo/owl";
+import { Component } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
-
+import { useService } from "@web/core/utils/hooks";
 export class ProductVariantDialog extends Component {
     static template = "account_move_inherit.ProductVariantDialog";
     static components = { Dialog };
