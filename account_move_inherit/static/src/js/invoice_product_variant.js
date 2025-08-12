@@ -7,7 +7,7 @@ import { useService } from "@web/core/utils/hooks";
 import { Dialog } from "@web/core/dialog/dialog";
 
 export class AccountMoveLineProductField extends Many2OneField {
-    static template = "account_move_inherit.InvoiceProductField";
+    static template = "account_move_inherit.InvoiceProductVariantField";
 
     setup() {
         super.setup();
