@@ -6,43 +6,38 @@ import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
 import { Dialog } from "@web/core/dialog/dialog";
 
-export class AccountMoveLineProductVariantField extends Many2OneField {
-    static template = "account_move_inherit.InvoiceProductVariantField";
+export class AccountMoveLineProductField extends Many2OneField {
+    static template = "account_move_inherit.InvoiceProductField";
 
     setup() {
         super.setup();
-        this.dialogService = useService("dialog");
+        this.actionService = useService("action");
+        this.dialog = useService("dialog");
+        this.orm = useService("orm")
     }
 
-    async onShowVariants() {
+    async onEditConfiguration() {
         const product_tmpl_id = this.props.record.data.product_tmpl_id?.[0];
-        if (!product_tmpl_id) {
-            console.warn("No product template found.");
-            return;
-        }
-
-        const variants = await rpc("/get_product_variants", { product_tmpl_id });
-        if (!variants.length) {
-            this.dialogService.add(Dialog, { title: "No Variants", body: "This product has no variants." });
-            return;
-        }
-
-        this.dialogService.add(Dialog, {
-            title: "Product Variants",
-            body: {
-                Component: {
-                    template: "account_move_inherit.ProductVariantDialogTable",
-                    props: { variants },
-                },
-            },
+        this.dialog.add(Dialog,{
+            product_tmpl_id: this.props.record.data.product_tmpl_id?.[0]
         });
+        if (!product_tmpl_id) {
+            console.warn("No product template selected for configuration.");
+            return;
+        }
+        const action = await rpc("/open_product_variants", { product_tmpl_id });
+        if (!action) {
+            console.error("No action returned from server");
+            return;
+        }
+        this.actionService.doAction(action);
     }
 }
 
-export const accountMoveLineProductVariantField = {
+export const accountMoveLineProductField = {
     ...many2OneField,
     listViewWidth: [240, 400],
-    component: AccountMoveLineProductVariantField,
+    component: AccountMoveLineProductField,
 };
 
-registry.category("fields").add("invoice_product_many2one", accountMoveLineProductVariantField);
+registry.category("fields").add("invoice_product_many2one", accountMoveLineProductField);
