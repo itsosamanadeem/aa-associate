@@ -4,7 +4,7 @@ from odoo.http import request
 
 class ProductVariantController(http.Controller):
 
-    @http.route('/get_product_variants', type='json', auth='user')
+    @http.route('/get_product_variants', type='json', auth='public', methods=['POST'], csrf=False)
     def get_product_variants(self, product_tmpl_id):
         if not product_tmpl_id:
             return []
