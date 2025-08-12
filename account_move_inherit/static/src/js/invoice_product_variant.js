@@ -13,7 +13,7 @@ export class AccountMoveLineProductField extends Many2OneField {
     };
     setup() {
         super.setup()
-        console.log("AccountMoveLineProductField setup called", this.props.record.data.product_id[0]);
+        console.log("AccountMoveLineProductField setup called", this.props.record.data);
         // console.log("AccountMoveLineProductField setup called", this.props);
         this.actionService = useService("action");
 
