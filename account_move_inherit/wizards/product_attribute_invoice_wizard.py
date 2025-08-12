@@ -8,17 +8,24 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
     product_id = fields.Many2one('product.product', string="Product", required=True,)
     product_tmpl_id = fields.Many2one('product.template', required=True)
     # attribute_id = fields.Many2one('product.template.attribute.line', string="Attribute", required=True)
-    attribute_value_ids = fields.Many2one(
+    attribute_value_ids = fields.One2many(
         'product.attribute.custom.value', 
+        'attribute_id',
         compute='_compute_attribute_values',
         string="Attributes",
         )
 
     @api.depends('product_tmpl_id')
     def _compute_attribute_values(self):
-        for rec in self:    
-            variants= rec.env['product.attribute.custom.value'].search([('attribute_id.id', '=', rec.product_tmpl_id.attribute_line_ids.attribute_id.id)])
-            rec.attribute_value_ids = variants
+        for rec in self:
+            if rec.product_tmpl_id:
+                attribute_ids = rec.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
+                variants = rec.env['product.attribute.custom.value'].search([
+                    ('attribute_id', 'in', attribute_ids)
+                ])
+                rec.attribute_value_ids = variants
+            else:
+                rec.attribute_value_ids = False
 
     def action_confirm(self):
         self.ensure_one()
