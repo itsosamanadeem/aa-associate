@@ -9,14 +9,14 @@ class ProductAttributeInvoiceWizard(models.TransientModel):
     product_tmpl_id = fields.Many2one('product.template', required=True)
     attribute_value_ids = fields.Many2many(
         related='product_id.product_template_attribute_value_ids',
-        depends='product_tmpl_id',
+        depends=['product_tmpl_id'],
         string="Attributes",
     )
     
     def action_confirm(self):
         self.ensure_one()
         # Find variant for selected attribute values
-    
+
         # product_variant = self.product_tmpl_id._get_variant_for_combination(self.attribute_value_ids)
         raise UserError(_("Please select at least one attribute value.")) if not self.attribute_value_ids else None
         if not product_variant:
