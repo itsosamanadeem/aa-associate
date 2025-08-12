@@ -1,0 +1,23 @@
+<!-- static/src/xml/product_variant_dialog.xml -->
+<templates xml:space="preserve">
+    <t t-name="account_move_inherit.ProductVariantDialog">
+        <Dialog title="Product Variants" size="'lg'" confirmLabel="Close">
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price Extra</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="props.variants" t-as="variant" t-key="variant.name">
+                        <tr>
+                            <td><t t-esc="variant.name" /></td>
+                            <td><t t-esc="variant.price" /></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </Dialog>
+    </t>
+</templates>

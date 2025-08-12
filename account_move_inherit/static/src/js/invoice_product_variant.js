@@ -21,21 +21,22 @@ export class AccountMoveLineProductField extends Many2OneField {
 
     async onEditConfiguration() {
         const product_tmpl_id = this.props.record.data.product_template_id?.[0];
-        // this.dialog.add(Dialog{
-        //     product_tmpl_id: this.props.record.data.product_tmpl_id?.[0]
-        // })
         if (!product_tmpl_id) {
             console.warn("No product template selected for configuration.");
             return;
         }
-        const action = await rpc("/get_product_variants", { product_tmpl_id });
-        if (!action) {
-            console.error("No action returned from server");
+
+        const variants = await rpc("/get_product_variants", { product_tmpl_id });
+
+        if (!variants || variants.length === 0) {
+            console.error("No variants found for product");
             return;
         }
-        console.log(action);
-        
-        // this.actionService.doAction(action);
+
+        // Open custom dialog
+        this.dialog.add(ProductVariantDialog, {
+            variants,
+        });
     }
 }
 
