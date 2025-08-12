@@ -5,7 +5,10 @@ import { useService } from "@web/core/utils/hooks";
 export class ProductVariantDialog extends Component {
     static template = "account_move_inherit.ProductVariantDialog";
     static components = { Dialog };
-
+    static props = {
+        variants: { type: Array },  // required: list of variants
+        close: { type: Function },  // injected by dialog service
+    };
     setup() {
         // Variants are passed as props
         console.log("Variants in Dialog:", this.props.variants);
