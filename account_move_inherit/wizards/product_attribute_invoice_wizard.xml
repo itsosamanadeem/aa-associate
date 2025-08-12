@@ -19,6 +19,9 @@
                                     </div>
                                     <div>
                                         <strong><field name="attribute_value_id"/></strong>
+                                        <span class="text-muted">
+                                            <t t-esc="variant_price"/> <!-- Display the variant price -->
+                                        </span>
                                     </div>
                                 </div>
                             </t>
