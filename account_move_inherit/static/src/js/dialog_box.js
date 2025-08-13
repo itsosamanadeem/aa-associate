@@ -40,6 +40,8 @@ export class ProductVariantDialog extends Component {
 
     selectVariant(variant) {
         this.state.selectedId = variant.id;
+        console.log(this.state.selectedId);
+        
     }
 
     async confirm() {
