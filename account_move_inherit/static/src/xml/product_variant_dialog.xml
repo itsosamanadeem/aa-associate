@@ -18,11 +18,21 @@
                     </t>
                 </tbody>
             </table>
-
-            <!-- Footer buttons -->
-            <div class="mt-3 text-end">
-                <button class="btn btn-secondary" t-on-click="close">Cancel</button>
-            </div>
+            <t t-set-slot="footer">
+                <button
+                    name="sale_product_configurator_confirm_button"
+                    class="btn btn-primary"
+                    >
+                    Confirm
+                </button>
+                <button
+                    name="sale_product_configurator_cancel_button"
+                    class="btn btn-secondary"
+                    t-on-click="close"
+                >
+                    Cancel
+                </button>
+            </t>
         </Dialog>
     </t>
 </templates>

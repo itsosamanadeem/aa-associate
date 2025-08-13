@@ -20,7 +20,6 @@ the Sale Order product configurator.
         'test_sale_product_configurators',
     ],
     'data': [
-        # 'security/ir.model.access.csv',
         'views/account_move_lines.xml',
     ],
     'assets': {

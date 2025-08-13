@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_product_attribute_invoice_wizard,product.attribute.invoice.wizard,model_product_attribute_invoice_wizard,,1,1,1,1
-access_product_attribute_invoice_wizard_line,product.attribute.invoice.wizard.line,model_product_attribute_invoice_wizard_line,,1,1,1,1
