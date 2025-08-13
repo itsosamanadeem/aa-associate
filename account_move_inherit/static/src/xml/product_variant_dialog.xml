@@ -2,9 +2,10 @@
 <templates id="template" xml:space="preserve">
     <t t-name="account_move_inherit.ProductVariantDialog">
         <Dialog title="'Product Variants'" size="'lg'">
-            <div class="row g-3"> <!-- Bootstrap row with gutter -->
+            <div class="d-flex flex-wrap gap-3 align-items-start">
                 
-                <div class="col-md-2 text-center">
+                <!-- Image -->
+                <div class="text-center" style="flex: 0 0 80px;">
                     <img class="o_sale_product_configurator_img mb-2 img-fluid"
                          t-att-src="this.imageUrl"
                          alt="Variant Image"
@@ -12,27 +13,29 @@
                          height="64"/>
                 </div>
 
-                <div class="col-md-2">
+                <!-- Product Info -->
+                <div style="flex: 1 1 auto; min-width: 150px;">
                     <div class="fw-bold">
                         <t t-esc="this.product_name"/>
                     </div>
                     <div class="fw-bold d-flex align-items-center gap-1">
                         <t t-esc="this.product_name"/>
-                        <span > Class</span>
+                        <span> Class</span>
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <!-- Variants -->
+                <div style="flex: 2 1 300px;">
                     <div class="o_variant_list d-flex flex-wrap gap-2">
                         <t t-foreach="state.variantList" t-as="variant" t-key="variant.id">
-                            <div class="o_variant_item d-flex align-items-center bg-light rounded">
+                            <div class="o_variant_item d-flex align-items-center bg-light rounded p-1">
                                 <input type="checkbox"
                                     class="form-check-input me-2"
-                                    t-on-click="()=>selectVariant(variant)"/>
-                                <div class="fw-bold">
+                                    t-on-click="() => selectVariant(variant)"/>
+                                <div class="fw-bold me-2">
                                     <t t-esc="variant.name"/>
                                 </div>
-                                <div class="text-muted small border border-dark rounded-pill px-2 me-1">
+                                <div class="text-muted small border border-dark rounded-pill px-2">
                                     Price: <t t-esc="variant.price"/>
                                 </div>
                             </div>
@@ -40,14 +43,14 @@
                     </div>
                 </div>
 
-                <div class="col-md-1">
+                <!-- Counter and Total Price -->
+                <div class="d-flex flex-column justify-content-center text-center border-start ps-3" style="flex: 1 1 150px;">
                     Counter
                 </div>
-
-                <div class="col-md-1">
+                <div class="d-flex flex-column justify-content-center text-center border-start ps-3" style="flex: 1 1 150px;">
                     Total Price
                 </div>
-                
+
             </div>
 
             <!-- Footer buttons -->
