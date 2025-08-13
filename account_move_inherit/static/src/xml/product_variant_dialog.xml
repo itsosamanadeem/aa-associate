@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
-    <t t-name="account_move_inherit.ProductVariantDialog" owl="1">
-        <Dialog title="Select Product Variant" size="large">
+    <t t-name="account_move_inherit.ProductVariantDialog">
+        <Dialog title="'Product Variants'" size="'lg'">
             <div class="o_variant_list" style="display:flex;flex-wrap:wrap;gap:10px;">
                 <t t-foreach="variantList" t-as="variant" t-key="variant.id">
                     <div class="o_variant_item" style="border:1px solid #ccc;padding:10px;cursor:pointer;"
                          t-on-click="() => selectVariant(variant)">
-                        <img t-att-src="variant.imageUrl" alt="Variant Image" width="64" height="64"/>
+                        <img class="o_sale_product_configurator_img py-3 px-0" t-att-src="variant.imageUrl" alt="Variant Image" width="64" height="64"/>
                         <div>
                             <strong t-esc="variant.name"/>
                             <br/>
@@ -14,9 +15,24 @@
                     </div>
                 </t>
             </div>
-            <footer>
-                <button type="button" class="btn btn-secondary" t-on-click="close">Cancel</button>
-            </footer>
+            <t t-set-slot="footer">
+                <button
+                    name="sale_product_configurator_confirm_button"
+                    class="btn btn-primary"
+                    >
+                    Confirm
+                </button>
+                <button
+                    name="sale_product_configurator_cancel_button"
+                    class="btn btn-secondary"
+                    t-on-click="close"
+                >
+                    Cancel
+                </button>
+            </t>
         </Dialog>
     </t>
 </templates>
+
+
+
