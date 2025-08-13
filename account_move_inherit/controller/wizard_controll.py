@@ -18,6 +18,7 @@ class ProductVariantController(http.Controller):
             {   
                 "product_image": product.image_1920,
                 'product_id': product.id,
+                'product_name': product.name,
                 'id': v.id,
                 "name": v.name,
                 "price": v.price_extra,

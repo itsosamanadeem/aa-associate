@@ -16,6 +16,11 @@ export class ProductVariantDialog extends Component {
         this.props.variants.forEach(variant => {
             this.imageUrl = `/web/image/product.product/${variant.product_id}/image_256`;
         });
+        
+        this.props.variants.forEach(variant => {
+            this.product_name = variant.product_name;
+        });
+
         this.state = useState({
             selectedId: null,
             variantList: this.props.variants.map(v => ({
