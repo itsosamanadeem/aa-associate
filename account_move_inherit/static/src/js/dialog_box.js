@@ -21,6 +21,8 @@ export class ProductVariantDialog extends Component {
                 imageUrl: `/web/image/product.product/${v.id}/image_256`
             }))
         });
+        console.log(this.state.variantList);
+        
         this.orm = useService("orm");
         this.notification = useService("notification");
     }
