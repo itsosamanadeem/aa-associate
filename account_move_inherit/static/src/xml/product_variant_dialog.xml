@@ -17,9 +17,7 @@
                 <div class="col-md-4">
                     <div class="o_variant_list d-flex flex-wrap gap-2">
                         <t t-foreach="state.variantList" t-as="variant" t-key="variant.id">
-                            <div t-att-class="'o_variant_item card p-2 ' + (variant.id === state.selectedId ? 'border-primary shadow' : 'border')"
-                                 style="cursor:pointer; width:150px; text-align:center;"
-                                 t-on-click="() => selectVariant(variant)">
+                            <div class="o_variant_item card p-2" style="cursor:pointer; width:150px; text-align:center;" t-on-click="() => selectVariant(variant)">
                                 <div class="fw-bold">
                                     <t t-esc="variant.name"/>
                                 </div>
