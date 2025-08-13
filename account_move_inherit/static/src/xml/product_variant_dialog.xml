@@ -12,7 +12,7 @@
                          height="64"/>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <div class="fw-bold">
                         <t t-esc="this.product_name"/>
                     </div>
@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="o_variant_list d-flex flex-wrap gap-2">
                         <t t-foreach="state.variantList" t-as="variant" t-key="variant.id">
                             <div class="o_variant_item d-flex align-items-center bg-light rounded">
@@ -44,7 +44,7 @@
                     Counter
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-1">
                     Total Price
                 </div>
                 
