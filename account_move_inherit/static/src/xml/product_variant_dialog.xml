@@ -28,7 +28,7 @@
                             <div class="o_variant_item d-flex align-items-center bg-light rounded">
                                 <input type="checkbox"
                                     class="form-check-input me-2"
-                                    t-on-click="selectVariant(variant)"/>
+                                    t-on-click="()=>selectVariant(variant)"/>
                                 <div class="fw-bold">
                                     <t t-esc="variant.name"/>
                                 </div>
