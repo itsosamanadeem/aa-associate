@@ -2,37 +2,30 @@
 <templates id="template" xml:space="preserve">
     <t t-name="account_move_inherit.ProductVariantDialog">
         <Dialog title="'Product Variants'" size="'lg'">
-            <div class="o_variant_list" style="display:flex;flex-wrap:wrap;gap:10px;">
-                <t t-foreach="variantList" t-as="variant" t-key="variant.id">
-                    <div class="o_variant_item" style="border:1px solid #ccc;padding:10px;cursor:pointer;"
+            <div class="o_variant_list d-flex flex-wrap gap-2">
+                <t t-foreach="state.variantList" t-as="variant" t-key="variant.id">
+                    <div t-att-class="'o_variant_item card p-2 ' + (variant.id === state.selectedId ? 'border-primary shadow' : 'border')"
+                         style="cursor:pointer; width:150px; text-align:center;"
                          t-on-click="() => selectVariant(variant)">
-                        <img class="o_sale_product_configurator_img py-3 px-0" t-att-src="variant.imageUrl" alt="Variant Image" width="64" height="64"/>
-                        <div>
-                            <strong t-esc="variant.name"/>
-                            <br/>
-                            <span>Price: <t t-esc="variant.price"/></span>
+                        <img class="o_sale_product_configurator_img mb-2" t-att-src="variant.imageUrl"
+                             alt="Variant Image" width="64" height="64"/>
+                        <div class="fw-bold">
+                            <t t-esc="variant.name"/>
+                        </div>
+                        <div class="text-muted small">
+                            Price: <t t-esc="variant.price"/>
                         </div>
                     </div>
                 </t>
             </div>
             <t t-set-slot="footer">
-                <button
-                    name="sale_product_configurator_confirm_button"
-                    class="btn btn-primary"
-                    >
+                <button class="btn btn-primary" t-on-click="confirm">
                     Confirm
                 </button>
-                <button
-                    name="sale_product_configurator_cancel_button"
-                    class="btn btn-secondary"
-                    t-on-click="close"
-                >
+                <button class="btn btn-secondary" t-on-click="close">
                     Cancel
                 </button>
             </t>
         </Dialog>
     </t>
 </templates>
-
-
-
