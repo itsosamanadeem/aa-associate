@@ -5,7 +5,7 @@
             <div class="d-flex flex-wrap gap-3 align-items-start">
                 
                 <!-- Image -->
-                <div class="text-center" style="flex: 0 0 80px;">
+                <div class="text-center" style="flex: 0 0 120px;">
                     <img class="o_sale_product_configurator_img mb-2 img-fluid"
                          t-att-src="this.imageUrl"
                          alt="Variant Image"/>
