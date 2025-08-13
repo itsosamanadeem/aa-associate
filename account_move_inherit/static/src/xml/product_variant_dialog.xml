@@ -26,10 +26,9 @@
                     <div class="o_variant_list d-flex flex-wrap gap-2">
                         <t t-foreach="state.variantList" t-as="variant" t-key="variant.id">
                             <div class="o_variant_item d-flex align-items-center bg-light rounded">
-                                <t t-esc="variant"/>
                                 <input type="checkbox"
                                     class="form-check-input me-2"
-                                    t-on-click="selectVariant(variant)"/>
+                                    t-on-click="() => selectVariant(variant.id)"/>
                                 <div class="fw-bold">
                                     <t t-esc="variant.name"/>
                                 </div>
