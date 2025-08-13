@@ -12,6 +12,13 @@ export class ProductVariantDialog extends Component {
     setup() {
         // Variants are passed as props
         console.log("Variants in Dialog:", this.props.variants);
+        this.props.variants.forEach(variant => {
+            this.image = variant.product_image; // Assuming each variant has an image field
+            this.id= variant.id; // Assuming each variant has an id field
+            this.name = variant.name; // Assuming each variant has a name field
+            this.price = variant.price; // Assuming each variant has a price field
+            console.log("Variant:", variant);
+        });
         this.actionService = useService("action");
     }
     close() {

@@ -15,7 +15,6 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.dialog = useService("dialog");
         this.orm = useService("orm")
         console.log(this.props.record.data);
-        
     }
 
     async onEditConfiguration() {
@@ -31,7 +30,6 @@ export class AccountMoveLineProductField extends Many2OneField {
             console.error("No variants found for product");
             return;
         }
-
         // Open custom dialog
         this.dialog.add(ProductVariantDialog, {
             variants,
