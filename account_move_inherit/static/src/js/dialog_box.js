@@ -12,26 +12,23 @@ export class ProductVariantDialog extends Component {
     };
 
     setup() {
-
-        this.props.variants.forEach(variant => {
-            this.imageUrl = `/web/image/product.product/${variant.product_id}/image_256`;
-        });
-        
-        this.props.variants.forEach(variant => {
-            this.product_name = variant.product_name;
-        });
-
         this.state = useState({
-            selectedId: null,
+            selectedIds: [],
             variantList: this.props.variants.map(v => ({
                 id: v.id,
                 name: v.name,
                 price: v.price,
                 imageUrl: `/web/image/product.product/${v.product_id}/image_256`
-            }))
+            })),
+            totalPrice: 0
         });
-        console.log(this.state.variantList);
-        
+
+        // Pick first variant's image & product name just for header
+        if (this.props.variants.length) {
+            this.imageUrl = `/web/image/product.product/${this.props.variants[0].product_id}/image_256`;
+            this.product_name = this.props.variants[0].product_name;
+        }
+
         this.orm = useService("orm");
         this.notification = useService("notification");
 
@@ -39,19 +36,29 @@ export class ProductVariantDialog extends Component {
     }
 
     selectVariant(variant) {
-        this.state.selectedId = variant.id;
-        console.log(this.state.selectedId);
-        
+        const index = this.state.selectedIds.indexOf(variant.id);
+        if (index === -1) {
+            this.state.selectedIds.push(variant.id);
+        } else {
+            this.state.selectedIds.splice(index, 1);
+        }
+
+        // Recalculate total price
+        this.state.totalPrice = this.state.variantList
+            .filter(v => this.state.selectedIds.includes(v.id))
+            .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
+
+        console.log("Selected IDs:", this.state.selectedIds);
+        console.log("Total Price:", this.state.totalPrice);
     }
 
     async confirm() {
-        if (!this.state.selectedId) {
-            this.notification.add("Please select a variant", { type: "warning" });
+        if (!this.state.selectedIds.length) {
+            this.notification.add("Please select at least one variant", { type: "warning" });
             return;
         }
-        const selected = this.state.variantList.find(v => v.id === this.state.selectedId);
-        console.log("Selected Variant:", selected);
-        this.props.close(selected); // send back selected variant
+        const selected = this.state.variantList.filter(v => this.state.selectedIds.includes(v.id));
+        this.props.close(selected);
     }
 
     close() {

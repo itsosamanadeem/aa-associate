@@ -29,6 +29,7 @@
                             <div class="o_variant_item d-flex align-items-center bg-light rounded p-1">
                                 <input type="checkbox"
                                     class="form-check-input me-2"
+                                    t-att-checked="state.selectedIds.includes(variant.id)"
                                     t-on-click="() => selectVariant(variant)"/>
                                 <div class="fw-bold me-2">
                                     <t t-esc="variant.name"/>
@@ -41,12 +42,10 @@
                     </div>
                 </div>
 
-                <!-- Counter and Total Price -->
-                <!-- <div class="d-flex flex-column justify-content-center text-center border-start ps-3" style="flex: 1 1 150px;">
-                    Counter
-                </div> -->
+                <!-- Total Price -->
                 <div class="d-flex flex-column justify-content-center text-center border-start ps-3" style="flex: 1 1 150px;">
-                    Total Price
+                    <span class="fw-bold">Total Price</span>
+                    <span class="fs-5"><t t-esc="state.totalPrice.toFixed(2)"/></span>
                 </div>
 
             </div>
