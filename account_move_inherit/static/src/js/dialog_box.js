@@ -58,7 +58,8 @@ export class ProductVariantDialog extends Component {
             return;
         }
         const selected = this.state.variantList.filter(v => this.state.selectedIds.includes(v.id));
-        this.props.close(selected);
+        const totalPrice = this.state.totalPrice;
+        this.props.close({ selected, totalPrice }); // sending both
     }
 
     close() {
