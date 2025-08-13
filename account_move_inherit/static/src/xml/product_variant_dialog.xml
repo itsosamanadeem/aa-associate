@@ -1,47 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<templates xml:space="preserve">
-    <t t-name="account_move_inherit.ProductVariantDialog">
-        <Dialog title="'Product Variants'" size="'lg'">
-            <td class="o_sale_product_configurator_img py-3 px-0">
-                <img
-                    class="w-100"
-                    t-att-src="imageUrl"
-                    alt="Product Image"
-                />
-            </td>
-            <table class="table table-bordered table-sm">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Price Extra</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <t t-foreach="props.variants" t-as="variant" t-key="variant.id">
-                        <tr>
-                            <td><t t-esc="variant.name" /></td>
-                            <td><t t-esc="variant.price" /></td>
-                        </tr>
-                    </t>
-                </tbody>
-            </table>
-            <t t-set-slot="footer">
-                <button
-                    name="sale_product_configurator_confirm_button"
-                    class="btn btn-primary"
-                    >
-                    Confirm
-                </button>
-                <button
-                    name="sale_product_configurator_cancel_button"
-                    class="btn btn-secondary"
-                    t-on-click="close"
-                >
-                    Cancel
-                </button>
-            </t>
+<templates id="template" xml:space="preserve">
+    <t t-name="account_move_inherit.ProductVariantDialog" owl="1">
+        <Dialog title="Select Product Variant" size="large">
+            <div class="o_variant_list" style="display:flex;flex-wrap:wrap;gap:10px;">
+                <t t-foreach="variantList" t-as="variant" t-key="variant.id">
+                    <div class="o_variant_item" style="border:1px solid #ccc;padding:10px;cursor:pointer;"
+                         t-on-click="() => selectVariant(variant)">
+                        <img t-att-src="variant.imageUrl" alt="Variant Image" width="64" height="64"/>
+                        <div>
+                            <strong t-esc="variant.name"/>
+                            <br/>
+                            <span>Price: <t t-esc="variant.price"/></span>
+                        </div>
+                    </div>
+                </t>
+            </div>
+            <footer>
+                <button type="button" class="btn btn-secondary" t-on-click="close">Cancel</button>
+            </footer>
         </Dialog>
     </t>
 </templates>
-
-
