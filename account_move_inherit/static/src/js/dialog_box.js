@@ -34,6 +34,8 @@ export class ProductVariantDialog extends Component {
         
         this.orm = useService("orm");
         this.notification = useService("notification");
+
+        this.selectVariant = this.selectVariant.bind(this);
     }
 
     selectVariant(variant) {
