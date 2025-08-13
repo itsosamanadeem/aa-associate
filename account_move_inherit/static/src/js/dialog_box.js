@@ -34,11 +34,12 @@ export class ProductVariantDialog extends Component {
         
         this.orm = useService("orm");
         this.notification = useService("notification");
+
+        this.selectVariant = (variant) => {
+            this.state.selectedId = variant.id;
+        }
     }
 
-    selectVariant(variant) {
-        this.state.selectedId = variant.id;
-    }
 
     async confirm() {
         if (!this.state.selectedId) {
