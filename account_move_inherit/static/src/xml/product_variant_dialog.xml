@@ -5,7 +5,7 @@
             <div class="row g-3"> <!-- Bootstrap row with gutter -->
                 
                 <!-- Column 1: Image -->
-                <div class="col-md-3 text-center">
+                <div class="col-md-2 text-center">
                     <img class="o_sale_product_configurator_img mb-2 img-fluid"
                          t-att-src="this.imageUrl"
                          alt="Variant Image"
@@ -13,7 +13,7 @@
                          height="64"/>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="fw-bold">
                         <t t-esc="this.product_name"/>
                     </div>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     Counter
                 </div>
 
