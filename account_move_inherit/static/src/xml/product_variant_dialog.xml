@@ -8,9 +8,7 @@
                 <div class="text-center" style="flex: 0 0 80px;">
                     <img class="o_sale_product_configurator_img mb-2 img-fluid"
                          t-att-src="this.imageUrl"
-                         alt="Variant Image"
-                         width="64"
-                         height="64"/>
+                         alt="Variant Image"/>
                 </div>
 
                 <!-- Product Info -->
