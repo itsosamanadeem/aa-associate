@@ -30,6 +30,7 @@ export class AccountMoveLineProductField extends Many2OneField {
             console.error("No variants found for product");
             return;
         }
+
         // Open custom dialog
         this.dialog.add(ProductVariantDialog, {
             variants,

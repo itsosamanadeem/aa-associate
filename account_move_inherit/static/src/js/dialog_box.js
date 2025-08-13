@@ -13,7 +13,7 @@ export class ProductVariantDialog extends Component {
 
     setup() {
 
-        variants.forEach(variant => {
+        this.props.variants.forEach(variant => {
             this.imageUrl = `/web/image/product.product/${variant.product_id}/image_256`;
         });
         this.state = useState({
