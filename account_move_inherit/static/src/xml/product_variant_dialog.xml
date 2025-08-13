@@ -42,9 +42,9 @@
                 </div>
 
                 <!-- Counter and Total Price -->
-                <div class="d-flex flex-column justify-content-center text-center border-start ps-3" style="flex: 1 1 150px;">
+                <!-- <div class="d-flex flex-column justify-content-center text-center border-start ps-3" style="flex: 1 1 150px;">
                     Counter
-                </div>
+                </div> -->
                 <div class="d-flex flex-column justify-content-center text-center border-start ps-3" style="flex: 1 1 150px;">
                     Total Price
                 </div>
