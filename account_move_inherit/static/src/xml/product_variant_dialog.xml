@@ -2,6 +2,13 @@
 <templates xml:space="preserve">
     <t t-name="account_move_inherit.ProductVariantDialog">
         <Dialog title="'Product Variants'" size="'lg'">
+            <td class="o_sale_product_configurator_img py-3 px-0">
+                <img
+                    class="w-100"
+                    t-att-src="imageUrl"
+                    alt="Product Image"
+                />
+            </td>
             <table class="table table-bordered table-sm">
                 <thead>
                     <tr>

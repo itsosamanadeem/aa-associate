@@ -26,6 +26,7 @@ the Sale Order product configurator.
         'web.assets_backend': [
             'account_move_inherit/static/src/**/*.js',
             'account_move_inherit/static/src/**/*.xml',
+            'account_move_inherit/static/src/**/*.scss',
         ],
     },
     'installable': True,
