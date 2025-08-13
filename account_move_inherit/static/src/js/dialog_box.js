@@ -7,7 +7,7 @@ export class ProductVariantDialog extends Component {
     static components = { Dialog };
     static props = {
         variants: { type: Array },  // required: list of variants
-        close: { type: Function },  // injected by dialog service
+        close: Function
     };
     setup() {
         // Variants are passed as props
@@ -15,6 +15,6 @@ export class ProductVariantDialog extends Component {
         this.actionService = useService("action");
     }
     close() {
-        this.actionService.doAction({type: 'ir.actions.act_window_close'});
+        this.props.close();
     }
 }

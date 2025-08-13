@@ -35,6 +35,9 @@ export class AccountMoveLineProductField extends Many2OneField {
         // Open custom dialog
         this.dialog.add(ProductVariantDialog, {
             variants,
+            close: () => {
+                this.actionService.doAction({ type: 'ir.actions.act_window_close' });
+            }
         });
     }
 }
