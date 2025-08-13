@@ -17,7 +17,6 @@ export class ProductVariantDialog extends Component {
             this.id= variant.id; // Assuming each variant has an id field
             this.name = variant.name; // Assuming each variant has a name field
             this.price = variant.price; // Assuming each variant has a price field
-            console.log("Variant:", variant);
         });
         this.actionService = useService("action");
     }

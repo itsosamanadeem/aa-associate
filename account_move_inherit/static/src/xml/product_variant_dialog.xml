@@ -5,7 +5,7 @@
             <td class="o_sale_product_configurator_img py-3 px-0">
                 <img
                     class="w-100"
-                    t-att-src="imageUrl"
+                    t-att-src="this.image"
                     alt="Product Image"
                 />
             </td>
