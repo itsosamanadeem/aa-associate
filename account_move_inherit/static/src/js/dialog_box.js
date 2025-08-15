@@ -42,11 +42,11 @@ export class ProductVariantDialog extends Component {
         this.checkedVariants = this.checkedVariants.bind(this);
     }
     checkedVariants(variantId) {
-        return this.props.selected_variant_ids(variantId);
+        return (this.props.selected_variant_ids || []).includes(variantId);
     }
     selectVariant(variant) {
         const index = this.state.selectedIds.indexOf(variant.id);
-        if (index === -1) {
+        if (index >= 0) {
             this.state.selectedIds.push(variant.id);
         } else {
             this.state.selectedIds.splice(index, 1);
