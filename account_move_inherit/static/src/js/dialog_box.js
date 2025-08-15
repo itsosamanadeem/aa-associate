@@ -14,21 +14,28 @@ export class ProductVariantDialog extends Component {
         price_info: { type: Object, optional: true },
         currency_id: { type: Number, optional: true },
         line_id: { type: Number, optional: true },
+        selected_ptav_ids: { type: Array, optional: true },   // ✅ preload prop
     };
 
     setup() {
+        // expose formatCurrency to the template
+        this.formatCurrency = formatCurrency;
+
+        const initialSelected = Array.isArray(this.props.selected_ptav_ids)
+            ? [...this.props.selected_ptav_ids]
+            : [];
+
         this.state = useState({
-            selectedIds: [],
+            selectedIds: initialSelected,  // ✅ pre-check
             variantList: this.props.variants.map(v => ({
-                id: v.id,
+                id: v.id,                 // PTAV id
                 name: v.name,
                 price: v.price,
-                imageUrl: `/web/image/product.product/${v.product_id}/image_256`
+                imageUrl: `/web/image/product.product/${v.product_id}/image_256`,
             })),
             totalPrice: 0,
         });
 
-        // Pick first variant's image & product name just for header
         if (this.props.variants.length) {
             this.imageUrl = `/web/image/product.product/${this.props.variants[0].product_id}/image_256`;
             this.product_name = this.props.variants[0].product_name;
@@ -37,49 +44,46 @@ export class ProductVariantDialog extends Component {
         this.orm = useService("orm");
         this.notification = useService("notification");
 
+        // compute initial total if preselected
+        this.state.totalPrice = this.state.variantList
+            .filter(v => this.state.selectedIds.includes(v.id))
+            .reduce((sum, v) => sum + (parseFloat(v.price) || 0), 0);
+
         this.selectVariant = this.selectVariant.bind(this);
     }
 
     selectVariant(variant) {
-        const index = this.state.selectedIds.indexOf(variant.id);
-        if (index === -1) {
-            this.state.selectedIds.push(variant.id);
-        } else {
-            this.state.selectedIds.splice(index, 1);
-        }
+        const idx = this.state.selectedIds.indexOf(variant.id);
+        if (idx === -1) this.state.selectedIds.push(variant.id);
+        else this.state.selectedIds.splice(idx, 1);
 
-        // Recalculate total price
         this.state.totalPrice = this.state.variantList
             .filter(v => this.state.selectedIds.includes(v.id))
-            .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
-
-        console.log("Selected IDs:", this.state.selectedIds);
-        console.log("Total Price:", this.state.totalPrice);
+            .reduce((sum, v) => sum + (parseFloat(v.price) || 0), 0);
     }
 
     getProductTotalPrice() {
-
-        const total = this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
+        const subtotal = parseFloat(this.props.product_subtotal) || 0;
+        const total = (this.state.totalPrice || 0) + subtotal;
         return formatCurrency(total, this.props.currency_id);
     }
 
     async confirm() {
-        const total = this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
+        const subtotal = parseFloat(this.props.product_subtotal) || 0;
+        const total = (this.state.totalPrice || 0) + subtotal;
 
         await this.orm.call(
             "account.move.line",
             "update_price_unit",
             [[this.props.line_id], {
                 price: total,
-                selected_variant_ids: this.state.selectedIds
+                selected_ptav_ids: this.state.selectedIds,   // ✅ persist PTAVs
             }]
         );
 
-        this.notification.add("Price and selected variants updated successfully!", { type: "success" });
+        this.notification.add("Updated successfully!", { type: "success" });
         this.close();
     }
-
-
 
     close() {
         this.props.close();
