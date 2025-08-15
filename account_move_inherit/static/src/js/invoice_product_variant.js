@@ -9,14 +9,14 @@ import { Component, onWillStart } from "@odoo/owl";
 
 export class AccountMoveLineProductField extends Many2OneField {
     static template = "account_move_inherit.InvoiceProductField";
-    
+
     setup() {
         super.setup();
         this.actionService = useService("action");
         this.dialog = useService("dialog");
         this.orm = useService("orm")
         console.log(this.props.record);
-        
+
     }
 
     async onEditConfiguration() {
@@ -27,7 +27,7 @@ export class AccountMoveLineProductField extends Many2OneField {
         }
 
         const variants = await rpc("/get_product_variants", { product_tmpl_id, line_id: this.props.record.evalContext.id, });
-        
+
         if (!variants || variants.length === 0) {
             console.error("No variants found for product");
             return;
@@ -36,6 +36,12 @@ export class AccountMoveLineProductField extends Many2OneField {
         // Open custom dialog
         this.dialog.add(ProductVariantDialog, {
             variants,
+            onConfirm: ({ ids, names }) => {
+                // Update parent record’s local data immediately
+                this.selected_variant_ids = ids;
+                this.selected_variant_names = names;
+                this.render(); // re-render parent so UI updates
+            },
             close: () => {
                 this.actionService.doAction({ type: 'ir.actions.act_window_close' });
             },

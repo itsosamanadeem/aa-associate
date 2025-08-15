@@ -14,6 +14,7 @@ export class ProductVariantDialog extends Component {
         price_info: { type: Object, optional: true },
         currency_id: { type: Number, optional: true },
         line_id: { type: Number, optional: true },
+        onConfirm: { type: Function},
     };
 
     setup() {
@@ -75,6 +76,18 @@ export class ProductVariantDialog extends Component {
                 selected_variant_ids: this.state.selectedIds,
             }]
         );
+
+        const selectedNames = this.state.variantList
+            .filter(v => this.state.selectedIds.includes(v.id))
+            .map(v => v.name);
+
+        // Call parent callback before closing
+        if (this.props.onConfirm) {
+            this.props.onConfirm({
+                ids: this.state.selectedIds,
+                names: selectedNames
+            });
+        }
 
         this.notification.add("Price and selected variants updated successfully!", { type: "success" });
         this.close();
