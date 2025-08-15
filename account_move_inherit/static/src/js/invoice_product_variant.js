@@ -7,14 +7,14 @@ import { ProductVariantDialog } from "./dialog_box";
 
 export class AccountMoveLineProductField extends Many2OneField {
     static template = "account_move_inherit.InvoiceProductField";
-    
+
     setup() {
         super.setup();
         this.actionService = useService("action");
         this.dialog = useService("dialog");
         this.orm = useService("orm");
         console.log(this.props.record);
-        
+
     }
 
     async onEditConfiguration() {
