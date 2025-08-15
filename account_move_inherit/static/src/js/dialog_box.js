@@ -72,7 +72,7 @@ export class ProductVariantDialog extends Component {
             [[this.props.line_id], { price: total }]
         );
 
-        // this.notification.add("Price updated successfully!", { type: "success" });
+        this.notification.add("Price updated successfully!", { type: "success" });
         this.close();
     }
 
