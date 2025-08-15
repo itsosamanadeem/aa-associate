@@ -20,20 +20,25 @@ export class ProductVariantDialog extends Component {
     setup() {
         // expose formatCurrency to the template
         this.formatCurrency = formatCurrency;
+        onWillStart(async () => {
+            const savedVariants = await this.orm.call(
+                    "account.move.line",
+                    "read",
+                    [[this.props.line_id], ["selected_ptav_ids"]]
+                );
 
-        const initialSelected = Array.isArray(this.props.selected_ptav_ids)
-            ? [...this.props.selected_ptav_ids]
-            : [];
-
-        this.state = useState({
-            selectedIds: initialSelected,  // ✅ pre-check
-            variantList: this.props.variants.map(v => ({
-                id: v.id,                 // PTAV id
-                name: v.name,
-                price: v.price,
-                imageUrl: `/web/image/product.product/${v.product_id}/image_256`,
-            })),
-            totalPrice: 0,
+            const selectedIdsFromDB = savedVariants[0]?.selected_variant_ids || [];
+            
+            this.state = useState({
+                selectedIds: selectedIdsFromDB,  // ✅ pre-check
+                variantList: this.props.variants.map(v => ({
+                    id: v.id,                 // PTAV id
+                    name: v.name,
+                    price: v.price,
+                    imageUrl: `/web/image/product.product/${v.product_id}/image_256`,
+                })),
+                totalPrice: 0,
+            });
         });
 
         if (this.props.variants.length) {
