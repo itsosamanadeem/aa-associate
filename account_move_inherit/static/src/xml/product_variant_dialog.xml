@@ -42,18 +42,20 @@
                     </div>
                 </div>
 
-                <!-- Total Price -->
+                <!-- Total Price Column -->
                 <div class="d-flex flex-column justify-content-center text-center border-start ps-3" style="flex: 1 1 150px;">
                     <span class="fw-bold">Total Price</span>
-                    <span class="fs-5"><t t-esc="state.totalPrice.toFixed(2)"/></span>
+                    <!-- Format on render -->
+                    <span class="fs-5">
+                        <t t-esc="formatCurrency(state.totalPrice, props.currency_id)"/>
+                    </span>
                 </div>
-
+                
             </div>
-            <t t-name="account_move_inherit.total_price" >
-                <span
-                    class="h5 text-nowrap"
-                    t-out="getProductTotalPrice()"/>
-                <div t-if="this.props.price_info" t-out="this.props.price_info" class="text-muted"/>
+            <!-- For the footer total -->
+            <t t-name="account_move_inherit.total_price">
+                <span class="h5 text-nowrap" t-out="getProductTotalPrice()"/>
+                <div t-if="props.price_info" t-out="props.price_info" class="text-muted"/>
             </t>
             <!-- Footer buttons -->
             <t t-set-slot="footer">
