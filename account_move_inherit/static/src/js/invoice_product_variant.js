@@ -43,7 +43,6 @@ export class AccountMoveLineProductField extends Many2OneField {
             price_info: this.props.record.data.price_info,
             currency_id: this.props.record.data.currency_id[0],
             line_id: this.props.record.evalContext.id,
-            selected_variant_ids: this.props.record.data.selected_variant_ids || [],
         });
     }
 }

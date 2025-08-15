@@ -14,16 +14,11 @@ export class ProductVariantDialog extends Component {
         price_info: { type: Object, optional: true },
         currency_id: { type: Number, optional: true },
         line_id: { type: Number, optional: true },
-        selected_variant_ids: { type: Array, optional: true },
     };
 
     setup() {
-        const preSelectedIds = this.props.selected_variant_ids?.length
-            ? this.props.selected_variant_ids
-            : this.props.variants.filter(v => v.is_selected).map(v => v.id);
-
         this.state = useState({
-            selectedIds: [...preSelectedIds],
+            selectedIds: [],
             variantList: this.props.variants.map(v => ({
                 id: v.id,
                 name: v.name,
@@ -79,7 +74,6 @@ export class ProductVariantDialog extends Component {
             "update_price_unit",
             [[this.props.line_id], {
                 price: total,
-                selected_variant_ids: this.state.selectedIds
             }]
         );
 
