@@ -48,9 +48,9 @@ export class ProductVariantDialog extends Component {
         }
 
         // Recalculate total price
-        this.state.totalPrice = formatCurrency(this.state.variantList
+        this.state.totalPrice = this.state.variantList
             .filter(v => this.state.selectedIds.includes(v.id))
-            .reduce((sum, v) => sum + parseFloat(v.price || 0), 0), this.props.currency_id);
+            .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
 
         console.log("Selected IDs:", this.state.selectedIds);
         console.log("Total Price:", this.state.totalPrice);
