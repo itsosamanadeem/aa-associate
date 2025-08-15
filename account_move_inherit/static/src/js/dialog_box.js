@@ -44,6 +44,7 @@ export class ProductVariantDialog extends Component {
 
         onWillStart(()=>{
             console.log('this is variant list',this.state.variantList);
+            console.log('product_id', this.props.product_id);
             
             this.selectVariant(this.state.variantList.filter((x)=>{
                 return x.id === this.props.product_id;
