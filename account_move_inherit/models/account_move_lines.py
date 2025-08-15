@@ -22,7 +22,7 @@ class AccountMove(models.Model):
     def _search_product_template_id(self, operator, value):
         return [('product_id.product_tmpl_id', operator, value)]
 
-    def update_price_subtotal(self, vals):
+    def update_price_unit(self, vals):
         """ Update price_subtotal of this account.move.line """
         self.ensure_one()  # Only one line at a time
         price = vals.get("price")
@@ -35,5 +35,5 @@ class AccountMove(models.Model):
         except ValueError:
             raise UserError(_("Invalid price value"))
 
-        self.price_subtotal = price
+        self.price_unit = price
         return {"status": "success", "new_price_subtotal": self.price_subtotal}

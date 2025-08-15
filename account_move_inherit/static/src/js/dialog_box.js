@@ -68,7 +68,7 @@ export class ProductVariantDialog extends Component {
 
         await this.orm.call(
             "account.move.line",
-            "update_price_subtotal",
+            "update_price_unit",
             [[this.props.line_id], { price: total }]
         );
 
