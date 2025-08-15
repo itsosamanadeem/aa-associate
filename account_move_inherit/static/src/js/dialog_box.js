@@ -11,7 +11,7 @@ export class ProductVariantDialog extends Component {
         variants: { type: Array },
         close: Function,
         product_subtotal: { type: Number, optional: true },
-        price_info: { type: String, optional: true },
+        price_info: { type: Object, optional: true },
         currency_id: { type: Number, optional: true },
     };
 
@@ -25,10 +25,7 @@ export class ProductVariantDialog extends Component {
                 imageUrl: `/web/image/product.product/${v.product_id}/image_256`
             })),
             totalPrice: 0,
-            product_total_price: 0,
         });
-
-        console.log(this);
 
         // Pick first variant's image & product name just for header
         if (this.props.variants.length) {
@@ -50,14 +47,15 @@ export class ProductVariantDialog extends Component {
             this.state.selectedIds.splice(index, 1);
         }
 
-        // Keep totalPrice as a number, not formatted
+        // Recalculate total price
         this.state.totalPrice = this.state.variantList
             .filter(v => this.state.selectedIds.includes(v.id))
             .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
 
         console.log("Selected IDs:", this.state.selectedIds);
-        console.log("Total Price (raw):", this.state.totalPrice);
+        console.log("Total Price:", this.state.totalPrice);
     }
+
     getProductTotalPrice() {
         // Calculate numeric total
         this.state.product_total_price = this.state.variantList
