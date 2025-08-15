@@ -62,7 +62,8 @@ export class ProductVariantDialog extends Component {
         } else {
             this.state.selectedIds.splice(index, 1);
         }
-
+        console.log("Selected variant:", variant);
+        
         // Recalculate total price
         this.state.totalPrice = this.state.variantList
             .filter(v => this.state.selectedIds.includes(v.id))
