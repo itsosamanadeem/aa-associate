@@ -28,7 +28,7 @@ class AccountMove(models.Model):
         price = vals.get("price")
         if price is None:
             raise UserError(_("No price provided"))
-
+        raise UserError(_(price))
         # Ensure numeric
         # try:
         #     price = float(price)
