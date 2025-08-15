@@ -13,8 +13,7 @@ class AccountMove(models.Model):
         search='_search_product_template_id',
         domain=[('sale_ok', '=', True)])
 
-    selected_variant_ids = fields.Many2many(
-        "product.product",
+    selected_variant_ids = fields.Text(
         string="Selected Variants"
     )
 
@@ -30,6 +29,7 @@ class AccountMove(models.Model):
         """ Update price_subtotal of this account.move.line """
         self.ensure_one()  # Only one line at a time
         price = vals.get("price")
+        variants = vals.get("selected_variant_ids", [])
         if price is None:
             raise UserError(_("No price provided"))
 
@@ -40,5 +40,5 @@ class AccountMove(models.Model):
             raise UserError(_("Invalid price value"))
 
         self.price_unit = price
-        
+        self.selected_variant_ids= variants
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
