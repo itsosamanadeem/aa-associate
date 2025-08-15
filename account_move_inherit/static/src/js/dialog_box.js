@@ -48,21 +48,17 @@ export class ProductVariantDialog extends Component {
         }
 
         // Recalculate total price
-        this.state.totalPrice = this.state.variantList
+        this.state.totalPrice = formatCurrency(this.state.variantList
             .filter(v => this.state.selectedIds.includes(v.id))
-            .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
+            .reduce((sum, v) => sum + parseFloat(v.price || 0), 0), this.props.currency_id);
 
         console.log("Selected IDs:", this.state.selectedIds);
         console.log("Total Price:", this.state.totalPrice);
     }
 
     getProductTotalPrice() {
-        // Calculate numeric total
-        this.state.product_total_price = this.state.variantList
-            .filter(v => this.state.selectedIds.includes(v.id))
-            .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
 
-        const total = this.state.product_total_price + (parseFloat(this.props.product_subtotal) || 0);
+        const total = this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
 
         // Format only at the return step
         return formatCurrency(total, this.props.currency_id);

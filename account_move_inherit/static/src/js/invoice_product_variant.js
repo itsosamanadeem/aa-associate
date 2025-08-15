@@ -37,7 +37,7 @@ export class AccountMoveLineProductField extends Many2OneField {
             close: () => {
                 this.actionService.doAction({ type: 'ir.actions.act_window_close' });
             },
-            product_subtotal: this.props.record.data.product_subtotal,
+            product_subtotal: this.props.record.data.price_subtotal,
             price_info: this.props.record.data.price_info,
             currency_id: this.props.record.data.currency_id[0],
         });

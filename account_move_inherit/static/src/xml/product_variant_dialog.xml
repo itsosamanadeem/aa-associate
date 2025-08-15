@@ -45,7 +45,7 @@
                 <!-- Total Price -->
                 <div class="d-flex flex-column justify-content-center text-center border-start ps-3" style="flex: 1 1 150px;">
                     <span class="fw-bold">Total Price</span>
-                    <span class="fs-5"><t t-esc="state.totalPrice.toFixed(2)"/></span>
+                    <span class="fs-5"><t t-out="state.totalPrice"/></span>
                 </div>
 
             </div>
@@ -54,7 +54,7 @@
                 <span class="h5 text-nowrap" t-out="getProductTotalPrice()"/>
                 <div t-if="props.price_info" t-out="props.price_info" class="text-muted"/>
             </t>
-            
+
             <!-- Footer buttons -->
             <t t-set-slot="footer">
                 <button class="btn btn-primary" t-on-click="confirm">
