@@ -5,6 +5,7 @@ import { registry } from "@web/core/registry";
 import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
 import { ProductVariantDialog } from "./dialog_box";
+import { Component, onWillStart } from "@odoo/owl";
 
 export class AccountMoveLineProductField extends Many2OneField {
     static template = "account_move_inherit.InvoiceProductField";
@@ -14,7 +15,9 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.actionService = useService("action");
         this.dialog = useService("dialog");
         this.orm = useService("orm")
-        console.log(this.props.record);
+        onWillStart(async () => {
+            console.log(this.props.record);
+        });
     }
 
     async onEditConfiguration() {
