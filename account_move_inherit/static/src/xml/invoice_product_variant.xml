@@ -8,7 +8,7 @@
             <t t-esc="(props.record.data.product_id and props.record.data.product_id[1]) or ''"/>
         </span>
         <span t-if="props.selected_variant_names && props.selected_variant_names.length">
-            (<t t-esc="props.selected_variant_names.join(', ')"/>)
+            (<t t-esc="props.selected_variant_names"/>)
         </span>
     </t>
 
