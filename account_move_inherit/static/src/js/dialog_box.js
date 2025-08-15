@@ -1,5 +1,5 @@
 /** @odoo-module **/
-import { Component, useState } from "@odoo/owl";
+import { Component, useState, onWillStart } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { useService } from "@web/core/utils/hooks";
 import { formatCurrency } from "@web/core/currency";
@@ -15,9 +15,11 @@ export class ProductVariantDialog extends Component {
         currency_id: { type: Number, optional: true },
         line_id: { type: Number, optional: true },
         onConfirm: { type: Function},
+        product_id: { type: Number, optional: true },
     };
 
     setup() {
+
         this.state = useState({
             selectedIds: [],
             variantList: this.props.variants.map(v => ({
@@ -39,6 +41,13 @@ export class ProductVariantDialog extends Component {
         this.notification = useService("notification");
 
         this.selectVariant = this.selectVariant.bind(this);
+
+        onWillStart(()=>{
+            this.selectVariant(variant.filter((x)=>{
+                return x.id === this.props.product_id;
+            }))
+        })
+
         // this.checkedVariants = this.checkedVariants.bind(this);
     }
 
