@@ -26,7 +26,8 @@ export class ProductVariantDialog extends Component {
                 id: v.id,
                 name: v.name,
                 price: v.price,
-                imageUrl: `/web/image/product.product/${v.product_id}/image_256`
+                imageUrl: `/web/image/product.product/${v.product_id}/image_256`,
+                product_id: v.product_id,
             })),
             totalPrice: 0,
         });
