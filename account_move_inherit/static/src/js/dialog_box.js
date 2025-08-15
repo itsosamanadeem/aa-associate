@@ -19,7 +19,7 @@ export class ProductVariantDialog extends Component {
 
     setup() {
         this.state = useState({
-            selectedIds: [],
+            selectedIds: [...(this.props.selected_variant_ids || [])],
             variantList: this.props.variants.map(v => ({
                 id: v.id,
                 name: v.name,
