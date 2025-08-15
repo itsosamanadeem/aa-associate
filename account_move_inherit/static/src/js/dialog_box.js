@@ -25,9 +25,7 @@ export class ProductVariantDialog extends Component {
                 price: v.price,
                 imageUrl: `/web/image/product.product/${v.product_id}/image_256`
             })),
-            totalPrice: this.props.variants
-                .filter(v => preSelectedIds.includes(v.id))
-                .reduce((sum, v) => sum + parseFloat(v.price || 0), 0),
+            totalPrice: 0,
         });
 
         // Pick first variant's image & product name just for header
