@@ -53,18 +53,18 @@
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <!-- Left side: total -->
                     <div>
-                        <span class="h5 text-nowrap" t-out="getProductTotalPrice()"/>
-                        <div t-if="props.price_info" t-out="props.price_info" class="text-muted"/>
-                    </div>
-                    
-                    <!-- Right side: buttons -->
-                    <div>
                         <button class="btn btn-primary me-2" t-on-click="confirm">
                             Confirm
                         </button>
                         <button class="btn btn-secondary" t-on-click="close">
                             Cancel
                         </button>
+                    </div>
+                    
+                    <!-- Right side: buttons -->
+                    <div>
+                        <span class="h5 text-nowrap" t-out="getProductTotalPrice()"/>
+                        <div t-if="props.price_info" t-out="props.price_info" class="text-muted"/>
                     </div>
                 </div>
             </t>
