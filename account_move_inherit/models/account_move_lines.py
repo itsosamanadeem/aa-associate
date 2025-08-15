@@ -43,6 +43,6 @@ class AccountMove(models.Model):
             raise UserError(_("Invalid price value"))
 
         self.price_unit = price
-        self.selected_variant_ids = [(6, 0, variants.name)]
+        self.selected_variant_ids = [(6, 0, variants)]
         # raise UserError(_(f"Updated price: {self.price_unit} with variants: {self.selected_variant_ids}"))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
