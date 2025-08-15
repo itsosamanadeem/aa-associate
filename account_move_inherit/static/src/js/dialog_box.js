@@ -48,7 +48,7 @@ export class ProductVariantDialog extends Component {
             console.log('product_id', this.props.product_id);
             
             this.selectVariant(this.state.variantList.filter((x)=>{
-                return x.id === this.props.product_id;
+                return x.id === 32;
             }))
         })
 
