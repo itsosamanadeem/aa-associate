@@ -28,12 +28,12 @@ class AccountMove(models.Model):
         price = vals.get("price")
         if price is None:
             raise UserError(_("No price provided"))
-        raise UserError(_(price))
+
         # Ensure numeric
-        # try:
-        #     price = float(price)
-        # except ValueError:
-        #     raise UserError(_("Invalid price value"))
+        try:
+            price = float(price)
+        except ValueError:
+            raise UserError(_("Invalid price value"))
 
         self.price_subtotal = price
         return {"status": "success", "new_price_subtotal": self.price_subtotal}

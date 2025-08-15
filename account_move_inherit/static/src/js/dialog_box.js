@@ -64,7 +64,7 @@ export class ProductVariantDialog extends Component {
     }
 
     async confirm() {
-        const total = this.getProductTotalPrice();
+        const total = this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
 
         await this.orm.call(
             "account.move.line",
