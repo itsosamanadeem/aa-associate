@@ -69,10 +69,10 @@ export class ProductVariantDialog extends Component {
         await this.orm.call(
             "account.move.line",
             "update_price_subtotal",
-            [[this.props.line_id], { price: total }]  // Pass numeric total
+            [[this.props.line_id], { price: total }]
         );
 
-        this.notification.add("Price updated successfully!", { type: "success" });
+        // this.notification.add("Price updated successfully!", { type: "success" });
         this.close();
     }
 
