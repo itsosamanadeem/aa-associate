@@ -19,7 +19,7 @@ export class ProductVariantDialog extends Component {
 
     setup() {
         this.state = useState({
-            selectedIds: [...(this.props.selected_variant_ids || [])], // prefill from props
+            selectedIds: [],
             variantList: this.props.variants.map(v => ({
                 id: v.id,
                 name: v.name,
@@ -41,12 +41,10 @@ export class ProductVariantDialog extends Component {
         this.selectVariant = this.selectVariant.bind(this);
         this.checkedVariants = this.checkedVariants.bind(this);
     }
-    checkedVariants(variantId) {
-        return (this.props.selected_variant_ids || []).includes(variantId);
-    }
+    
     selectVariant(variant) {
         const index = this.state.selectedIds.indexOf(variant.id);
-        if (index >= 0) {
+        if (index === -1) {
             this.state.selectedIds.push(variant.id);
         } else {
             this.state.selectedIds.splice(index, 1);
