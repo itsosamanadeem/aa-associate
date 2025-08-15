@@ -32,7 +32,7 @@ class AccountMove(models.Model):
         self.ensure_one()  # Only one line at a time
         price = vals.get("price")
         variants = vals.get("selected_variant_ids", [])
-        raise UserError(_(f"{variants}"))
+        # raise UserError(_(f"{variants}"))
         if price is None:
             raise UserError(_("No price provided"))
 
@@ -43,5 +43,6 @@ class AccountMove(models.Model):
             raise UserError(_("Invalid price value"))
 
         self.price_unit = price
-        s
+        self.selected_variant_ids = [(6, 0, variants)]
+        raise UserError(_(f"Updated price: {self.price_unit} with variants: {self.selected_variant_ids}"))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
