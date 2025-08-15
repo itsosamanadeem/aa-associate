@@ -29,7 +29,7 @@
                             <div class="o_variant_item d-flex align-items-center bg-light rounded p-1">
                                 <input type="checkbox"
                                     class="form-check-input me-2"
-                                    t-att-checked="state.selectedIds.includes(variant.id)"
+                                    t-att-checked="()=>checkedVariants(variant.id)"
                                     t-on-change="() => selectVariant(variant)"/>
                                 <div class="fw-bold me-2">
                                     <t t-esc="variant.name"/>

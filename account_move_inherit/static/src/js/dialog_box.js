@@ -14,6 +14,7 @@ export class ProductVariantDialog extends Component {
         price_info: { type: Object, optional: true },
         currency_id: { type: Number, optional: true },
         line_id: { type: Number, optional: true },
+        selected_variant_ids: { type: Array, optional: true },
     };
 
     setup() {
@@ -38,8 +39,11 @@ export class ProductVariantDialog extends Component {
         this.notification = useService("notification");
 
         this.selectVariant = this.selectVariant.bind(this);
+        this.checkedVariants = this.checkedVariants.bind(this);
     }
-
+    checkedVariants(variantId) {
+        return this.props.selected_variant_ids(variantId);
+    }
     selectVariant(variant) {
         const index = this.state.selectedIds.indexOf(variant.id);
         if (index === -1) {

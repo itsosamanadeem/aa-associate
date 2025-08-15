@@ -42,7 +42,8 @@ export class AccountMoveLineProductField extends Many2OneField {
             product_subtotal: this.props.record.data.price_subtotal,
             price_info: this.props.record.data.price_info,
             currency_id: this.props.record.data.currency_id[0],
-            line_id: this.props.record.evalContext.id
+            line_id: this.props.record.evalContext.id,
+            selected_variant_ids: this.props.record.data.selected_variant_ids || [],
         });
     }
 }
