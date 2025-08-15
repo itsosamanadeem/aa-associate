@@ -19,8 +19,10 @@ export class AccountMoveLineProductField extends Many2OneField {
 
     }
     _onVariantsSelected({ ids, names }) {
-        this.selected_variant_ids = ids;
-        this.selected_variant_names = names;
+        // Store IDs in the record
+        this.props.record.data.selected_variant_ids = ids;
+        // Store names so they render in template
+        this.props.record.data.selected_variant_names = names;
         this.render();
     }
     async onEditConfiguration() {
