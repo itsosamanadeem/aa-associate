@@ -61,8 +61,8 @@ export class ProductVariantDialog extends Component {
         const index = this.state.selectedIds.indexOf(variant.id);
         console.log('index',index);
         
+        this.state.selectedIds.push(variant.id);
         if (index === -1) {
-            this.state.selectedIds.push(variant.id);
             console.log("Variant selected:", variant.id);
             
         } else {
