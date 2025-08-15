@@ -13,6 +13,10 @@ class AccountMove(models.Model):
         search='_search_product_template_id',
         domain=[('sale_ok', '=', True)])
 
+    selected_variant_ids = fields.Many2many(
+        "product.product",
+        string="Selected Variants"
+    )
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
@@ -36,4 +40,10 @@ class AccountMove(models.Model):
             raise UserError(_("Invalid price value"))
 
         self.price_unit = price
+        
+        if "selected_variant_ids" in vals:
+            self.write({
+                "selected_variant_ids": [(6, 0, vals["selected_variant_ids"])]
+            })
+            
         return {"status": "success", "new_price_subtotal": self.price_subtotal}

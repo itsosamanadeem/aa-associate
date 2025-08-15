@@ -69,12 +69,16 @@ export class ProductVariantDialog extends Component {
         await this.orm.call(
             "account.move.line",
             "update_price_unit",
-            [[this.props.line_id], { price: total }]
+            [[this.props.line_id], {
+                price: total,
+                selected_variant_ids: this.state.selectedIds
+            }]
         );
 
-        this.notification.add("Price updated successfully!", { type: "success" });
+        this.notification.add("Price and selected variants updated successfully!", { type: "success" });
         this.close();
     }
+
 
 
     close() {
