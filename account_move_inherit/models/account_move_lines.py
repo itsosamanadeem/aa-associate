@@ -30,10 +30,10 @@ class AccountMove(models.Model):
             raise UserError(_("No price provided"))
 
         # Ensure numeric
-        try:
-            price = float(price)
-        except ValueError:
-            raise UserError(_("Invalid price value"))
+        # try:
+        #     price = float(price)
+        # except ValueError:
+        #     raise UserError(_("Invalid price value"))
 
         self.price_subtotal = price
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
