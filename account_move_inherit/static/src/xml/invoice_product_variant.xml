@@ -7,9 +7,9 @@
         <span class="mx-2">
             <t t-esc="(props.record.data.product_id and props.record.data.product_id[1]) or ''"/>
         </span>
-        <span t-if="selected_variant_names && selected_variant_names.length">
+        <!-- <span t-if="selected_variant_names ">
             (<t t-esc="selected_variant_names.join(', ')"/>)
-        </span>
+        </span> -->
     </t>
 
 </templates>
