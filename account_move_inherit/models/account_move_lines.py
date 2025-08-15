@@ -14,6 +14,11 @@ class AccountMove(models.Model):
         search='_search_product_template_id',
         domain=[('sale_ok', '=', True)])
 
+    selected_variant_ids = fields.Many2many(
+        comodel_name='product.template.attribute.value',
+        string='Selected Variants',
+    )
+
     @api.depends('product_id')
     def _compute_product_template_id(self):
         for line in self:
@@ -26,6 +31,8 @@ class AccountMove(models.Model):
         """ Update price_subtotal of this account.move.line """
         self.ensure_one()  # Only one line at a time
         price = vals.get("price")
+        variants = vals.get("variants", [])
+        raise UserError(_(f"{variants}"))
         if price is None:
             raise UserError(_("No price provided"))
 
@@ -36,4 +43,5 @@ class AccountMove(models.Model):
             raise UserError(_("Invalid price value"))
 
         self.price_unit = price
+        s
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
