@@ -15,9 +15,6 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.actionService = useService("action");
         this.dialog = useService("dialog");
         this.orm = useService("orm")
-        onWillStart(async () => {
-            console.log(this.props.record);
-        });
     }
 
     async onEditConfiguration() {
@@ -43,6 +40,7 @@ export class AccountMoveLineProductField extends Many2OneField {
             product_subtotal: this.props.record.data.price_subtotal,
             price_info: this.props.record.data.price_info,
             currency_id: this.props.record.data.currency_id[0],
+            line_id: this.props.record.evalContext.id
         });
     }
 }

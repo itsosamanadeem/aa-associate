@@ -13,6 +13,7 @@ export class ProductVariantDialog extends Component {
         product_subtotal: { type: Number, optional: true },
         price_info: { type: Object, optional: true },
         currency_id: { type: Number, optional: true },
+        line_id: { type: Number, optional: true },
     };
 
     setup() {
@@ -61,13 +62,20 @@ export class ProductVariantDialog extends Component {
         const total = this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
         return formatCurrency(total, this.props.currency_id);
     }
+
     async confirm() {
-        const result = await this.orm.call("account.move.line", "update_price_subtotal", [{
-            price: this.getProductTotalPrice(),
-        }]);
-        console.log(result);
-        
+        const total = this.getProductTotalPrice();
+
+        await this.orm.call(
+            "account.move.line",
+            "update_price_subtotal",
+            [[this.props.line_id], { price: total }]  // Pass numeric total
+        );
+
+        this.notification.add("Price updated successfully!", { type: "success" });
+        this.close();
     }
+
 
     close() {
         this.props.close();
