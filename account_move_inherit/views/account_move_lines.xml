@@ -7,6 +7,9 @@
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='sequence']" position="after">
                 <field name="product_template_id" widget="invoice_product_many2one" context="{'partner_id': parent.partner_id, 'company_id': parent.company_id,'default_list_price': price_unit,}" options="{'no_open': True,}" domain="[('sale_ok', '=', True)]"/>
             </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='sequence']" position="after">
+                <field name="selected_variant_ids"/>
+            </xpath>
         </field>
     </record>
 </odoo>
