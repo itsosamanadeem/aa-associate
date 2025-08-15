@@ -43,7 +43,7 @@ export class ProductVariantDialog extends Component {
         this.selectVariant = this.selectVariant.bind(this);
 
         onWillStart(()=>{
-            this.selectVariant(variant.filter((x)=>{
+            this.selectVariant(this.state.variantList.filter((x)=>{
                 return x.id === this.props.product_id;
             }))
         })
