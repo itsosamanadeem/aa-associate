@@ -12,6 +12,7 @@ export class ProductVariantDialog extends Component {
         close: Function,
         product_subtotal: { type: Number, optional: true },
         price_info: { type: String, optional: true },
+        currency_id: { type: Number, optional: true },
     };
 
     setup() {
@@ -52,7 +53,7 @@ export class ProductVariantDialog extends Component {
         // Recalculate total price
         this.state.totalPrice = formatCurrency(this.state.variantList
             .filter(v => this.state.selectedIds.includes(v.id))
-            .reduce((sum, v) => sum + parseFloat(v.price || 0), 0), this.env.currency.id);
+            .reduce((sum, v) => sum + parseFloat(v.price || 0), 0), this.props.currency_id);
 
         console.log("Selected IDs:", this.state.selectedIds);
         console.log("Total Price:", this.state.totalPrice);
@@ -64,7 +65,7 @@ export class ProductVariantDialog extends Component {
                 .filter(v => this.state.selectedIds.includes(v.id))
                 .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
             return this.state.product_total_price + (this.props.product_subtotal || 0);
-        }, this.env.currency.id);
+        }, this.props.currency_id);
     }
     async confirm() {
         if (!this.state.selectedIds.length) {

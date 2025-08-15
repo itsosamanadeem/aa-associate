@@ -39,6 +39,7 @@ export class AccountMoveLineProductField extends Many2OneField {
             },
             product_subtotal: this.props.record.data.product_subtotal,
             price_info: this.props.record.data.price_info,
+            currency_id: this.props.record.data.currency_id[0],
         });
     }
 }
