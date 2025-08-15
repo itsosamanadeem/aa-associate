@@ -26,7 +26,7 @@ export class AccountMoveLineProductField extends Many2OneField {
             return;
         }
 
-        const variants = await rpc("/get_product_variants", { product_tmpl_id });
+        const variants = await rpc("/get_product_variants", { product_tmpl_id, line_id: this.props.record.evalContext.id, });
 
         if (!variants || variants.length === 0) {
             console.error("No variants found for product");

@@ -1,6 +1,7 @@
 # models/account_move_line.py
 from odoo import models, api, _ , fields
 from odoo.exceptions import UserError
+import json
 
 class AccountMove(models.Model):
     _inherit = 'account.move.line'
@@ -40,5 +41,5 @@ class AccountMove(models.Model):
             raise UserError(_("Invalid price value"))
 
         self.price_unit = price
-        self.selected_variant_ids= variants
+        self.selected_variant_ids = json.dumps(variants) 
         return {"status": "success", "new_price_subtotal": self.price_subtotal}

@@ -18,15 +18,21 @@ export class ProductVariantDialog extends Component {
     };
 
     setup() {
+        const preSelectedIds = this.props.selected_variant_ids?.length
+            ? this.props.selected_variant_ids
+            : this.props.variants.filter(v => v.is_selected).map(v => v.id);
+
         this.state = useState({
-            selectedIds: [],
+            selectedIds: [...preSelectedIds],
             variantList: this.props.variants.map(v => ({
                 id: v.id,
                 name: v.name,
                 price: v.price,
                 imageUrl: `/web/image/product.product/${v.product_id}/image_256`
             })),
-            totalPrice: 0,
+            totalPrice: this.props.variants
+                .filter(v => preSelectedIds.includes(v.id))
+                .reduce((sum, v) => sum + parseFloat(v.price || 0), 0),
         });
 
         // Pick first variant's image & product name just for header
@@ -41,7 +47,7 @@ export class ProductVariantDialog extends Component {
         this.selectVariant = this.selectVariant.bind(this);
         // this.checkedVariants = this.checkedVariants.bind(this);
     }
-    
+
     selectVariant(variant) {
         const index = this.state.selectedIds.indexOf(variant.id);
         if (index === -1) {
