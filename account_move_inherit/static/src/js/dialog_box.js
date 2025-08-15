@@ -1,5 +1,5 @@
 /** @odoo-module **/
-import { Component, useState, onWillStart } from "@odoo/owl";
+import { Component, useState, onWillStart, onMounted } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { useService } from "@web/core/utils/hooks";
 import { formatCurrency } from "@web/core/currency";
@@ -43,7 +43,7 @@ export class ProductVariantDialog extends Component {
 
         this.selectVariant = this.selectVariant.bind(this);
 
-        onWillStart(()=>{
+        onMounted(()=>{
             console.log('this is variant list',this.state.variantList);
             console.log('product_id', this.props.product_id);
             
@@ -51,6 +51,7 @@ export class ProductVariantDialog extends Component {
                 return x.id === 32;
             }))
         })
+
 
         // this.checkedVariants = this.checkedVariants.bind(this);
     }
@@ -61,8 +62,8 @@ export class ProductVariantDialog extends Component {
         const index = this.state.selectedIds.indexOf(variant.id);
         console.log('index',index);
         
-        this.state.selectedIds.push(variant.id);
         if (index === -1) {
+            this.state.selectedIds.push(variant.id);
             console.log("Variant selected:", variant.id);
             
         } else {
