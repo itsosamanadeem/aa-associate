@@ -21,3 +21,6 @@ class AccountMove(models.Model):
 
     def _search_product_template_id(self, operator, value):
         return [('product_id.product_tmpl_id', operator, value)]
+
+    def update_price_subtotal(self, vals):
+        pass

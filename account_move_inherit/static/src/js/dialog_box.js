@@ -59,17 +59,14 @@ export class ProductVariantDialog extends Component {
     getProductTotalPrice() {
 
         const total = this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
-
-        // Format only at the return step
         return formatCurrency(total, this.props.currency_id);
     }
     async confirm() {
-        if (!this.state.selectedIds.length) {
-            this.notification.add("Please select at least one variant", { type: "warning" });
-            return;
-        }
-        const selected = this.state.variantList.filter(v => this.state.selectedIds.includes(v.id));
-        this.props.close(selected);
+        const result = await this.orm.call("account.move.line", "update_price_subtotal", [{
+            price: this.getProductTotalPrice(),
+        }]);
+        console.log(result);
+        
     }
 
     close() {

@@ -14,7 +14,7 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.actionService = useService("action");
         this.dialog = useService("dialog");
         this.orm = useService("orm")
-        console.log(this.props.record.data);
+        console.log(this.props.record);
     }
 
     async onEditConfiguration() {
