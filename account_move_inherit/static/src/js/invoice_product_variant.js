@@ -18,7 +18,11 @@ export class AccountMoveLineProductField extends Many2OneField {
         console.log(this.props.record);
 
     }
-
+    _onVariantsSelected({ ids, names }) {
+        this.selected_variant_ids = ids;
+        this.selected_variant_names = names;
+        this.render();
+    }
     async onEditConfiguration() {
         const product_tmpl_id = this.props.record.data.product_template_id?.[0];
         if (!product_tmpl_id) {
@@ -36,12 +40,7 @@ export class AccountMoveLineProductField extends Many2OneField {
         // Open custom dialog
         this.dialog.add(ProductVariantDialog, {
             variants,
-            onConfirm: ({ ids, names }) => {
-                // Update parent record’s local data immediately
-                this.selected_variant_ids = ids;
-                this.selected_variant_names = names;
-                this.render(); // re-render parent so UI updates
-            },
+            onConfirm: this._onVariantsSelected.bind(this),
             close: () => {
                 this.actionService.doAction({ type: 'ir.actions.act_window_close' });
             },
