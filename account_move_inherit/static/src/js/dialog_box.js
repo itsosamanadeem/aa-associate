@@ -39,7 +39,7 @@ export class ProductVariantDialog extends Component {
         this.notification = useService("notification");
 
         this.selectVariant = this.selectVariant.bind(this);
-        this.checkedVariants = this.checkedVariants.bind(this);
+        // this.checkedVariants = this.checkedVariants.bind(this);
     }
     
     selectVariant(variant) {
