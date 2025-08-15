@@ -36,7 +36,9 @@ export class AccountMoveLineProductField extends Many2OneField {
             variants,
             close: () => {
                 this.actionService.doAction({ type: 'ir.actions.act_window_close' });
-            }
+            },
+            product_subtotal: this.props.record.data.product_subtotal,
+            price_info: this.props.record.data.price_info,
         });
     }
 }

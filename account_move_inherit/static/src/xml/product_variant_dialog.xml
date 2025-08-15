@@ -49,7 +49,12 @@
                 </div>
 
             </div>
-
+            <t t-name="account_move_inherit.total_price" >
+                <span
+                    class="h5 text-nowrap"
+                    t-out="getProductTotalPrice()"/>
+                <div t-if="this.props.price_info" t-out="this.props.price_info" class="text-muted"/>
+            </t>
             <!-- Footer buttons -->
             <t t-set-slot="footer">
                 <button class="btn btn-primary" t-on-click="confirm">
