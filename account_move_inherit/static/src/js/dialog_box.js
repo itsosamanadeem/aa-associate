@@ -52,20 +52,15 @@ export class ProductVariantDialog extends Component {
 
     }
 
-    selectVariant(variant) {
-        console.log('_____>>>>>>', this.state.selectedIds);
-
-        const index = this.state.selectedIds.indexOf(variant.id);
-        // console.log('index',index);
+    selectVariant(variantId) {
+        const index = this.state.selectedIds.indexOf(variantId);
 
         if (index === -1) {
-            this.state.selectedIds.push(variant);
-            console.log("Variant selected:", variant);
-
+            this.state.selectedIds.push(variantId);   // store ID
+            console.log("Variant selected:", variantId);
         } else {
             this.state.selectedIds.splice(index, 1);
         }
-        console.log("Selected variant:", variant);
 
         // Recalculate total price
         this.state.totalPrice = this.state.variantList
@@ -75,6 +70,7 @@ export class ProductVariantDialog extends Component {
         console.log("Selected IDs:", this.state.selectedIds);
         console.log("Total Price:", this.state.totalPrice);
     }
+
 
     getProductTotalPrice() {
 
