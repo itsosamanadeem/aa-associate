@@ -45,6 +45,8 @@ export class ProductVariantDialog extends Component {
 
         onWillStart(() => {
             const defaultVariant = this.state.variantList.find(x => x.id === 32);
+            console.log("defaultVariant:", defaultVariant);
+            
             if (defaultVariant) {
                 this.selectVariant(defaultVariant);
             }
@@ -56,7 +58,7 @@ export class ProductVariantDialog extends Component {
         const index = this.state.selectedIds.indexOf(variantId);
 
         if (index === -1) {
-            this.state.selectedIds.push(variantId);   // store ID
+            this.state.selectedIds.push(variantId);
             console.log("Variant selected:", variantId);
         } else {
             this.state.selectedIds.splice(index, 1);
