@@ -14,7 +14,7 @@ export class ProductVariantDialog extends Component {
         price_info: { type: Object, optional: true },
         currency_id: { type: Number, optional: true },
         line_id: { type: Number, optional: true },
-        onConfirm: { type: Function},
+        onConfirm: { type: Function },
         product_id: { type: Number, optional: true },
     };
 
@@ -43,31 +43,30 @@ export class ProductVariantDialog extends Component {
 
         this.selectVariant = this.selectVariant.bind(this);
 
-        onWillStart(()=>{
-            console.log('this is variant list',this.state.variantList);
-            console.log('product_id', this.props.product_id);
-            
-            this.selectVariant(this.state.variantList.filter((x)=>{
-                return x.id === 32;
-            }))
-        })
+        onWillStart(() => {
+            const defaultVariant = this.state.variantList.find(x => x.id === 32);
+            if (defaultVariant) {
+                this.selectVariant(defaultVariant);
+            }
+        });
+
     }
 
     selectVariant(variant) {
-        console.log('_____>>>>>>',this.state.selectedIds);
-        
+        console.log('_____>>>>>>', this.state.selectedIds);
+
         const index = this.state.selectedIds.indexOf(variant.id);
         // console.log('index',index);
-        
+
         if (index === -1) {
             this.state.selectedIds.push(variant);
             console.log("Variant selected:", variant);
-            
+
         } else {
             this.state.selectedIds.splice(index, 1);
         }
         console.log("Selected variant:", variant);
-        
+
         // Recalculate total price
         this.state.totalPrice = this.state.variantList
             .filter(v => this.state.selectedIds.includes(v.id))
