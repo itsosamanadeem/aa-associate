@@ -43,7 +43,7 @@ export class ProductVariantDialog extends Component {
 
         this.selectVariant = this.selectVariant.bind(this);
 
-        onMounted(()=>{
+        onWillStart(()=>{
             console.log('this is variant list',this.state.variantList);
             console.log('product_id', this.props.product_id);
             
@@ -51,16 +51,13 @@ export class ProductVariantDialog extends Component {
                 return x.id === 32;
             }))
         })
-
-
-        // this.checkedVariants = this.checkedVariants.bind(this);
     }
 
     selectVariant(variant) {
         console.log('_____>>>>>>',this.state.selectedIds);
         
         const index = this.state.selectedIds.indexOf(variant.id);
-        console.log('index',index);
+        // console.log('index',index);
         
         if (index === -1) {
             this.state.selectedIds.push(variant.id);

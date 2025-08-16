@@ -30,7 +30,7 @@
                                 <input type="checkbox"
                                     class="form-check-input me-2"
                                     t-att-checked="state.selectedIds.includes(variant.id) ? 'checked' : null"
-                                    t-on-change="() => selectVariant(variant)"/>
+                                    t-on-change="() => selectVariant(variant.id)"/>
                                 <div class="fw-bold me-2">
                                     <t t-esc="variant.name"/>
                                 </div>
