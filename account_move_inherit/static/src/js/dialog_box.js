@@ -45,10 +45,10 @@ export class ProductVariantDialog extends Component {
 
         onWillStart(() => {
             const defaultVariant = this.state.variantList.find(x => x.id === 32);
-            console.log("defaultVariant:", defaultVariant);
+            console.log("defaultVariant:", defaultVariant.id);
             
             if (defaultVariant) {
-                this.selectVariant(defaultVariant);
+                this.selectVariant(defaultVariant.id);
             }
         });
 
