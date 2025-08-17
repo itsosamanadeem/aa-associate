@@ -14,8 +14,7 @@ class AccountMove(models.Model):
         search='_search_product_template_id',
         domain=[('sale_ok', '=', True)])
 
-    selected_variant_ids = fields.Many2many(
-        comodel_name='product.product',
+    selected_variant_ids = fields.Json(
         string='Selected Variants',
     )
 
@@ -43,7 +42,7 @@ class AccountMove(models.Model):
             raise UserError(_("Invalid price value"))
 
         self.price_unit = price
-        if variants:
-            self.selected_variant_ids = [(6, 0, variants)]
-            raise UserError(_(f"Updated price: {self.price_unit} with variants: {self.selected_variant_ids}"))
-        # return {"status": "success", "new_price_subtotal": self.price_subtotal}
+        # if variants:
+        self.selected_variant_ids = [(6, 0, variants)]
+        raise UserError(_(f"Updated price: {self.price_unit} with variants: {self.selected_variant_ids}"))
+        return {"status": "success", "new_price_subtotal": self.price_subtotal}
