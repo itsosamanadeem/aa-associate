@@ -32,7 +32,6 @@ export class ProductVariantDialog extends Component {
             totalPrice: 0,
         });
 
-        // Pick first variant's image & product name just for header
         if (this.props.variants.length) {
             this.imageUrl = `/web/image/product.product/${this.props.variants[0].product_id}/image_256`;
             this.product_name = this.props.variants[0].product_name;
@@ -44,9 +43,10 @@ export class ProductVariantDialog extends Component {
         this.selectVariant = this.selectVariant.bind(this);
 
         onWillStart(() => {
-            const defaultVariant = this.state.variantList.find(x => x.id === 32);
+            const defaultVariant = this.state.variantList.find(x => x.id in this.state.selectedIds);
+
             console.log("defaultVariant:", defaultVariant.id);
-            
+
             if (defaultVariant) {
                 this.selectVariant(defaultVariant.id);
             }
