@@ -43,11 +43,16 @@ export class ProductVariantDialog extends Component {
         this.selectVariant = this.selectVariant.bind(this);
 
         onWillStart(() => {
-            const defaultVariant = this.state.variantList.find(x => this.state.selectedIds.includes(x.id));
+            let defaultVariant = this.state.variantList.find(
+                x => this.state.selectedIds.includes(x.id)
+            );
 
-            console.log("defaultVariant:", defaultVariant.id);
+            if (!defaultVariant && this.state.variantList.length) {
+                defaultVariant = this.state.variantList[0]; // fallback
+            }
 
             if (defaultVariant) {
+                console.log("Auto-selecting:", defaultVariant.id);
                 this.selectVariant(defaultVariant.id);
             }
         });
