@@ -32,7 +32,7 @@ class AccountMove(models.Model):
         self.ensure_one()  # Only one line at a time
         price = vals.get("price")
         variants = vals.get("selected_variant_ids")
-        # raise UserError(_(f"{variants}"))
+        raise UserError(_(f"{variants}"))
         if price is None:
             raise UserError(_("No price provided"))
 
