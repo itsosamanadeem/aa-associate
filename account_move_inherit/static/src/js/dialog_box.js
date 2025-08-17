@@ -46,9 +46,9 @@ export class ProductVariantDialog extends Component {
         onWillStart(() => {
             if (this.props.selected_variant_ids?.length) {
                 this.state.selectedIds = [...this.props.selected_variant_ids];
-                this.state.totalPrice = this.state.variantList
-                    .filter(v => this.state.selectedIds.includes(v.id))
-                    .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
+                console.log("Selected variant IDs from props:", this.state.selectedIds);
+                
+                this.selectVariant(this.props.selected_variant_ids);
             }
         });
 
