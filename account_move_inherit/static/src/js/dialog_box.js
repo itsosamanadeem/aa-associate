@@ -43,7 +43,7 @@ export class ProductVariantDialog extends Component {
         this.selectVariant = this.selectVariant.bind(this);
 
         onWillStart(() => {
-            const defaultVariant = this.state.variantList.find(x => x.id in this.state.selectedIds);
+            const defaultVariant = this.state.variantList.find(x => this.state.selectedIds.includes(x.id));
 
             console.log("defaultVariant:", defaultVariant.id);
 
