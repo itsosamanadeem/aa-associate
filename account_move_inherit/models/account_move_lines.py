@@ -15,7 +15,7 @@ class AccountMove(models.Model):
         domain=[('sale_ok', '=', True)])
 
     selected_variant_ids = fields.Many2many(
-        comodel_name='product.template.attribute.value',
+        comodel_name='product.product',
         string='Selected Variants',
     )
 
