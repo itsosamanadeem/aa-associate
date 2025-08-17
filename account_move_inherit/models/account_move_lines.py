@@ -15,7 +15,8 @@ class AccountMove(models.Model):
         domain=[('sale_ok', '=', True)])
 
     selected_variant_ids = fields.Many2many(
-        "product.product", string="Selected Variants"
+        comodel_name='product.template.attribute.value',
+        string='Selected Variants',
     )
 
     @api.depends('product_id')
