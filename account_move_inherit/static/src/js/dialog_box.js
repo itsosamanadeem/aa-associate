@@ -16,6 +16,7 @@ export class ProductVariantDialog extends Component {
         line_id: { type: Number, optional: true },
         onConfirm: { type: Function },
         product_id: { type: Number, optional: true },
+        selected_variant_ids: { type: Array, optional: true },
     };
 
     setup() {
@@ -43,17 +44,11 @@ export class ProductVariantDialog extends Component {
         this.selectVariant = this.selectVariant.bind(this);
 
         onWillStart(() => {
-            let defaultVariant = this.state.variantList.find(
-                x => this.state.selectedIds.includes(x.id)
-            );
-
-            if (!defaultVariant && this.state.variantList.length) {
-                defaultVariant = this.state.variantList[0]; // fallback
-            }
-
-            if (defaultVariant) {
-                console.log("Auto-selecting:", defaultVariant.id);
-                this.selectVariant(defaultVariant.id);
+            if (this.props.selected_variant_ids?.length) {
+                this.state.selectedIds = [...this.props.selected_variant_ids];
+                this.state.totalPrice = this.state.variantList
+                    .filter(v => this.state.selectedIds.includes(v.id))
+                    .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
             }
         });
 
@@ -93,7 +88,7 @@ export class ProductVariantDialog extends Component {
             "update_price_unit",
             [[this.props.line_id], {
                 price: total,
-                // selected_variant_ids: this.state.selectedIds,
+                selected_variant_ids: this.state.selectedIds,
             }]
         );
 
