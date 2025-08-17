@@ -88,7 +88,7 @@ export class ProductVariantDialog extends Component {
             "update_price_unit",
             [[this.props.line_id], {
                 price: total,
-                selected_variant_ids: this.state.selectedIds,
+                selected_variant_ids: [[6, 0, this.state.selectedIds]],
             }]
         );
 
