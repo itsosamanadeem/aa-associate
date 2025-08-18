@@ -27,6 +27,7 @@ class AccountMove(models.Model):
     @api.model
     def trademark_name_selection(self):
         partner = self.move_id.partner_id.x_studio_associated_trademarks
+        raise UserError(_("Partner: %s" % partner))
         if not partner:
             return []
         return [
