@@ -30,7 +30,7 @@ export class AccountMoveLineProductField extends Many2OneField {
     }
 
     async onEditConfiguration() {
-        await this.formService.save({ reload: false });
+        await this.props.record.save({ reload: false });
         const product_tmpl_id = this.props.record.data.product_template_id?.[0];
         if (!product_tmpl_id) {
             console.warn("No product template selected for configuration.");
