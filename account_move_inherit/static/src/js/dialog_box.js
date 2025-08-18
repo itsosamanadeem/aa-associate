@@ -1,5 +1,5 @@
 /** @odoo-module **/
-import { Component, useState, onWillStart, onMounted } from "@odoo/owl";
+import { Component, useState, onWillStart } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { useService } from "@web/core/utils/hooks";
 import { formatCurrency } from "@web/core/currency";
@@ -20,7 +20,6 @@ export class ProductVariantDialog extends Component {
     };
 
     setup() {
-
         this.state = useState({
             selectedIds: [],
             variantList: this.props.variants.map(v => ({
@@ -40,45 +39,32 @@ export class ProductVariantDialog extends Component {
 
         this.orm = useService("orm");
         this.notification = useService("notification");
-
         this.selectVariant = this.selectVariant.bind(this);
 
         onWillStart(() => {
             if (this.props.selected_variant_ids?.length) {
                 this.state.selectedIds = [...this.props.selected_variant_ids];
-                console.log("Selected variant IDs from props:", this.state.selectedIds);
                 this.state.totalPrice = this.state.variantList
                     .filter(v => this.state.selectedIds.includes(v.id))
                     .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
-                // this.selectVariant(this.props.selected_variant_ids);
             }
-
         });
-
     }
 
     selectVariant(variantId) {
         const index = this.state.selectedIds.indexOf(variantId);
-
         if (index === -1) {
             this.state.selectedIds.push(variantId);
-            console.log("Variant selected:", variantId);
         } else {
             this.state.selectedIds.splice(index, 1);
         }
 
-        // Recalculate total price
         this.state.totalPrice = this.state.variantList
             .filter(v => this.state.selectedIds.includes(v.id))
             .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
-
-        console.log("Selected IDs:", this.state.selectedIds);
-        console.log("Total Price:", this.state.totalPrice);
     }
 
-
     getProductTotalPrice() {
-
         const total = this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
         return formatCurrency(total, this.props.currency_id);
     }
@@ -91,7 +77,7 @@ export class ProductVariantDialog extends Component {
             "update_price_unit",
             [[this.props.line_id], {
                 price: total,
-                selected_variant_ids: this.state.selectedIds
+                selected_variant_ids: this.state.selectedIds,
             }]
         );
 
@@ -99,19 +85,16 @@ export class ProductVariantDialog extends Component {
             .filter(v => this.state.selectedIds.includes(v.id))
             .map(v => v.name);
 
-        // Call parent callback before closing
         if (this.props.onConfirm) {
             this.props.onConfirm({
                 ids: this.state.selectedIds,
-                names: selectedNames
+                names: selectedNames,   // ✅ send names to parent
             });
         }
 
         this.notification.add("Price and selected variants updated successfully!", { type: "success" });
         this.close();
     }
-
-
 
     close() {
         this.props.close();
