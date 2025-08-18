@@ -14,7 +14,7 @@
                 <strong>Variants:</strong>
                 <t t-foreach="state.selected_variant_names" t-as="v" t-key="v">
                     <span class="badge bg-secondary me-1">
-                        <t t-esc="v"/>
+                        <t t-esc="v"/><br/>
                     </span>
                 </t>
             </div>
