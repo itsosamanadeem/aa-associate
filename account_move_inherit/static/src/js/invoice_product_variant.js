@@ -20,7 +20,7 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.dialog = useService("dialog");
         this.orm = useService("orm");
 
-        console.log("AccountMoveLineProductField setup", this.props.record);
+        console.log("AccountMoveLineProductField setup", this);
         
     }
 
