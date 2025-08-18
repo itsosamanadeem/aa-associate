@@ -3,6 +3,15 @@ from odoo import models, api, _ , fields
 from odoo.exceptions import UserError
 import json
 
+class PartnerLineDDD04(models.Model):
+    _name = "x_res_partner_line_ddd04"
+    _inherit = "x_res_partner_line_ddd04"
+
+    # Change the record name field
+    _rec_name = "x_studio_trademark_field"
+
+
+    
 class AccountMove(models.Model):
     _inherit = 'account.move.line'
 
@@ -21,6 +30,7 @@ class AccountMove(models.Model):
 
     trademark_name= fields.Many2one(
         comodel_name='x_res_partner_line_ddd04',
+
         string='Trademark',
     )
 
