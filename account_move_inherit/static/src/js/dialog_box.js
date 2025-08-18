@@ -105,8 +105,9 @@ export class ProductVariantDialog extends Component {
         window.location.reload();
         this.close();
     }
-
+    
     close() {
+        window.location.reload();
         this.props.close();
     }
 }
