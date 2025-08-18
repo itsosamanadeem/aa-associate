@@ -20,7 +20,7 @@ export class ProductVariantDialog extends Component {
     };
 
     setup() {
-        
+
         this.state = useState({
             selectedIds: [],
             variantList: this.props.variants.map(v => ({
@@ -37,7 +37,7 @@ export class ProductVariantDialog extends Component {
             this.imageUrl = `/web/image/product.product/${this.props.variants[0].product_id}/image_256`;
             this.product_name = this.props.variants[0].product_name;
         }
-        
+
         if (this.props.variants.length) {
             this.attribute_name = this.props.variants[0].attribute_name;
         }
@@ -79,18 +79,19 @@ export class ProductVariantDialog extends Component {
             .filter(v => this.state.selectedIds.includes(v.id))
             .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
     }
-
+    arraysEqual(arr1, arr2) {
+        if (arr1.length !== arr2.length) return false;
+        return arr1.every(val => arr2.includes(val));
+    }
     getProductTotalPrice() {
-        console.log(this.props.selected_variant_ids, this.state.selectedIds);
-        
-        if (this.props.selected_variant_ids === this.state.selectedIds) {
+        if (this.arraysEqual(this.props.selected_variant_ids || [], this.state.selectedIds)) {
             console.log(true);
-            
             return formatCurrency(this.props.product_subtotal, this.props.currency_id);
-        }else{
+        } else {
             const total = this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
             return formatCurrency(total, this.props.currency_id);
         }
+
     }
 
     async confirm() {
@@ -112,7 +113,7 @@ export class ProductVariantDialog extends Component {
         window.location.reload();
         this.close();
     }
-    
+
     close() {
         window.location.reload();
         this.props.close();
