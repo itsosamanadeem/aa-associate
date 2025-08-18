@@ -24,9 +24,14 @@ export class AccountMoveLineProductField extends Many2OneField {
 
         console.log("AccountMoveLineProductField setup", this);
 
-        // onWillStart(async () => {
-        //     this._onVariantsSelected = await this._onVariantsSelected.bind(this);
-        // });
+        onWillStart(async() => {
+            const variants_name = await this.orm.read(
+                'account.move.line',
+                [this.props.record.evalContext.id], ['selected_variant_names']
+            )
+            console.log("Variants Name:", variants_name);
+            
+        });
 
     }
 
