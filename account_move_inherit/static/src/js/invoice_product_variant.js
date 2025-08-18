@@ -5,7 +5,7 @@ import { registry } from "@web/core/registry";
 import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
 import { ProductVariantDialog } from "./dialog_box";
-import { Component, useState } from "@odoo/owl";
+import { Component, useState, onWillStart } from "@odoo/owl";
 
 export class AccountMoveLineProductField extends Many2OneField {
     static template = "account_move_inherit.InvoiceProductField";
@@ -21,11 +21,14 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.orm = useService("orm");
 
         console.log("AccountMoveLineProductField setup", this);
+
+        onWillStart(async () => {
+            this._onVariantsSelected = await this._onVariantsSelected.bind(this);
+        });
         
     }
 
     async _onVariantsSelected({ ids, names }) {
-        await this.props.record.load();
         this.state.selected_variant_ids = ids;
         this.state.selected_variant_names = names;
 
@@ -34,7 +37,7 @@ export class AccountMoveLineProductField extends Many2OneField {
     }
 
     async onEditConfiguration() {
-        await this.props.record.save({ reload: false });
+        
         const product_tmpl_id = this.props.record.data.product_template_id?.[0];
         if (!product_tmpl_id) {
             console.warn("No product template selected for configuration.");
