@@ -22,6 +22,7 @@ the Sale Order product configurator.
     'data': [
         'security/ir.model.access.csv',
         'views/account_move_lines.xml',
+        'views/crm_inherit.xml',
     ],
     'assets': {
         'web.assets_backend': [
