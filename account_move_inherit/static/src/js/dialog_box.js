@@ -53,9 +53,6 @@ export class ProductVariantDialog extends Component {
                 // this.selectVariant(this.props.selected_variant_ids);
             }
 
-            this.getProductTotalPrice(){
-                return this.props.product_subtotal || 0;
-            }
         });
 
     }
