@@ -19,7 +19,7 @@ class AccountMove(models.Model):
     )
     selected_variant_names = fields.Json(string="Variant Names")
 
-    trademark_name = fields.Selection(
+    trademark_id = fields.Selection(
         selection=lambda self: self.trademark_name_selection(),
         string="Trademark",
     )
