@@ -7,7 +7,7 @@ class AccountMove(models.Model):
     _inherit = 'account.move.line'
 
     product_template_id = fields.Many2one(
-        string="Product Template",
+        string="Product Variants",
         comodel_name='product.template',
         compute='_compute_product_template_id',
         readonly=False,
@@ -18,6 +18,12 @@ class AccountMove(models.Model):
         string='Selected Variants',
     )
     selected_variant_names = fields.Json(string="Variant Names")
+
+    trademark_name= fields.Many2one(
+        comodel_name='x_res_partner_line_ddd04',
+        string='Trademark',
+    )
+
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
