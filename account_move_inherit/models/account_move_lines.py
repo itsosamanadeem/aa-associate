@@ -25,10 +25,14 @@ class AccountMove(models.Model):
     )
 
     def trademark_name_selection(self):
-        for record in self:
-            if record.move_id.partner_id.x_studio_associated_trademarks:
-                return [(str(trademark.id), trademark.x_studio_trademark_name) for trademark in record.move_id.partner_id.x_studio_associated_trademarks]
-            return []
+        for rec in self:
+            rec.ensure_one()
+            trademarks = rec.move_id.partner_id.x_studio_associated_trademarks
+            # raise UserError(trademarks)
+            raise UserError([
+                (str(trademark.id), trademark.x_studio_trademark_name)
+                for trademark in trademarks
+            ])
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
