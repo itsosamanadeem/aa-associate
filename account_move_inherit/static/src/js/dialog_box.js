@@ -85,7 +85,6 @@ export class ProductVariantDialog extends Component {
     }
     getProductTotalPrice() {
         if (this.arraysEqual(this.props.selected_variant_ids || [], this.state.selectedIds)) {
-            console.log(true);
             return formatCurrency(this.props.product_subtotal, this.props.currency_id);
         } else {
             const total = this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
@@ -95,7 +94,7 @@ export class ProductVariantDialog extends Component {
     }
 
     async confirm() {
-        const total = this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
+        const total = this.getProductTotalPrice();
 
         await this.orm.call(
             "account.move.line",
