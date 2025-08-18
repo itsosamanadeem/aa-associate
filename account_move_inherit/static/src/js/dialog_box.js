@@ -20,7 +20,6 @@ export class ProductVariantDialog extends Component {
     };
 
     setup() {
-        console.log("ProductVariantDialog setup", this.props.variants);
         
         this.state = useState({
             selectedIds: [],

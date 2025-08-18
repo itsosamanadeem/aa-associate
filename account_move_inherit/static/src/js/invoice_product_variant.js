@@ -21,9 +21,6 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.actionService = useService("action");
         this.dialog = useService("dialog");
         this.orm = useService("orm");
-
-        console.log("AccountMoveLineProductField setup", this.props.record.data);
-
         // onWillStart(async() => {
         //     const variants_name = await this.orm.read(
         //         'account.move.line',
@@ -38,9 +35,6 @@ export class AccountMoveLineProductField extends Many2OneField {
     async _onVariantsSelected({ ids, names }) {
         this.state.selected_variant_ids = ids;
         this.state.selected_variant_names = names;
-
-        console.log("Selected Variants:", ids, names);
-
     }
 
     async onEditConfiguration() {
@@ -60,7 +54,7 @@ export class AccountMoveLineProductField extends Many2OneField {
             console.error("No variants found for product");
             return;
         }
-        
+
         this.dialog.add(ProductVariantDialog, {
             variants,
             onConfirm: this._onVariantsSelected.bind(this),
