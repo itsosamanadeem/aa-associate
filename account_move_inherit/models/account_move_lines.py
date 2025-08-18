@@ -20,7 +20,7 @@ class AccountMove(models.Model):
     selected_variant_names = fields.Json(string="Variant Names")
     
     trademark_id = fields.Many2one(
-        comodel_name="x_res_partner_line_ddd04",
+        comodel_name="res.partner.trademark",
         string="Trademark",
     )
 
