@@ -19,6 +19,9 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.actionService = useService("action");
         this.dialog = useService("dialog");
         this.orm = useService("orm");
+
+        console.log("AccountMoveLineProductField setup", this.props.record);
+        
     }
 
     async _onVariantsSelected({ ids, names }) {
