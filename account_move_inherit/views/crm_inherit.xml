@@ -23,7 +23,7 @@
                             </form>
                             <!-- List view for One2many lines -->
                             <tree editable="bottom">
-                                <field name="sequence" widget="handle"/>
+                                <!-- <field name="sequence" widget="handle"/> -->
                                 <field name="trademark_number"/>
                                 <field name="trademark_name"/>
                             </tree>
