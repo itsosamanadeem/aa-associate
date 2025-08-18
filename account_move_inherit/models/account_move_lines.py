@@ -2,16 +2,7 @@
 from odoo import models, api, _ , fields
 from odoo.exceptions import UserError
 import json
-class ResPartner(models.Model):
-    _inherit = "res.partner"
 
-    def name_get(self):
-        result = []
-        for rec in self:
-            name = rec.x_studio_trademark_field or rec.name
-            result.append((rec.id, name))
-        return result
-        
 class AccountMove(models.Model):
     _inherit = 'account.move.line'
 
@@ -28,11 +19,18 @@ class AccountMove(models.Model):
     )
     selected_variant_names = fields.Json(string="Variant Names")
 
-    trademark_name = fields.Many2one(
-        comodel_name="res.partner",  # or the correct model
+    trademark_name = fields.Selection(
+        selection=lambda self: self.trademark_name_selection(),
         string="Trademark",
     )
 
+    def trademark_name_selection(self):
+        trademarks = self.env['res.partner'].search([('partner_id','=',self.invoice_line_ids.partner_id.id)])
+        if trademarks:
+            trademarks.x_studio_associated_trademarks.x_studio_trademark_name
+            return [(trademark.id, trademark.name) for trademark in trademarks.x_studio_associated_trademarks.x_studio_trademark_name]
+        return []
+            
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
