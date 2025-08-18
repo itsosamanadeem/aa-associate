@@ -10,6 +10,9 @@
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='sequence']" position="after">
                 <field name="selected_variant_ids" column_invisible="1"/>
             </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='sequence']" position="after">
+                <field name="selected_variant_names" column_invisible="1"/>
+            </xpath>
         </field>
     </record>
 </odoo>
