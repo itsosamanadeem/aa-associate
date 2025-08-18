@@ -22,7 +22,7 @@ class AccountMove(models.Model):
     trademark_id = fields.Many2one(
         comodel_name="x_res_partner_line_ddd04",
         string="Trademark",
-        domain="[('partner_id', '=', parent.partner_id)]",
+        domain="[('partner_id', '=', move_id.partner_id)]",
     )
 
     # @api.model
