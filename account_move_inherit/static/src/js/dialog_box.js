@@ -81,6 +81,8 @@ export class ProductVariantDialog extends Component {
     }
 
     getProductTotalPrice() {
+        console.log(this.props.selected_variant_ids, this.state.selectedIds);
+        
         if (this.props.selected_variant_ids === this.state.selectedIds) {
             console.log(true);
             
