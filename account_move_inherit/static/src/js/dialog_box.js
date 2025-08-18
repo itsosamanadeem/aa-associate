@@ -89,6 +89,9 @@ export class ProductVariantDialog extends Component {
             [[this.props.line_id], {
                 price: total,
                 selected_variant_ids: this.state.selectedIds,
+                selected_variant_names: this.state.variantList
+                    .filter(v => this.state.selectedIds.includes(v.id))
+                    .map(v => v.name),
             }]
         );
 

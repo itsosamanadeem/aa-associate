@@ -17,13 +17,8 @@ class AccountMove(models.Model):
     selected_variant_ids = fields.Json(
         string='Selected Variants',
     )
-    selected_variant_names = fields.Char(string="Variant Names", compute="_compute_variant_names", store=True)
+    selected_variant_names = fields.json(string="Variant Names")
 
-    @api.depends("selected_variant_ids")
-    def _compute_variant_names(self):
-        for line in self:
-            line.selected_variant_names = ", ".join(line.selected_variant_ids.mapped("name")) if line.selected_variant_ids else ""
-            
     @api.depends('product_id')
     def _compute_product_template_id(self):
         for line in self:
@@ -37,6 +32,8 @@ class AccountMove(models.Model):
         self.ensure_one()  # Only one line at a time
         price = vals.get("price")
         variants = vals.get("selected_variant_ids",[])
+        variants_names = vals.get("selected_variant_names",[])
+
         # raise UserError(_(f"{variants}"))
         if price is None:
             raise UserError(_("No price provided"))
@@ -50,5 +47,6 @@ class AccountMove(models.Model):
         self.price_unit = price
         # if variants:
         self.selected_variant_ids = variants
+        self.selected_variant_names = variants_names
         # raise UserError(_(f"Updated price: {self.price_unit} with variants: {self.selected_variant_ids}"))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
