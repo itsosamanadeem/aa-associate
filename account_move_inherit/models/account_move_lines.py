@@ -17,7 +17,13 @@ class AccountMove(models.Model):
     selected_variant_ids = fields.Json(
         string='Selected Variants',
     )
+    selected_variant_names = fields.Char(string="Variant Names", compute="_compute_variant_names", store=True)
 
+    @api.depends("selected_variant_ids")
+    def _compute_variant_names(self):
+        for line in self:
+            line.selected_variant_names = ", ".join(line.selected_variant_ids.mapped("name")) if line.selected_variant_ids else ""
+            
     @api.depends('product_id')
     def _compute_product_template_id(self):
         for line in self:

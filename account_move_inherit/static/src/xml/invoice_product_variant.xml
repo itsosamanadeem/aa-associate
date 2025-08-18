@@ -9,7 +9,6 @@
             <t t-esc="(props.record.data.product_id and props.record.data.product_id[1]) or ''"/>
         </span>
 
-        <!-- Selected variants (badges) -->
         <t t-if="state.selected_variant_names.length">
             <div class="mt-1">
                 <strong>Variants:</strong>

@@ -14,7 +14,9 @@ export class AccountMoveLineProductField extends Many2OneField {
         super.setup();
         this.state = useState({
             selected_variant_ids: this.props.record.data.selected_variant_ids || [],
-            selected_variant_names: this.props.record.data.selected_variant_names || [],
+            selected_variant_names: this.props.record.data.selected_variant_names
+                ? this.props.record.data.selected_variant_names.split(", ")   // convert CSV to array
+                : [],
         });
         this.actionService = useService("action");
         this.dialog = useService("dialog");
@@ -22,10 +24,10 @@ export class AccountMoveLineProductField extends Many2OneField {
 
         console.log("AccountMoveLineProductField setup", this);
 
-        onWillStart(async () => {
-            this._onVariantsSelected = await this._onVariantsSelected.bind(this);
-        });
-        
+        // onWillStart(async () => {
+        //     this._onVariantsSelected = await this._onVariantsSelected.bind(this);
+        // });
+
     }
 
     async _onVariantsSelected({ ids, names }) {
@@ -33,11 +35,11 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.state.selected_variant_names = names;
 
         console.log("Selected Variants:", ids, names);
-        
+
     }
 
     async onEditConfiguration() {
-        
+
         const product_tmpl_id = this.props.record.data.product_template_id?.[0];
         if (!product_tmpl_id) {
             console.warn("No product template selected for configuration.");
