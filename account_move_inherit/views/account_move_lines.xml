@@ -4,6 +4,9 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='product_id']" position="after">
+                <field name="trademark_name" />
+            </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='sequence']" position="after">
                 <field name="product_template_id" widget="invoice_product_many2one" context="{'partner_id': parent.partner_id, 'company_id': parent.company_id,'default_list_price': price_unit,}" options="{'no_open': True,}" domain="[('sale_ok', '=', True)]"/>
             </xpath>
