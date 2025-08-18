@@ -39,7 +39,8 @@ class AccountMove(models.Model):
         price = vals.get("price")
         variants = vals.get("selected_variant_ids",[])
         variants_names = vals.get("selected_variant_names",[])
-
+        
+        raise UserError(price)
         if price is None:
             raise UserError(_("No price provided"))
 
