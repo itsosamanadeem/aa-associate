@@ -28,8 +28,7 @@ class AccountMove(models.Model):
         for record in self:
             if record.move_id.partner_id.x_studio_associated_trademarks:
                 return [(str(trademark.id), trademark.x_studio_trademark_name) for trademark in record.move_id.partner_id.x_studio_associated_trademarks]
-        trademarks = self.move_id.partner_id.x_studio_associated_trademarks
-            
+            return []
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
