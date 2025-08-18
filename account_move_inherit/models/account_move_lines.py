@@ -14,10 +14,10 @@ class AccountMove(models.Model):
         search='_search_product_template_id',
         domain=[('sale_ok', '=', True)])
 
-    selected_variant_ids = fields.Json(
+    selected_variant_ids = fields.Text(
         string='Selected Variants',
     )
-    selected_variant_names = fields.Json(string="Variant Names")
+    selected_variant_names = fields.Text(string="Variant Names")
 
     trademark_id = fields.Selection(
         selection=lambda self: self.trademark_name_selection(),
@@ -61,7 +61,9 @@ class AccountMove(models.Model):
 
         self.price_unit = price
         # if variants:
-        self.selected_variant_ids = variants
-        self.selected_variant_names = variants_names
+        self.selected_variant_ids = json.dump(variants)
+        self.selected_variant_names = json.dump(variants_names)
+
+        
         # raise UserError(_(f"Updated price: {self.price_unit} with variants: {self.selected_variant_ids} variant names: {self.selected_variant_names}"))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
