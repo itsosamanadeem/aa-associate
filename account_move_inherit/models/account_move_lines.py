@@ -27,6 +27,7 @@ class AccountMove(models.Model):
     def trademark_name_selection(self):
         trademarks = self.move_id.partner_id
         if trademarks:
+            raise UserError([(str(trademark.id), trademark.name) for trademark in trademarks.x_studio_associated_trademarks])
             return [(str(trademark.id), trademark.name) for trademark in trademarks.x_studio_associated_trademarks]
         return []
             
