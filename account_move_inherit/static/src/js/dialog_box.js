@@ -48,6 +48,17 @@ export class ProductVariantDialog extends Component {
                     .filter(v => this.state.selectedIds.includes(v.id))
                     .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
             }
+
+            const selectedNames = this.state.variantList
+                .filter(v => this.state.selectedIds.includes(v.id))
+                .map(v => v.name);
+
+            if (this.props.onConfirm) {
+                this.props.onConfirm({
+                    ids: this.state.selectedIds,
+                    names: selectedNames,
+                });
+            }
         });
     }
 
@@ -81,19 +92,8 @@ export class ProductVariantDialog extends Component {
             }]
         );
 
-        const selectedNames = this.state.variantList
-            .filter(v => this.state.selectedIds.includes(v.id))
-            .map(v => v.name);
-
-        if (this.props.onConfirm) {
-            this.props.onConfirm({
-                ids: this.state.selectedIds,
-                names: selectedNames,   // ✅ send names to parent
-            });
-        }
-
         this.notification.add("Price and selected variants updated successfully!", { type: "success" });
-        
+
         this.close();
     }
 
