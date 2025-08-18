@@ -2,15 +2,14 @@
     <record id="view_crm_lead_form_inherit_trademark" model="ir.ui.view">
         <field name="name">crm.lead.form.inherit.trademark</field>
         <field name="model">crm.lead</field>
-        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
 
             <!-- Insert into the first notebook of CRM lead -->
-            <xpath expr="//form/sheet/notebook" position="inside">
+            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
                 <page string="Trademark Details" name="trademark_details_page">
                     <group name="trademark_group">
                         <field name="associated_trademark_ids">
-                            <!-- Form view for One2many lines -->
                             <form>
                                 <sheet string="Trademark">
                                     <group>
