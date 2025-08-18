@@ -25,7 +25,7 @@ class AccountMove(models.Model):
     )
 
     def trademark_name_selection(self):
-        trademarks = self.env['res.partner'].search([('partner_id', '=', self.invoice_line_ids.partner_id.id)])
+        trademarks = self.env['res.partner'].search([('partner_id', '=', self.move_id.partner_id)])
         if trademarks:
             return [(str(trademark.id), trademark.name) for trademark in trademarks.x_studio_associated_trademarks]
         return []
