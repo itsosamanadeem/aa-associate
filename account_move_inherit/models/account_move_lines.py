@@ -22,19 +22,8 @@ class AccountMove(models.Model):
     trademark_id = fields.Many2one(
         comodel_name="res.partner.trademark",
         string="Trademark",
+        domain="[('partner_id', '=', parent.partner_id)]",
     )
-
-    # @api.model
-    # def trademark_name_selection(self):
-    #     partner = self.env['res.partner'].browse(self.move_id.partner_id)
-    #     # raise UserError(_("Partner: %s" % partner))
-    #     if not partner:
-    #         return []
-    #     return [
-    #         (str(trademark.id), trademark.x_studio_trademark_name)
-    #         for trademark in partner
-    #     ]
-
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
