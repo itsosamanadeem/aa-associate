@@ -14,6 +14,7 @@ the Sale Order product configurator.
     'category': 'Customizations',
     'license': 'LGPL-3',
     'depends': [
+        'base',
         'account',
         'product',
         'sale',
