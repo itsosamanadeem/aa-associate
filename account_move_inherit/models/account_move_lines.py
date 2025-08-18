@@ -3,15 +3,11 @@ from odoo import models, api, _ , fields
 from odoo.exceptions import UserError
 import json
 
-class ResPartner(models.Model):
-    _inherit = "res.partner"
+class PartnerLineDDD04(models.Model):
+    _inherit = "x.res.partner.line.ddd04"
 
-    def name_get(self):
-        result = []
-        for rec in self:
-            name = rec.x_studio_trademark_field or rec.name
-            result.append((rec.id, name))
-        return result
+    # Change the record name field
+    _rec_name = "x_studio_trademark_field"
 
 
     
