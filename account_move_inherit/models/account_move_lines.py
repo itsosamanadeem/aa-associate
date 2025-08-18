@@ -25,12 +25,11 @@ class AccountMove(models.Model):
     )
 
     def trademark_name_selection(self):
-        for rec in self:
-            trademarks = rec.move_id.partner_id.x_studio_associated_trademarks
-            raise UserError(trademarks)
-            if trademarks:
-                return [[(str(trademark.id), trademark.x_studio_trademark_name) for trademark in trademarks]]
-            return []
+        trademarks = self.move_id.partner_id.x_studio_associated_trademarks
+        raise UserError(trademarks)
+        if trademarks:
+            return [[(str(trademark.id), trademark.x_studio_trademark_name) for trademark in trademarks]]
+        return []
             
 
     @api.depends('product_id')
