@@ -93,6 +93,7 @@ export class ProductVariantDialog extends Component {
         }
 
         this.notification.add("Price and selected variants updated successfully!", { type: "success" });
+        await this.props.record.load();
         this.close();
     }
 

@@ -24,9 +24,13 @@ export class AccountMoveLineProductField extends Many2OneField {
     _onVariantsSelected({ ids, names }) {
         this.state.selected_variant_ids = ids;
         this.state.selected_variant_names = names;
+
+        console.log("Selected Variants:", ids, names);
+        
     }
 
     async onEditConfiguration() {
+        await this.formService.save({ reload: false });
         const product_tmpl_id = this.props.record.data.product_template_id?.[0];
         if (!product_tmpl_id) {
             console.warn("No product template selected for configuration.");
