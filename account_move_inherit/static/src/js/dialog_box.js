@@ -81,8 +81,12 @@ export class ProductVariantDialog extends Component {
     }
 
     getProductTotalPrice() {
-        const total = this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
-        return formatCurrency(total, this.props.currency_id);
+        if (this.props.selected_variant_ids === this.state.selectedIds) {
+            return formatCurrency(this.props.product_subtotal, this.props.currency_id);
+        }else{
+            const total = this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
+            return formatCurrency(total, this.props.currency_id);
+        }
     }
 
     async confirm() {

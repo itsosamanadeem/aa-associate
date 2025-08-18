@@ -40,19 +40,15 @@ class AccountMove(models.Model):
         variants = vals.get("selected_variant_ids",[])
         variants_names = vals.get("selected_variant_names",[])
 
-        # raise UserError(_(f"{variants}"))
         if price is None:
             raise UserError(_("No price provided"))
 
-        # Ensure numeric
         try:
             price = float(price)
         except ValueError:
             raise UserError(_("Invalid price value"))
 
         self.price_unit = price
-        # if variants:
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
-        # raise UserError(_(f"Updated price: {self.price_unit} with variants: {self.selected_variant_ids} variant names: {self.selected_variant_names}"))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
