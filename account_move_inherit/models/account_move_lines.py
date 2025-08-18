@@ -26,12 +26,12 @@ class AccountMove(models.Model):
 
     @api.model
     def trademark_name_selection(self):
-        partner = self.env['res.partner'].browse(self._context.get('partner_id'))
+        partner = self.move_id.partner_id.x_studio_associated_trademarks
         if not partner:
             return []
         return [
             (str(trademark.id), trademark.x_studio_trademark_name)
-            for trademark in partner.x_studio_associated_trademarks
+            for trademark in partner
         ]
 
 
