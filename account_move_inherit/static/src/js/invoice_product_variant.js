@@ -60,7 +60,7 @@ export class AccountMoveLineProductField extends Many2OneField {
             console.error("No variants found for product");
             return;
         }
-
+        
         this.dialog.add(ProductVariantDialog, {
             variants,
             onConfirm: this._onVariantsSelected.bind(this),
