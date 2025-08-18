@@ -22,7 +22,7 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.dialog = useService("dialog");
         this.orm = useService("orm");
 
-        console.log("AccountMoveLineProductField setup", this);
+        console.log("AccountMoveLineProductField setup", this.props.record.data);
 
         onWillStart(async() => {
             const variants_name = await this.orm.read(
