@@ -83,18 +83,20 @@ export class ProductVariantDialog extends Component {
         if (arr1.length !== arr2.length) return false;
         return arr1.every(val => arr2.includes(val));
     }
-    getProductTotalPrice() {
+    getRawTotalPrice() {
         if (this.arraysEqual(this.props.selected_variant_ids || [], this.state.selectedIds)) {
-            return formatCurrency(this.props.product_subtotal, this.props.currency_id);
+            return parseFloat(this.props.product_subtotal) || 0;
         } else {
-            const total = this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
-            return formatCurrency(total, this.props.currency_id);
+            return this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
         }
-
+    }
+    getProductTotalPrice() {
+        const total = this.getRawTotalPrice();
+        return formatCurrency(total, this.props.currency_id);
     }
 
     async confirm() {
-        const total = this.getProductTotalPrice();
+        const total = this.getRawTotalPrice();
 
         await this.orm.call(
             "account.move.line",
