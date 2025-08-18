@@ -3,7 +3,7 @@
 <templates xml:space="preserve">
 
     <t t-name="account_move_inherit.InvoiceProductField" >
-        <t t-component="many2OneField.component" t-props="props" />
+        <!-- <t t-component="many2OneField.component" t-props="props" /> -->
         <button type="button" class="btn btn-secondary fa fa-pencil px-2" t-on-click="onEditConfiguration"/>
         <span class="mx-2">
             <t t-esc="(props.record.data.product_id and props.record.data.product_id[1]) or ''"/>
