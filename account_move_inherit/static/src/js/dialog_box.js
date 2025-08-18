@@ -38,6 +38,10 @@ export class ProductVariantDialog extends Component {
             this.imageUrl = `/web/image/product.product/${this.props.variants[0].product_id}/image_256`;
             this.product_name = this.props.variants[0].product_name;
         }
+        
+        if (this.props.variants.length) {
+            this.attribute_name = this.props.variants[0].attribute_name;
+        }
 
         this.orm = useService("orm");
         this.notification = useService("notification");
