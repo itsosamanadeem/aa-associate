@@ -18,32 +18,23 @@ class AccountMove(models.Model):
         string='Selected Variants',
     )
     selected_variant_names = fields.Json(string="Variant Names")
-
-    trademark_id = fields.Selection(
-        selection=lambda self: self.trademark_name_selection(),
+    
+    trademark_id = fields.Many2one(
+        comodel_name="x_res_partner_line_ddd04",
         string="Trademark",
+        domain="[('partner_id', '=', parent.partner_id)]",
     )
 
-    @api.model
-    def trademark_name_selection(self):
-        partners = self.env['res.partner'].browse(self.move_id.partner_id)
-        for partner in partners:
-            if not partner.x_studio_associated_trademarks:
-                continue
-            # raise UserError(_("Partner: %s" % partner))
-            # if not partner:
-            #     return []
-            # raise UserError(_("Partner: %s" % partner))
-            return [
-                (str(trademark.id), trademark.x_studio_trademark_name)
-                for trademark in partner.x_studio_associated_trademarks
-            ]
-        # if not partner:
-        #     return []
-        # return [
-        #     (str(trademark.id), trademark.x_studio_trademark_name)
-        #     for trademark in partner
-        # ]
+    # @api.model
+    # def trademark_name_selection(self):
+    #     partner = self.env['res.partner'].browse(self.move_id.partner_id)
+    #     # raise UserError(_("Partner: %s" % partner))
+    #     if not partner:
+    #         return []
+    #     return [
+    #         (str(trademark.id), trademark.x_studio_trademark_name)
+    #         for trademark in partner
+    #     ]
 
 
     @api.depends('product_id')
