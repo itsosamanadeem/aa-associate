@@ -28,7 +28,7 @@ class AccountMove(models.Model):
         trademarks = self.env['res.partner'].search([('partner_id','=',self.invoice_line_ids.partner_id.id)])
         if trademarks:
             trademarks.x_studio_associated_trademarks.x_studio_trademark_name
-            return [(trademark.id, trademark.name) for trademark in trademarks.x_studio_associated_trademarks.x_studio_trademark_name]
+            return [(int(trademark.id), trademark.name) for trademark in trademarks.x_studio_associated_trademarks.x_studio_trademark_name]
         return []
             
 
