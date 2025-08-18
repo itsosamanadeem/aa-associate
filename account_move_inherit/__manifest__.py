@@ -18,6 +18,8 @@ the Sale Order product configurator.
         'product',
         'sale',
         'test_sale_product_configurators',
+        'crm',
+        'contacts',
     ],
     'data': [
         'security/ir.model.access.csv',

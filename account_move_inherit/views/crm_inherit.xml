@@ -2,7 +2,7 @@
     <record id="view_crm_partner_form_inherit_trademark" model="ir.ui.view">
         <field name="name">crm.partner.form.inherit.trademark</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="crm.view_partner_form"/>
+        <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
 
             <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
