@@ -7,7 +7,7 @@
 
             <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
                 <page string="Trademark Details" name="trademark_details_page">
-                    <!-- <group name="trademark_group">
+                    <group name="trademark_group">
                         <field name="associated_trademark_ids">
                             <form>
                                 <sheet string="Trademark">
@@ -20,13 +20,13 @@
                                     <field name="name"/>
                                 </sheet>
                             </form>
-                            <tree editable="bottom">
+                            <!-- <tree editable="bottom">
                                 <field name="sequence" widget="handle"/>
                                 <field name="trademark_number"/>
                                 <field name="trademark_name"/>
-                            </tree>
+                            </tree> -->
                         </field>
-                    </group> -->
+                    </group>
                 </page>
             </xpath>
 

@@ -19,11 +19,3 @@ class ResPartner(models.Model):
         "res.partner.trademark", "partner_id", string="Associated Trademarks"
     )
 
-class CrmLead(models.Model):
-    _inherit = "crm.lead"
-
-    associated_trademark_ids = fields.One2many(
-        related="partner_id.associated_trademark_ids",
-        string="Associated Trademarks",
-        readonly=False
-    )
