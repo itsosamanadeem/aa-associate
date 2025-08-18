@@ -26,14 +26,24 @@ class AccountMove(models.Model):
 
     @api.model
     def trademark_name_selection(self):
-        partner = self.env['res.partner'].browse(self.move_id.partner_id)
-        raise UserError(_("Partner: %s" % partner))
-        if not partner:
-            return []
-        return [
-            (str(trademark.id), trademark.x_studio_trademark_name)
-            for trademark in partner
-        ]
+        partners = self.env['res.partner'].browse(self.move_id.partner_id)
+        for partner in partners:
+            if not partner.x_studio_associated_trademarks:
+                continue
+            # raise UserError(_("Partner: %s" % partner))
+            # if not partner:
+            #     return []
+            # raise UserError(_("Partner: %s" % partner))
+            return [
+                (str(trademark.id), trademark.x_studio_trademark_name)
+                for trademark in partner.x_studio_associated_trademarks
+            ]
+        # if not partner:
+        #     return []
+        # return [
+        #     (str(trademark.id), trademark.x_studio_trademark_name)
+        #     for trademark in partner
+        # ]
 
 
     @api.depends('product_id')
