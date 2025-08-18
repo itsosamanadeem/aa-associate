@@ -21,7 +21,8 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.orm = useService("orm");
     }
 
-    _onVariantsSelected({ ids, names }) {
+    async _onVariantsSelected({ ids, names }) {
+        await this.props.record.load();
         this.state.selected_variant_ids = ids;
         this.state.selected_variant_names = names;
 
