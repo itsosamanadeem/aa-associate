@@ -48,5 +48,5 @@ class AccountMove(models.Model):
         # if variants:
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
-        raise UserError(_(f"Updated price: {self.price_unit} with variants: {self.selected_variant_ids} variant names: {self.selected_variant_names}"))
+        # raise UserError(_(f"Updated price: {self.price_unit} with variants: {self.selected_variant_ids} variant names: {self.selected_variant_names}"))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
