@@ -26,7 +26,7 @@ class AccountMove(models.Model):
 
     @api.model
     def trademark_name_selection(self):
-        partner = self.move_id.partner_id
+        partner = self.env['res.partner'].browse(self.move_id.partner_id)
         raise UserError(_("Partner: %s" % partner))
         if not partner:
             return []
