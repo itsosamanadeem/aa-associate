@@ -14,25 +14,26 @@ class AccountMove(models.Model):
         search='_search_product_template_id',
         domain=[('sale_ok', '=', True)])
 
-    selected_variant_ids = fields.Text(
+    selected_variant_ids = fields.Json(
         string='Selected Variants',
     )
-    selected_variant_names = fields.Text(string="Variant Names")
+    selected_variant_names = fields.Json(string="Variant Names")
 
     trademark_id = fields.Selection(
         selection=lambda self: self.trademark_name_selection(),
         string="Trademark",
     )
 
+    @api.model
     def trademark_name_selection(self):
-        for rec in self:
-            rec.ensure_one()
-            trademarks = rec.move_id.partner_id.x_studio_associated_trademarks
-            # raise UserError(trademarks)
-            raise UserError([
-                (str(trademark.id), trademark.x_studio_trademark_name)
-                for trademark in trademarks
-            ])
+        partner = self.env['res.partner'].browse(self._context.get('partner_id'))
+        if not partner:
+            return []
+        return [
+            (str(trademark.id), trademark.x_studio_trademark_name)
+            for trademark in partner.x_studio_associated_trademarks
+        ]
+
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
@@ -61,9 +62,7 @@ class AccountMove(models.Model):
 
         self.price_unit = price
         # if variants:
-        self.selected_variant_ids = json.dump(variants)
-        self.selected_variant_names = json.dump(variants_names)
-
-        
+        self.selected_variant_ids = variants
+        self.selected_variant_names = variants_names
         # raise UserError(_(f"Updated price: {self.price_unit} with variants: {self.selected_variant_ids} variant names: {self.selected_variant_names}"))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
