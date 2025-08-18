@@ -2,14 +2,6 @@
 from odoo import models, api, _ , fields
 from odoo.exceptions import UserError
 import json
-
-class PartnerLineDDD04(models.Model):
-    _inherit = "x.res.partner.line.ddd04"
-
-    # Change the record name field
-    _rec_name = "x_studio_trademark_field"
-
-
     
 class AccountMove(models.Model):
     _inherit = 'account.move.line'
