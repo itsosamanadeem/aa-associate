@@ -10,14 +10,18 @@
         <!-- Selected Variants -->
         <t t-if="state.selected_variant_names.length">
             <div class="mt-2">
-                <small>
-                    <em>
-                        <t t-foreach="state.selected_variant_names" t-as="v" t-key="v">
-                            <t t-esc="v"/>
-                            <t t-if="v !== state.selected_variant_names[state.selected_variant_names.length - 1]">, </t>
-                        </t>
-                    </em>
-                </small>
+                <div class="row g-2">
+                    <small>
+                        <em>
+                            <t t-foreach="state.selected_variant_names" t-as="v" t-key="v">
+                                <div class="col-6">
+                                    <t t-esc="v"/>
+                                    <t t-if="v !== state.selected_variant_names[state.selected_variant_names.length - 1]">, </t>
+                                </div>
+                            </t>
+                        </em>
+                    </small>
+                </div>
             </div>
         </t>
     </t>
