@@ -6,6 +6,7 @@ import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
 import { ProductVariantDialog } from "./dialog_box";
 import { Component, useState, onWillStart } from "@odoo/owl";
+import { Dialog } from "@web/core/dialog/dialog";
 
 export class AccountMoveLineProductField extends Many2OneField {
     static template = "account_move_inherit.InvoiceProductField";
@@ -22,7 +23,7 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.dialog = useService("dialog");
         this.orm = useService("orm");
         this.checkState = this.props.record._parentRecord.data.state
-        
+
     }
 
     async _onVariantsSelected({ ids, names }) {
@@ -44,10 +45,12 @@ export class AccountMoveLineProductField extends Many2OneField {
         });
 
         if (!variants || variants.length === 0) {
-            console.error("No variants found for product");
+            this.dialog.add(Dialog, {
+                title: "No Variants Available",
+                body: "No variants are defined for this product. Please check the product configuration.",
+            });
             return;
         }
-
         this.dialog.add(ProductVariantDialog, {
             variants,
             onConfirm: this._onVariantsSelected.bind(this),
