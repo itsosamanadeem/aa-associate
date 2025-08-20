@@ -15,7 +15,7 @@
                         <div class="container-fluid p-0">
                             <div class="row">
                                 <t t-foreach="state.selected_variant_names" t-as="v" t-key="v" t-foreach-index="i">
-                                    <div class="col-3">
+                                    <div class="col-5">
                                         <t t-esc="v"/>
                                         <t t-if="i !== state.selected_variant_names.length - 1">,</t>
                                     </div>
