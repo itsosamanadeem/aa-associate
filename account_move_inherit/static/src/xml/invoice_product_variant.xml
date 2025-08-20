@@ -7,9 +7,9 @@
         <!-- Selected Variants -->
         <t t-if="state.selected_variant_names.length">
             <div class="mt-3">
-                <div class="row g-2">
+                <div class="row">
                     <t t-foreach="state.selected_variant_names" t-as="v" t-key="v">
-                        <div class="col-3">
+                        <div class="col-6">
                             <small>
                                 <em>
                                     <t t-esc="v"/>
