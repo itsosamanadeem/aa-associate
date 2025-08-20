@@ -8,7 +8,7 @@
                 <field name="trademark_id"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='sequence']" position="after">
-                <field name="product_template_id" widget="invoice_product_many2one" domain="[('sale_ok', '=', True)]" readonly="state != 'draft'"/>
+                <field name="product_template_id" widget="invoice_product_many2one" domain="[('sale_ok', '=', True)]" readonly="move_id.state != 'draft'"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='sequence']" position="after">
                 <field name="selected_variant_ids" column_invisible="1"/>
