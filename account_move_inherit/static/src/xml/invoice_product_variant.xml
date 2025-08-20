@@ -12,15 +12,14 @@
             <div class="mt-2">
                 <small>
                     <em>
-                        <!-- Outer loop: every 3 variants = 1 row -->
-                        <t t-foreach="_.chunk(state.selected_variant_names, 3)" t-as="row" t-key="row">
-                            <div>
-                                <!-- Inner loop: variants inside this row -->
-                                <t t-foreach="row" t-as="v" t-key="v" t-foreach-index="j">
-                                    <t t-esc="v"/>
-                                    <t t-if="j !== row.length - 1">, </t>
-                                </t>
-                            </div>
+                        <t t-foreach="state.selected_variant_names" t-as="v" t-key="v" t-foreach-index="i">
+                            <t t-esc="v"/>
+                            <!-- add comma if not last in row -->
+                            <t t-if="(i % 3 !== 2) and (i !== state.selected_variant_names.length - 1)">, </t>
+                            <!-- line break after every 3rd variant -->
+                            <t t-if="i % 3 === 2">
+                                <br/>
+                            </t>
                         </t>
                     </em>
                 </small>
