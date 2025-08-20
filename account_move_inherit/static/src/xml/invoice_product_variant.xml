@@ -9,7 +9,7 @@
             <div class="mt-3">
                 <div class="row g-2">
                     <t t-foreach="state.selected_variant_names" t-as="v" t-key="v">
-                        <div class="col-4">
+                        <div class="col-3">
                             <small>
                                 <em>
                                     <t t-esc="v"/>
