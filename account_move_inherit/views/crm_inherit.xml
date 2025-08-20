@@ -15,6 +15,7 @@
                                         <group>
                                             <field name="trademark_name"/>
                                             <field name="trademark_number"/>
+                                            <field name="trademark_price" />
                                         </group>
                                     </group>
                                     <field name="name"/>

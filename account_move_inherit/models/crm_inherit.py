@@ -10,7 +10,8 @@ class ResPartnerTrademark(models.Model):
     partner_id = fields.Many2one("res.partner", string="Partner", ondelete="cascade")
     trademark_name = fields.Char(string="Trademark Name")
     trademark_number = fields.Char(string="Trademark Number")
-    name = fields.Char(string="Display Name")  # can hold formatted label
+    name = fields.Char(string="Display Name")  
+    trademark_price = fields.Float(string="Trademark Price", default=0.0)
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
