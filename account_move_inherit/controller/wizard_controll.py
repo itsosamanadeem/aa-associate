@@ -1,7 +1,7 @@
 # my_module/controllers/main.py
 from odoo import http
 from odoo.http import request
-
+from odoo.exceptions import UserError, ValidationError, AccessError
 class ProductVariantController(http.Controller):
 
     @http.route('/get_product_variants', type='json', auth='public', methods=['POST'], csrf=False)
@@ -14,7 +14,8 @@ class ProductVariantController(http.Controller):
         
         product_detail=product.attribute_line_ids.mapped('attribute_id').ids
         variants = request.env['product.template.attribute.value'].sudo().search([('attribute_id','in', product_detail)])
-
+        if not variants:
+            raise ValidationError("No variants found for the given product template ID.")
         return [
             {   
                 "product_image": product.image_1920,
