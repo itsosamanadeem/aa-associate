@@ -21,7 +21,7 @@
                                     </div>
                                     <!-- Start new row every 3 items -->
                                     <t t-if="(i + 1) % 3 === 0 and i !== state.selected_variant_names.length - 1">
-                                        </div><div class="row">
+                                        <div class="row"></div>
                                     </t>
                                 </t>
                             </div>
