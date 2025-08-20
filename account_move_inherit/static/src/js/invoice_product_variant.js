@@ -47,7 +47,16 @@ export class AccountMoveLineProductField extends Many2OneField {
         if (!variants || variants.length === 0) {
             this.dialog.add(Dialog, {
                 title: "No Variants Available",
-                body: "No variants are defined for this product. Please check the product configuration.",
+                slots: {
+                    default: () => "No variants are defined for this product. Please check the product configuration.",
+                    footer: () => (
+                        <button type="button"
+                            class="btn btn-primary"
+                            onClick={() => this.dialog.close()}>
+                            OK
+                        </button>
+                    ),
+                },
             });
             return;
         }
