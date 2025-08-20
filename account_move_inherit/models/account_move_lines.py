@@ -10,9 +10,8 @@ class AccountMove(models.Model):
         string="Product Variants",
         comodel_name='product.template',
         compute='_compute_product_template_id',
-        readonly=False,
         search='_search_product_template_id',
-        domain=[('sale_ok', '=', True)])
+        )
 
     selected_variant_ids = fields.Json(
         string='Selected Variants',

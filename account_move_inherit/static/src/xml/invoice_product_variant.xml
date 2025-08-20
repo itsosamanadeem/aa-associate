@@ -2,21 +2,15 @@
 
 <templates xml:space="preserve">
 
-    <t t-name="account_move_inherit.InvoiceProductField">
-        <!-- Edit Button -->
-        <button type="button"
-                class="btn btn-primary btn-sm px-3 py-1 shadow-sm d-flex align-items-center rounded-pill"
-                t-on-click="onEditConfiguration">
-            <i class="fa fa-pencil me-2"></i> Edit Configuration
-        </button>
-
+    <t t-name="account_move_inherit.InvoiceProductField" >
+        <button type="button" class="btn btn-secondary fa fa-pencil px-2" t-on-click="onEditConfiguration"/>
         <!-- Selected Variants -->
         <t t-if="state.selected_variant_names.length">
             <div class="mt-3">
                 <div class="row g-2">
                     <t t-foreach="state.selected_variant_names" t-as="v" t-key="v">
                         <div class="col-6">
-                            <span class="badge rounded-pill w-100 py-2 px-3 shadow-sm d-block text-center"
+                            <span class="badge rounded w-100 py-2 px-3 shadow-sm d-block text-center"
                                   style="background-color: var(--primary); font-size: 0.85rem; color: #fff;">
                                 <t t-esc="v"/>
                             </span>
