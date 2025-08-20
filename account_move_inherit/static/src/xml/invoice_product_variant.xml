@@ -12,10 +12,8 @@
                         <div class="col-6">
                             <small>
                                 <em>
-                                    <t t-foreach="state.selected_variant_names" t-as="v" t-key="v">
-                                        <t t-esc="v"/>
-                                        <t t-if="v !== state.selected_variant_names[state.selected_variant_names.length - 1]">, </t>
-                                    </t>
+                                    <t t-esc="v"/>
+                                    <t t-if="v !== state.selected_variant_names[state.selected_variant_names.length - 1]">, </t>
                                 </em>
                             </small>
                         </div>
