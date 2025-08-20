@@ -6,7 +6,7 @@ import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
 import { ProductVariantDialog } from "./dialog_box";
 import { Component, useState, onWillStart } from "@odoo/owl";
-import { Dialog } from "@web/core/dialog/dialog";
+import { NoVariantDialog } from "./no_variant_dialog_box";
 
 export class AccountMoveLineProductField extends Many2OneField {
     static template = "account_move_inherit.InvoiceProductField";
@@ -45,10 +45,9 @@ export class AccountMoveLineProductField extends Many2OneField {
         });
 
         if (!variants || variants.length === 0) {
-            this.dialog.add(Dialog, {
-                title: "No Variants Available",
-                slots: {
-                    default: () => "No variants are defined for this product. Please check the product configuration.",
+            this.dialog.add(NoVariantDialog, {
+                close: () => {
+                    this.actionService.doAction({ type: 'ir.actions.act_window_close' });
                 },
             });
             return;
