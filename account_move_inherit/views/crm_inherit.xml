@@ -21,11 +21,6 @@
                                     <field name="name"/>
                                 </sheet>
                             </form>
-                            <!-- <tree editable="bottom">
-                                <field name="sequence" widget="handle"/>
-                                <field name="trademark_number"/>
-                                <field name="trademark_name"/>
-                            </tree> -->
                         </field>
                     </group>
                 </page>
