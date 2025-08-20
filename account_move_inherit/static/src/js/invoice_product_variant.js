@@ -21,7 +21,7 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.actionService = useService("action");
         this.dialog = useService("dialog");
         this.orm = useService("orm");
-        console.log(this.props.record._parentRecord.data.state);
+        this.checkState = this.props.record._parentRecord.data.state
         
     }
 
