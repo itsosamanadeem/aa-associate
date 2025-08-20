@@ -12,10 +12,14 @@
             <div class="mt-2">
                 <small>
                     <em>
-                        <t t-foreach="state.selected_variant_names" t-as="v" t-key="v">
-                            <t t-esc="v"/>
-                            <t t-if="v !== state.selected_variant_names[state.selected_variant_names.length - 1]">, </t>
-                        </t>
+                        <div class="d-flex flex-wrap">
+                            <t t-foreach="state.selected_variant_names" t-as="v" t-key="v" t-foreach-index="i">
+                                <div class="me-1 mb-1" style="width: 33%;">
+                                    <t t-esc="v"/>
+                                    <t t-if="(i % 3 !== 2) and (i !== state.selected_variant_names.length - 1)">,</t>
+                                </div>
+                            </t>
+                        </div>
                     </em>
                 </small>
             </div>
