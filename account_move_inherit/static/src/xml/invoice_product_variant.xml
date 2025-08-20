@@ -10,19 +10,14 @@
         <!-- Selected Variants -->
         <t t-if="state.selected_variant_names.length">
             <div class="mt-2">
-                <!-- Loop in steps of 2 -->
-                <t t-foreach="Array.from({length: Math.ceil(state.selected_variant_names.length / 2)}, (_,i) => i)" t-as="rowIndex" t-key="rowIndex">
-                    <div class="row g-2 mb-1">
-                        <!-- First item in the row -->
-                        <div class="col-6">
-                            <small><em><t t-esc="state.selected_variant_names[rowIndex*2]"/></em></small>
-                        </div>
-                        <!-- Second item in the row (if exists) -->
-                        <div class="col-6" t-if="state.selected_variant_names[rowIndex*2+1]">
-                            <small><em><t t-esc="state.selected_variant_names[rowIndex*2+1]"/></em></small>
-                        </div>
-                    </div>
-                </t>
+                <small>
+                    <em>
+                        <t t-foreach="state.selected_variant_names" t-as="v" t-key="v">
+                            <t t-esc="v"/>
+                            <t t-if="v !== state.selected_variant_names[state.selected_variant_names.length - 1]">, </t>
+                        </t>
+                    </em>
+                </small>
             </div>
         </t>
     </t>
