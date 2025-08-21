@@ -23,7 +23,7 @@ class ProductVariantController(http.Controller):
                 'product_name': product.name,
                 'id': v.id,
                 "name": v.name,
-                "price": v.price_extra,
+                "price": v.default_extra_price,
                 "attribute_id": v.attribute_id.id,
                 "attribute_name": v.attribute_id.name,
             }
