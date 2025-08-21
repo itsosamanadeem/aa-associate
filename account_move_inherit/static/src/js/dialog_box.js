@@ -68,16 +68,21 @@ export class ProductVariantDialog extends Component {
     }
 
     selectVariant(variantId) {
+
         const index = this.state.selectedIds.indexOf(variantId);
         if (index === -1) {
             this.state.selectedIds.push(variantId);
         } else {
             this.state.selectedIds.splice(index, 1);
         }
-
-        this.state.totalPrice = this.state.variantList
-            .filter(v => this.state.selectedIds.includes(v.id))
-            .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
+        if (this.arraysEqual(this.props.selected_variant_ids || [], this.state.selectedIds)) {
+            this.state.totalPrice = parseFloat(this.props.product_subtotal) || 0;
+        }
+        else{
+            this.state.totalPrice = this.state.variantList
+                .filter(v => this.state.selectedIds.includes(v.id))
+                .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
+        }
     }
     arraysEqual(arr1, arr2) {
         if (arr1.length !== arr2.length) return false;
