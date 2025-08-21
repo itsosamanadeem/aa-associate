@@ -11,10 +11,10 @@
 
                 <!-- Message -->
                 <p class="fs-5 fw-semibold text-secondary">
-                    No variants are defined for this product.
+                    No service are defined for this product.
                 </p>
                 <p class="text-muted mb-0">
-                    Please check the product configuration or create variants before proceeding.
+                    Please check the product configuration or create service before proceeding.
                 </p>
             </div>
 

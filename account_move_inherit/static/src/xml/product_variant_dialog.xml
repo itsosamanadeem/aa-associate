@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
     <t t-name="account_move_inherit.ProductVariantDialog">
-        <Dialog title="'Select Variant Classes'" size="'lg'">
+        <Dialog title="'Select Service Classes'" size="'lg'">
             <div class="d-flex flex-wrap gap-3 align-items-start">
                 
                 <!-- Image -->
