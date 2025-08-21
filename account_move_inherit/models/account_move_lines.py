@@ -37,7 +37,7 @@ class AccountMove(models.Model):
             if self.product_id.product_tmpl_id in price_list.mapped('product_tmpl_id'):
                 self.price_unit = price_list.filtered(
                     lambda item: item.product_tmpl_id == self.product_id.product_tmpl_id
-                ).price
+                ).fixed_price
     
     # @api.onchange('trademark_id')
     # def _onchange_trademark_id(self):
