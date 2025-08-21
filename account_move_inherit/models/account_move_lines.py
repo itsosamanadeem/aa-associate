@@ -25,13 +25,19 @@ class AccountMove(models.Model):
     )
 
 
-    @api.onchange('move_id.partner_id')
+    @api.onchange('move_id.partner_id','product_id')
     def _onchange_partner_id_and_product_id(self):
         """ Update the trademark_id based on the partner and product selection """
         self.ensure_one()
         if self.move_id.partner_id:
             price_list= self.move_id.partner_id.property_product_pricelist.item_ids
-            raise UserError(_("Price list items: %s") % json.dumps(price_list.mapped('product_tmpl_id.name')))
+            if not price_list:
+                raise UserError(_("No price list items found for the selected partner."))
+            
+            if self.product_id.product_tmpl_id in price_list.mapped('product_tmpl_id'):
+                self.price_unit = price_list.filtered(
+                    lambda item: item.product_tmpl_id == self.product_id.product_tmpl_id
+                ).price
     
     # @api.onchange('trademark_id')
     # def _onchange_trademark_id(self):
