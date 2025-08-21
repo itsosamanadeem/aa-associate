@@ -68,33 +68,46 @@ export class ProductVariantDialog extends Component {
     }
 
     selectVariant(variantId) {
-
         const index = this.state.selectedIds.indexOf(variantId);
         if (index === -1) {
             this.state.selectedIds.push(variantId);
         } else {
             this.state.selectedIds.splice(index, 1);
         }
-        if (this.arraysEqual(this.props.selected_variant_ids || [], this.state.selectedIds)) {
-            this.state.totalPrice = parseFloat(this.props.product_subtotal) || 0;
-        }
-        else{
-            this.state.totalPrice = this.state.variantList
-                .filter(v => this.state.selectedIds.includes(v.id))
-                .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
-        }
+
+        this.state.totalPrice = this.state.variantList
+            .filter(v => this.state.selectedIds.includes(v.id))
+            .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
     }
     arraysEqual(arr1, arr2) {
         if (arr1.length !== arr2.length) return false;
         return arr1.every(val => arr2.includes(val));
     }
     getRawTotalPrice() {
-        if (this.arraysEqual(this.props.selected_variant_ids || [], this.state.selectedIds)) {
-            return parseFloat(this.props.product_subtotal) || 0;
-        } else {
-            return this.state.totalPrice + (parseFloat(this.props.product_subtotal) || 0);
-        }
+        const originalIds = this.props.selected_variant_ids || [];
+        const currentIds = this.state.selectedIds;
+
+        // Variants that were added beyond the original
+        const newlyAdded = this.state.variantList.filter(
+            v => currentIds.includes(v.id) && !originalIds.includes(v.id)
+        );
+
+        // Variants that were removed compared to original
+        const removed = this.state.variantList.filter(
+            v => originalIds.includes(v.id) && !currentIds.includes(v.id)
+        );
+
+        let total = parseFloat(this.props.product_subtotal) || 0;
+
+        // Add prices for new variants
+        total += newlyAdded.reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
+
+        // Subtract prices for removed variants
+        total -= removed.reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
+
+        return total;
     }
+
     getProductTotalPrice() {
         const total = this.getRawTotalPrice();
         return formatCurrency(total, this.props.currency_id);
