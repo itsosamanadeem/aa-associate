@@ -24,13 +24,13 @@ class AccountMove(models.Model):
         domain="[('partner_id', '=', parent.partner_id)]",
     )
 
-    @api.onchange('trademark_id')
-    def _onchange_trademark_id(self):
-        self.ensure_one()
-        if not self.trademark_id:
-            self.price_unit = 0.0
-        if self.trademark_id:
-            self.price_unit = self.trademark_id.trademark_price
+    # @api.onchange('trademark_id')
+    # def _onchange_trademark_id(self):
+    #     self.ensure_one()
+    #     if not self.trademark_id:
+    #         self.price_unit = 0.0
+    #     if self.trademark_id:
+    #         self.price_unit = self.trademark_id.trademark_price
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
