@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_inherit" inherit_id="account.report_invoice_document" primary="True">
+        <xpath expr="//th[@name='th_quantity']" position="replace">
+            <th name="th_trademark" class="text-start"> <span>Trademark Name</span></th>
+            <th name="th_class" class="text-start"> <span>Service Class</span></th>
+        </xpath>
+        <xpath expr="//td[@name='td_quantity']" position="replace">
+            <td name="td_trademark" class="text-end text-nowrap">
+                <span t-field="line.trademark_id">3.00</span>
+                <!--<span t-field="line.product_uom_id" groups="uom.group_uom">units</span>-->
+            </td>
+            <td name="td_class" class="text-end text-nowrap">
+                <t t-foreach="line.selected_variant_names" t-as="variant">
+                    <span><t t-esc="variant"/><br/></span>
+                </t>
+                <!--<span t-field="line.product_uom_id" groups="uom.group_uom">units</span>-->
+            </td>
+        </xpath>
+    </template>
+</odoo>
