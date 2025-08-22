@@ -8,7 +8,7 @@
                         <th name="th_description" class="text-start"><span>Service Name</span></th>
                         <th name="th_trademark" class="text-start"> <span>Trademark Name</span></th>
                         <th name="th_class" class="text-start"> <span>Service Class</span></th>  
-                        <th name="th_priceunit" t-attf-class="text-end text-nowrap {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>Service Price</span></th>
+                        <!-- <th name="th_priceunit" t-attf-class="text-end text-nowrap {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>Service Price</span></th> -->
                         <th name="th_discount" t-if="display_discount" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                             <span>Disc.%</span>
                         </th>
@@ -40,9 +40,9 @@
                                         <span><t t-esc="variant"/><br/></span>
                                     </t>
                                 </td>
-                                <td name="td_price_unit" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                <!-- <td name="td_price_unit" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                     <span class="text-nowrap" t-field="line.price_unit">9.00</span>
-                                </td>
+                                </td> -->
                                 <td name="td_discount" t-if="display_discount" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                     <span class="text-nowrap" t-field="line.discount">0</span>
                                 </td>
