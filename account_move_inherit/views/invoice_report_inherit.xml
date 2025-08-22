@@ -30,7 +30,12 @@
                         <tr t-att-class="'fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
                             <t t-if="line.display_type == 'product'" name="account_invoice_line_accountable">
                                 <td name="account_invoice_line_name">
-                                    <span t-if="line.name" t-field="line.name" t-options="{'widget': 'text'}">Bacon Burger</span>
+                                    <span t-if="line.name" t-field="line.name" t-options="{'widget': 'text'}">Bacon Burger</span><br/>
+                                    <small class="mt-2">
+                                        <em>
+                                            <t t-esc="line.product_id.product_tmpl_id.description_purchase"/>
+                                        </em>
+                                    </small>
                                 </td>
                                 <td name="td_trademark" class="text-end text-nowrap">
                                     <span t-field="line.trademark_id"></span>
