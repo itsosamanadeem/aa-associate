@@ -33,14 +33,12 @@
                                     <span t-if="line.name" t-field="line.name" t-options="{'widget': 'text'}">Bacon Burger</span>
                                 </td>
                                 <td name="td_trademark" class="text-end text-nowrap">
-                                    <span t-field="line.trademark_id">3.00</span>
-                                    <!--<span t-field="line.product_uom_id" groups="uom.group_uom">units</span>-->
+                                    <span t-field="line.trademark_id"></span>
                                 </td>
                                 <td name="td_class" class="text-end text-nowrap">
                                     <t t-foreach="line.selected_variant_names" t-as="variant">
                                         <span><t t-esc="variant"/><br/></span>
                                     </t>
-                                    <!--<span t-field="line.product_uom_id" groups="uom.group_uom">units</span>-->
                                 </td>
                                 <td name="td_price_unit" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                     <span class="text-nowrap" t-field="line.price_unit">9.00</span>
