@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_invoice_inherit" inherit_id="account.report_invoice_document">
-        <xpath expr="//table[@class='o_has_total_table']" position="replace">
+        <xpath expr="//table[@class='o_has_total_table table o_main_table table-borderless']" position="replace">
             <table class="o_has_total_table table o_main_table table-borderless" name="invoice_line_table">
                 <thead>
                     <tr>
