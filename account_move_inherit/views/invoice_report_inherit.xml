@@ -31,11 +31,6 @@
                             <t t-if="line.display_type == 'product'" name="account_invoice_line_accountable">
                                 <td name="account_invoice_line_name">
                                     <span t-if="line.name" t-field="line.name" t-options="{'widget': 'text'}">Bacon Burger</span><br/>
-                                    <!-- <small class="mt-2">
-                                        <em>
-                                            <t t-esc="line.product_id.product_tmpl_id.description_purchase"/>
-                                        </em>
-                                    </small> -->
                                 </td>
                                 <td name="td_trademark" class="text-end text-nowrap">
                                     <span t-field="line.trademark_id"></span>
@@ -85,23 +80,22 @@
                 </tbody>
             </table>
         </xpath>
-        <xpath expr="//div[@id='payment_term']//div[@class='mb-3'][p[@name='payment_communication']]" position="after">
-            <div class="mt-3" style="border: 1px solid #dee2e6; border-radius: 6px; padding: 10px;">
+        <xpath expr="//div[@id='payment_term']" position="after">
+            <div class="mt-5 clearfix overflow-auto" style="border: 1px solid #dee2e6; border-radius: 6px; padding: 10px; width: 100% !important;">
                 <strong style="color:#4e4e4e; font-size:14px;">Product Descriptions</strong>
                 <div class="mt-2" style="padding-left:8px;">
                     <t t-set="descriptions" t-value="set(o.invoice_line_ids.mapped('product_id'))"/>
                     <t t-foreach="descriptions" t-as="description">
                         <div style="margin-bottom:6px; padding:6px 10px; border-bottom:1px solid #e9ecef;">
-                            <span style="font-weight:600; color:#212529;" t-out="description.name"/>
-                            <br/>
+                            <span style="font-weight:10; color:#212529;" t-out="description.name"/> :
                             <small style="color:#6c757d;">
                                 <em t-out="description.product_tmpl_id.description_purchase"/>
                             </small>
+                            <br/>
                         </div>
                     </t>
                 </div>
             </div>
-
         </xpath>
     </template>
 </odoo>
