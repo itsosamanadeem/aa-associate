@@ -71,7 +71,7 @@ export class ProductVariantDialog extends Component {
     updateApplicationNumber(variantId, value) {
         const variant = this.state.variantList.find(v => v.id === variantId);
         if (variant) {
-            variant.applicationNumber = parseInt(value || 0);
+            variant.applicationNumber = value || 0;
         }
     }
 
