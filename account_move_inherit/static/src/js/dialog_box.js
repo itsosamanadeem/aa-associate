@@ -29,6 +29,7 @@ export class ProductVariantDialog extends Component {
                 price: v.price,
                 imageUrl: `/web/image/product.product/${v.product_id}/image_256`,
                 product_id: v.product_id,
+                applicationNumber: 0,
             })),
             totalPrice: 0,
         });
@@ -126,6 +127,9 @@ export class ProductVariantDialog extends Component {
                 selected_variant_names: this.state.variantList
                     .filter(v => this.state.selectedIds.includes(v.id))
                     .map(v => v.name),
+                application_numbers: this.state.variantList
+                    .filter(v => this.state.selectedIds.includes(v.id))
+                    .map(v => ({ id: v.id, applicationNumber: v.applicationNumber })),  // <--- NEW
             }]
         );
 

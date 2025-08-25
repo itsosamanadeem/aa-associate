@@ -42,7 +42,12 @@
                                 <div class="text-muted small border border-dark rounded-pill px-2">
                                     Price: <t t-esc="variant.price"/>
                                 </div>
-                                <input type="number" class="form-control ms-2" style="width:100px !important;"/>
+                                <input type="number" 
+                                    class="form-control ms-2" 
+                                    style="width:100px !important;"
+                                    t-att-value="variant.applicationNumber"
+                                    t-on-change="(ev) => updateApplicationNumber(variant.id, ev.target.value)"/>
+
                             </div>
                         </t>
                     </div>
