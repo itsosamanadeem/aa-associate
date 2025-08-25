@@ -21,10 +21,12 @@ export class ProductVariantDialog extends Component {
     };
 
     setup() {
-        const appNumbers = Array.isArray(this.props.application_number)
-            ? this.props.application_number
-            : Object.values(this.props.application_number || {});
-
+        let appNumbers = [];
+        if (Array.isArray(this.props.application_number)) {
+            appNumbers = this.props.application_number;
+        } else if (this.props.application_number && typeof this.props.application_number === "object") {
+            appNumbers = Object.values(this.props.application_number);
+        }
         this.state = useState({
             selectedIds: [],
             variantList: this.props.variants.map(v => {
