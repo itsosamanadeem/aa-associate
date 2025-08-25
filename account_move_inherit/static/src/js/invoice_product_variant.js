@@ -64,6 +64,7 @@ export class AccountMoveLineProductField extends Many2OneField {
             line_id: this.props.record.evalContext.id,
             product_id: this.props.record.data.product_id?.[0],
             selected_variant_ids: this.state.selected_variant_ids,
+            application_number: this.props.record.data.application_id || {}
         });
     }
 }

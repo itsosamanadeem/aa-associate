@@ -17,6 +17,7 @@ export class ProductVariantDialog extends Component {
         onConfirm: { type: Function },
         product_id: { type: Number, optional: true },
         selected_variant_ids: { type: Array, optional: true },
+        application_number: { type: Object, optional: true },
     };
 
     setup() {
@@ -29,7 +30,7 @@ export class ProductVariantDialog extends Component {
                 price: v.price,
                 imageUrl: `/web/image/product.product/${v.product_id}/image_256`,
                 product_id: v.product_id,
-                applicationNumber: 0,
+                applicationNumber: (this.props.application_number && this.props.application_number[v.id]) ? this.props.application_number[v.id] : 0,
             })),
             totalPrice: 0,
         });
