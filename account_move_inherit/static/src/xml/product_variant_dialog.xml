@@ -28,7 +28,7 @@
                 </div>
 
                 <!-- Variants -->
-                <div style="flex: 2 1 300px;">
+                <div style="flex: 2 1 400px;">
                     <div class="o_variant_list d-flex flex-wrap gap-2">
                         <t t-foreach="state.variantList" t-as="variant" t-key="variant.id">
                             <div class="o_variant_item d-flex align-items-center bg-light rounded p-1">
@@ -42,8 +42,7 @@
                                 <div class="text-muted small border border-dark rounded-pill px-2">
                                     Price: <t t-esc="variant.price"/>
                                 </div>
-                                <input type="number" class="form-control ms-2"
-                                    style="width: 70px;"/>
+                                <input type="number" class="form-control ms-2"/>
                             </div>
                         </t>
                     </div>
