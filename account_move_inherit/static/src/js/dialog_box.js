@@ -78,6 +78,7 @@ export class ProductVariantDialog extends Component {
         this.state.totalPrice = this.state.variantList
             .filter(v => this.state.selectedIds.includes(v.id))
             .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
+
     }
     arraysEqual(arr1, arr2) {
         if (arr1.length !== arr2.length) return false;
