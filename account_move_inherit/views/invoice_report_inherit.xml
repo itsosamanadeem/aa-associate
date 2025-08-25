@@ -82,7 +82,7 @@
         </xpath>
         <xpath expr="//div[@id='payment_term']" position="after">
             <div class="mt-5 clearfix overflow-auto" style="border: 1px solid #dee2e6; border-radius: 6px; padding: 10px; width: 100% !important;">
-                <strong style="color:#4e4e4e; font-size:14px;">Product Descriptions</strong>
+                <strong style="color:#4e4e4e; font-size:14px;">Service Descriptions</strong>
                 <div class="mt-2" style="padding-left:8px;">
                     <t t-set="descriptions" t-value="set(o.invoice_line_ids.mapped('product_id'))"/>
                     <t t-foreach="descriptions" t-as="description">
