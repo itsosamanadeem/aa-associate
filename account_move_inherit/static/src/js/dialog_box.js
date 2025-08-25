@@ -136,7 +136,7 @@ export class ProductVariantDialog extends Component {
                     .map(v => v.name),
                 application_numbers: this.state.variantList
                     .filter(v => this.state.selectedIds.includes(v.id))
-                    .map(v => ({ id: v.id, applicationNumber: v.applicationNumber })),  // <--- NEW
+                    .map(v => ({ id: v.id, applicationNumber: v.applicationNumber })),
             }]
         );
 
