@@ -43,7 +43,7 @@
                                     Price: <t t-esc="variant.price"/>
                                 </div>
                                 <t t-esc="variant.id"/>
-                                <t t-esc="variant.applicationNumber"/>
+                                <t t-esc="variant.applicationNumber[variant.id].applicationNumber"/>
                                 <!-- <input type="number" 
                                     class="form-control ms-2" 
                                     style="width:100px !important;"
