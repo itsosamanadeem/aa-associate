@@ -13,7 +13,7 @@ class AccountMove(models.Model):
         search='_search_product_template_id',
         )
 
-    application_number = fields.Json(string="Application Number")
+    application_id = fields.Json(string="Application Number")
     
     selected_variant_ids = fields.Json(
         string='Selected Variants',
@@ -76,6 +76,6 @@ class AccountMove(models.Model):
         self.price_unit = price
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
-        self.application_number = application_number  
+        self.application_id = application_number  
 
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
