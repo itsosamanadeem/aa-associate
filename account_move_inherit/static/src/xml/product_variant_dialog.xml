@@ -42,6 +42,7 @@
                                 <div class="text-muted small border border-dark rounded-pill px-2">
                                     Price: <t t-esc="variant.price"/>
                                 </div>
+                                <t t-esc="variant.applicationNumber"/>
                                 <input type="number" 
                                     class="form-control ms-2" 
                                     style="width:100px !important;"
