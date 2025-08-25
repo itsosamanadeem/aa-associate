@@ -42,7 +42,7 @@
                                 <div class="text-muted small border border-dark rounded-pill px-2">
                                     Price: <t t-esc="variant.price"/>
                                 </div>
-                                <input type="number" class="form-control ms-2" style="width:80px !important;"/>
+                                <input type="number" class="form-control ms-2" style="width:100px !important;"/>
                             </div>
                         </t>
                     </div>
