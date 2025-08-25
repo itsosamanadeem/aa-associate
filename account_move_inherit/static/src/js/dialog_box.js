@@ -17,30 +17,29 @@ export class ProductVariantDialog extends Component {
         onConfirm: { type: Function },
         product_id: { type: Number, optional: true },
         selected_variant_ids: { type: Array, optional: true },
-        application_number: { type: Object, optional: true },
+        application_number: { type: Array, optional: true },   // fix: it's an array
     };
 
     setup() {
-
         this.state = useState({
             selectedIds: [],
-            variantList: this.props.variants.map(v => ({
-                id: v.id,
-                name: v.name,
-                price: v.price,
-                imageUrl: `/web/image/product.product/${v.product_id}/image_256`,
-                product_id: v.product_id,
-                applicationNumber: this.props.application_number[v.id].applicationNumber ,
-            })),
+            variantList: this.props.variants.map(v => {
+                const appObj = (this.props.application_number || []).find(a => a.id === v.id);
+                return {
+                    id: v.id,
+                    name: v.name,
+                    price: v.price,
+                    imageUrl: `/web/image/product.product/${v.product_id}/image_256`,
+                    product_id: v.product_id,
+                    applicationNumber: appObj ? appObj.applicationNumber : 0,
+                };
+            }),
             totalPrice: 0,
         });
 
         if (this.props.variants.length) {
             this.imageUrl = `/web/image/product.product/${this.props.variants[0].product_id}/image_256`;
             this.product_name = this.props.variants[0].product_name;
-        }
-
-        if (this.props.variants.length) {
             this.attribute_name = this.props.variants[0].attribute_name;
         }
 
@@ -69,12 +68,12 @@ export class ProductVariantDialog extends Component {
             }
         });
     }
+
     updateApplicationNumber(variantId, value) {
         const variant = this.state.variantList.find(v => v.id === variantId);
         if (variant) {
-            
             variant.applicationNumber = value || 0;
-            console.log("Updating application number for variant",variant.applicationNumber);
+            console.log("Updating application number for variant", variant.id, variant.applicationNumber);
         }
     }
 
@@ -89,32 +88,23 @@ export class ProductVariantDialog extends Component {
         this.state.totalPrice = this.state.variantList
             .filter(v => this.state.selectedIds.includes(v.id))
             .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
+    }
 
-    }
-    arraysEqual(arr1, arr2) {
-        if (arr1.length !== arr2.length) return false;
-        return arr1.every(val => arr2.includes(val));
-    }
     getRawTotalPrice() {
         const originalIds = this.props.selected_variant_ids || [];
         const currentIds = this.state.selectedIds;
 
-        // Variants that were added beyond the original
         const newlyAdded = this.state.variantList.filter(
             v => currentIds.includes(v.id) && !originalIds.includes(v.id)
         );
 
-        // Variants that were removed compared to original
         const removed = this.state.variantList.filter(
             v => originalIds.includes(v.id) && !currentIds.includes(v.id)
         );
 
         let total = parseFloat(this.props.product_subtotal) || 0;
 
-        // Add prices for new variants
         total += newlyAdded.reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
-
-        // Subtract prices for removed variants
         total -= removed.reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
 
         return total;
@@ -137,7 +127,7 @@ export class ProductVariantDialog extends Component {
                 selected_variant_names: this.state.variantList
                     .filter(v => this.state.selectedIds.includes(v.id))
                     .map(v => v.name),
-                application_numbers: this.state.variantList
+                application_number: this.state.variantList
                     .filter(v => this.state.selectedIds.includes(v.id))
                     .map(v => ({ id: v.id, applicationNumber: v.applicationNumber })),
             }]
