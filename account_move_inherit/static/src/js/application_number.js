@@ -7,7 +7,7 @@ export class ApplicationNumberField extends Component {
     static template = "account_move_inherit.ApplicationNumberField";
 
     setup() {
-        console.log("ApplicationNumberField setup called");
+        console.log("ApplicationNumberField setup called", this.props);
     }
 }
 export const application_number_field = {
