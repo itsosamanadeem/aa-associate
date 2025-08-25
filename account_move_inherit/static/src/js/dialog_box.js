@@ -46,6 +46,7 @@ export class ProductVariantDialog extends Component {
         this.orm = useService("orm");
         this.notification = useService("notification");
         this.selectVariant = this.selectVariant.bind(this);
+        this.updateApplicationNumber = this.updateApplicationNumber.bind(this);
 
         onWillStart(() => {
             if (this.props.selected_variant_ids?.length) {
@@ -66,6 +67,12 @@ export class ProductVariantDialog extends Component {
                 });
             }
         });
+    }
+    updateApplicationNumber(variantId, value) {
+        const variant = this.state.variantList.find(v => v.id === variantId);
+        if (variant) {
+            variant.applicationNumber = parseInt(value || 0);
+        }
     }
 
     selectVariant(variantId) {
