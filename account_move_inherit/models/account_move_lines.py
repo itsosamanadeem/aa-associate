@@ -13,6 +13,8 @@ class AccountMove(models.Model):
         search='_search_product_template_id',
         )
 
+    application_number = fields.Integer(string="Application Number")
+    
     selected_variant_ids = fields.Json(
         string='Selected Variants',
     )
