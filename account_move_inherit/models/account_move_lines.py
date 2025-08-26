@@ -13,7 +13,7 @@ class AccountMove(models.Model):
         search='_search_product_template_id',
         )
 
-    application_id = fields.Json(string="Application Number")
+    # application_id = fields.Json(string="Application Number")
     
     selected_variant_ids = fields.Json(
         string='Selected Variants',
@@ -63,7 +63,7 @@ class AccountMove(models.Model):
         price = vals.get("price")
         variants = vals.get("selected_variant_ids",[])
         variants_names = vals.get("selected_variant_names",[])
-        application_number = vals.get("application_numbers", {})
+        # application_number = vals.get("application_numbers", {})
 
         if price is None:
             raise UserError(_("No price provided"))
@@ -76,6 +76,6 @@ class AccountMove(models.Model):
         self.price_unit = price
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
-        self.application_id = application_number  
+        # self.application_id = application_number  
         # raise UserError(_("Application Number: %s") % self.application_id)
         return {"status": "success", "new_price_subtotal": self.price_subtotal}

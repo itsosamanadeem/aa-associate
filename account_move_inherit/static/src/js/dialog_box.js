@@ -17,27 +17,24 @@ export class ProductVariantDialog extends Component {
         onConfirm: { type: Function },
         product_id: { type: Number, optional: true },
         selected_variant_ids: { type: Array, optional: true },
-        application_number: { type: Array, optional: true },   // fix: it's an array
+        application_number: { type: Object, optional: true },
     };
 
     setup() {
-        let appNumbers = [];
-        if (Array.isArray(this.props.application_number)) {
-            appNumbers = this.props.application_number;
-        } else if (this.props.application_number && typeof this.props.application_number === "object") {
-            appNumbers = Object.values(this.props.application_number);
-        }
+
+        
+
         this.state = useState({
             selectedIds: [],
             variantList: this.props.variants.map(v => {
-                const appObj = appNumbers.find(a => a.id === v.id);
+                // const appObj = (this.props.application_number || []).find(a => a.id === v.id);
                 return {
                     id: v.id,
                     name: v.name,
                     price: v.price,
                     imageUrl: `/web/image/product.product/${v.product_id}/image_256`,
                     product_id: v.product_id,
-                    applicationNumber: appObj ? appObj.applicationNumber : 0,
+                    // applicationNumber: appObj ? appObj.applicationNumber : 0,
                 };
             }),
             totalPrice: 0,
@@ -133,9 +130,9 @@ export class ProductVariantDialog extends Component {
                 selected_variant_names: this.state.variantList
                     .filter(v => this.state.selectedIds.includes(v.id))
                     .map(v => v.name),
-                application_number: this.state.variantList
-                    .filter(v => this.state.selectedIds.includes(v.id))
-                    .map(v => ({ id: v.id, applicationNumber: v.applicationNumber })),
+                // application_number: this.state.variantList
+                //     .filter(v => this.state.selectedIds.includes(v.id))
+                //     .map(v => ({ id: v.id, applicationNumber: v.applicationNumber })),
             }]
         );
 

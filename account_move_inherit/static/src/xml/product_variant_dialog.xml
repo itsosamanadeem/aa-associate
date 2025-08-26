@@ -41,12 +41,12 @@
                                 </div>
 
                                 <!-- Application Number input (only visible when selected) -->
-                                <t t-if="state.selectedIds.includes(variant.id)">
+                                <!-- <t t-if="state.selectedIds.includes(variant.id)">
                                     <input type="number" 
                                         class="form-control ms-2" 
                                         style="width:100px !important;"
                                         t-att-value="variant.applicationNumber"
-                                        t-on-change="(ev) => updateApplicationNumber(variant.id, ev.target.value)"/>
+                                        t-on-change="(ev) => updateApplicationNumber(variant.id, ev.target.value)"/> -->
                                 </t>
                             </div>
                         </t>
