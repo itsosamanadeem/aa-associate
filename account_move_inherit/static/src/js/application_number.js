@@ -16,7 +16,7 @@ export class ApplicationNumberField extends Component {
             variant_names: this.props.record.data.selected_variant_names || [],
             values: {},
         });
-        console.log("Initial values:", this.props.name, this.props.update());
+        console.log("Initial values:", this.props.name, this.props.update);
 
     }
 
