@@ -14,7 +14,10 @@ class AccountMove(models.Model):
         )
 
     application_id = fields.Text(string="Application Number", store=True)
-    
+    application_variant_data = fields.Json(
+        string="Application Variants",
+        help="Stores mapping of variant → input value"
+    )
     selected_variant_ids = fields.Json(
         string='Selected Variants',
     )

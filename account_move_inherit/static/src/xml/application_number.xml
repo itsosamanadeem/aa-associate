@@ -3,12 +3,19 @@
 
     <t t-name="account_move_inherit.ApplicationNumberField">
         <t t-foreach="state.variant_names" t-as="variant_name" t-key="variant_name">
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <!-- Dropdown with all variants -->
                 <div>
-                    <select class="form-select">
-                        <option t-esc="variant_name"/>
+                    <select class="form-select"
+                            t-on-change="(ev) => this.onVariantChange(variant_name, ev.target.value)">
+                        <t t-foreach="state.variant_names" t-as="opt" t-key="opt">
+                            <option t-att-selected="state.selected[variant_name] === opt ? 'selected' : false"
+                                    t-esc="opt"/>
+                        </t>
                     </select>
                 </div>
+
+                <!-- Number input -->
                 <div>
                     <input type="number"
                            class="form-control"
