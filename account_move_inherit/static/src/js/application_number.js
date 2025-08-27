@@ -14,15 +14,13 @@ export class ApplicationNumberField extends Component {
 
         this.state = useState({
             variant_names: this.props.record.data.selected_variant_names || [],
-            values: {},
+            values: this.props.record.data[this.props.name] || {},
         });
         console.log("Initial values:", this.props.value);
 
     }
 
     getValue(){
-        console.log("Getting value for", this.props.record.data[this.props.name] || []);
-        
         return this.props.record.data[this.props.name];
     }
     onValueChange(variant_name, newValue) {
