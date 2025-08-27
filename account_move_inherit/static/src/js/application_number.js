@@ -1,7 +1,7 @@
 /** odoo-module **/
 
 import { registry } from "@web/core/registry";
-import { Component, useState } from "@odoo/owl";
+import { Component, useState, onWillUpdateProps, onWillStart } from "@odoo/owl";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 
 export class ApplicationNumberField extends Component {
@@ -23,12 +23,15 @@ export class ApplicationNumberField extends Component {
             variant_names: this.props.record.data.selected_variant_names || [],
             values: initialValue || {}
         });
+
+        onWillStart(console.log("onWillStart - Initial values:", this.props))
+        onWillUpdateProps((prop)=>{this.onValueChange(prop.name, this.getValue())})
         console.log("Initial values:", this.props.value);
 
     }
 
     getValue() {
-        return this.props.record.data[this.props.name];
+        return JSON.stringify(this.props.record.data[this.props.name]);
     }
     onValueChange(variant_name, newValue) {
         this.state.values[variant_name] = parseInt(newValue) || 0;
