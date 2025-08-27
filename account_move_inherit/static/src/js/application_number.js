@@ -15,14 +15,14 @@ export class ApplicationNumberField extends Component {
             variant_names: this.props.record.data.selected_variant_names || [],
             values: this.props.value || {},   // load from field value
         });
+
+        console.log("Initial values:", this.props.value);
+        
     }
 
     onValueChange(variant_name, newValue) {
-        // Update local state
         this.state.values[variant_name] = parseInt(newValue) || 0;
-
-        // Persist to ORM using update()
-        this.props.update(this.state.values);
+        this.props.record.update(this.state.values);
     }
 }
 
