@@ -9,6 +9,7 @@ export class ApplicationNumberField extends Component {
     setup() {
         console.log("ApplicationNumberField setup called", this.props);
         this.variant_names= this.props.record.data.selected_variant_names || [];
+        this.variant_count = this.variant_names.length;
     }
 }
 export const application_number_field = {

@@ -3,18 +3,20 @@
 <templates xml:space="preserve">
 
     <t t-name="account_move_inherit.ApplicationNumberField" >
-        <div>
-            <div>
-                <select>
-                    <t t-foreach="this.variant_names" t-as="variant_name" t-key="variant_name">
-                        <option t-esc="variant_name"/>
-                    </t>
-                </select>
+        <t t-foreach="this.variant_count" t-key="this.variant_count">
+            <div class="d-flex align-items-center gap-2">
+                    <div>
+                        <select>
+                            <t t-foreach="this.variant_names" t-as="variant_name" t-key="variant_name">
+                                <option t-esc="variant_name"/>
+                            </t>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="number" class="form-control" style="width:100px !important;"/>
+                    </div>
             </div>
-            <div>
-                <input type="number" class="form-control" style="width:100px !important;"/>
-            </div>
-        </div>
+        </t>
     </t>
 
 </templates>
