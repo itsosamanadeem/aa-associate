@@ -2,20 +2,21 @@
 
 import { registry } from "@web/core/registry";
 import { Component, useState } from "@odoo/owl";
+import { standardFieldProps } from "@web/views/fields/standard_field_props";
 
 export class ApplicationNumberField extends Component {
     static template = "account_move_inherit.ApplicationNumberField";
     static props = {
-        data: Object,
+        ...standardFieldProps,
     };
     setup() {
-        console.log("ApplicationNumberField setup called", this.props);
+        // console.log("ApplicationNumberField setup called", this.props);
 
         this.state = useState({
             variant_names: this.props.record.data.selected_variant_names || [],
             values: {},
         });
-        console.log("Initial values:", this.props.data);
+        console.log("Initial values:", this.props);
 
     }
 
