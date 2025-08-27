@@ -11,22 +11,29 @@ export class ApplicationNumberField extends Component {
     };
     setup() {
         // console.log("ApplicationNumberField setup called", this.props);
-
+        let initialValue = this.props.record.data[this.props.name];
+        if (typeof initialValue === "string") {
+            try {
+                initialValue = JSON.parse(initialValue);
+            } catch (e) {
+                initialValue = {};
+            }
+        }
         this.state = useState({
             variant_names: this.props.record.data.selected_variant_names || [],
-            values: this.props.record.data[this.props.name] || {},
+            values: initialValue || {}
         });
         console.log("Initial values:", this.props.value);
 
     }
 
-    getValue(){
+    getValue() {
         return this.props.record.data[this.props.name];
     }
     onValueChange(variant_name, newValue) {
-        this.state.values[variant_name] = newValue;
+        this.state.values[variant_name] = parseInt(newValue) || 0;
         console.log("Updated values:", this.state.values);
-        this.props.record.update(this.state.values)
+        this.props.record.update(JSON.stringify(this.state.values))
     }
 }
 
