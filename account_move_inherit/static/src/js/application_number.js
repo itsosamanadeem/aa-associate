@@ -10,40 +10,31 @@ export class ApplicationNumberField extends Component {
         ...standardFieldProps,
     };
     setup() {
-        // console.log("ApplicationNumberField setup called", this.props);
         let initialValue = this.props.record.data[this.props.name];
+
         if (typeof initialValue === "string") {
             try {
                 initialValue = JSON.parse(initialValue);
-            } catch (e) {
+            } catch {
                 initialValue = {};
             }
         }
+
         this.state = useState({
             variant_names: this.props.record.data.selected_variant_names || [],
-            values: initialValue || {}
+            values: initialValue || {},
         });
 
-        onWillStart(()=>{
-            console.log("onWillStart - Initial values:", this.props)
-        })
-        onWillUpdateProps((prop)=>{
-            console.log(prop, "prop");
-            
-            // this.onValueChange(prop.name, this.getValue())
-        })
-        console.log("Initial values:", this.props.value);
-
-    }
-
-    getValue() {
-        return JSON.parse(this.props.record.data[this.props.name]);
     }
     onValueChange(variant_name, newValue) {
         this.state.values[variant_name] = parseInt(newValue) || 0;
+        this.props.record.update({
+            [this.props.name]: this.state.values,
+        });
+
         console.log("Updated values:", this.state.values);
-        this.props.record.update(JSON.parse(this.state.values))
     }
+
 }
 
 export const application_number_field = {
