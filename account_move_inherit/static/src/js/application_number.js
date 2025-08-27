@@ -20,10 +20,15 @@ export class ApplicationNumberField extends Component {
 
     }
 
+    getValue(){
+        return this.props.record.data[this.props.name];
+    }
     onValueChange(variant_name, newValue) {
         this.state.values[variant_name] = newValue;
         console.log("Updated values:", this.state.values);
-
+        this.props.record.update({
+            [this.props.name]: this.getValue() ? this.getValue() : JSON.stringify(this.state.values),
+        })
     }
 }
 
