@@ -5,7 +5,9 @@ import { Component, useState } from "@odoo/owl";
 
 export class ApplicationNumberField extends Component {
     static template = "account_move_inherit.ApplicationNumberField";
-
+    static props = {
+        data: Object,
+    };
     setup() {
         console.log("ApplicationNumberField setup called", this.props);
 
@@ -13,9 +15,7 @@ export class ApplicationNumberField extends Component {
             variant_names: this.props.record.data.selected_variant_names || [],
             values: {},
         });
-        // console.log("Initial values:", this.props.record._onUpdate({
-        //     application_variant_data: JSON.stringify(this.state.values),
-        // }));
+        console.log("Initial values:", this.props.data);
 
     }
 
