@@ -26,9 +26,7 @@ export class ApplicationNumberField extends Component {
     onValueChange(variant_name, newValue) {
         this.state.values[variant_name] = newValue;
         console.log("Updated values:", this.state.values);
-        this.props.record.update({
-            [this.props.name]: this.getValue() 
-        })
+        this.props.record.update(this.state.values)
     }
 }
 
