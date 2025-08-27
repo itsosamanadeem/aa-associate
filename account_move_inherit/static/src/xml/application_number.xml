@@ -2,26 +2,19 @@
 <templates xml:space="preserve">
 
     <t t-name="account_move_inherit.ApplicationNumberField">
-        <t t-foreach="state.rows" t-as="row" t-key="row.index">
-            <div class="d-flex align-items-center gap-2 mb-2">
-                <!-- Dropdown with ALL variants -->
+        <t t-foreach="state.variant_names" t-as="variant_name" t-key="variant_name">
+            <div class="d-flex align-items-center gap-2">
                 <div>
-                    <select class="form-select"
-                            t-on-change="(ev) => this.onVariantChange(row.index, ev.target.value)">
-                        <t t-foreach="state.variant_names" t-as="variant_name" t-key="variant_name">
-                            <option t-att-selected="row.variant === variant_name ? 'selected' : false"
-                                    t-esc="variant_name"/>
-                        </t>
+                    <select class="form-select">
+                        <option t-esc="variant_name"/>
                     </select>
                 </div>
-
-                <!-- Number input -->
                 <div>
                     <input type="number"
                            class="form-control"
                            style="width:100px !important;"
-                           t-att-value="row.value"
-                           t-on-change="(ev) => this.onValueChange(row.index, ev.target.value)"/>
+                           t-att-value="state.values[variant_name] || ''"
+                           t-on-change="(ev) => this.onValueChange(variant_name, ev.target.value)"/>
                 </div>
             </div>
         </t>
