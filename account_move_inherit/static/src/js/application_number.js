@@ -9,20 +9,28 @@ export class ApplicationNumberField extends Component {
     static props = {
         ...standardFieldProps,
     };
-
     setup() {
+        // console.log("ApplicationNumberField setup called", this.props);
+
         this.state = useState({
             variant_names: this.props.record.data.selected_variant_names || [],
-            values: this.props.value || {},   // load from field value
+            values: {},
         });
-
         console.log("Initial values:", this.props.value);
-        
+
     }
 
+    getValue(){
+        console.log("Getting value for", this.props.record.data[this.props.name] || []);
+        
+        return this.props.record.data[this.props.name];
+    }
     onValueChange(variant_name, newValue) {
-        this.state.values[variant_name] = parseInt(newValue) || 0;
-        this.props.record.update(this.state.values);
+        this.state.values[variant_name] = newValue;
+        console.log("Updated values:", this.state.values);
+        this.props.record.update({
+            [this.props.name]: this.getValue() 
+        })
     }
 }
 
