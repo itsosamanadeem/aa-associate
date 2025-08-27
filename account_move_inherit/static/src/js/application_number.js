@@ -34,12 +34,12 @@ export class ApplicationNumberField extends Component {
     }
 
     getValue() {
-        return JSON.stringify(this.props.record.data[this.props.name]);
+        return JSON.parse(this.props.record.data[this.props.name]);
     }
     onValueChange(variant_name, newValue) {
         this.state.values[variant_name] = parseInt(newValue) || 0;
         console.log("Updated values:", this.state.values);
-        this.props.record.update(JSON.stringify(this.state.values))
+        this.props.record.update(JSON.parse(this.state.values))
     }
 }
 
