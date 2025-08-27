@@ -13,7 +13,7 @@ class AccountMove(models.Model):
         search='_search_product_template_id',
         )
 
-    # application_id = fields.Json(string="Application Number")
+    application_id = fields.Json(string="Application Number")
     
     selected_variant_ids = fields.Json(
         string='Selected Variants',
