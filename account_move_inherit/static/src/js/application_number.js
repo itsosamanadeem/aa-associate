@@ -24,7 +24,9 @@ export class ApplicationNumberField extends Component {
             values: initialValue || {}
         });
 
-        onWillStart(console.log("onWillStart - Initial values:", this.props))
+        onWillStart(()=>{
+            console.log("onWillStart - Initial values:", this.props)
+        })
         onWillUpdateProps((prop)=>{console.log(prop);
         })
         console.log("Initial values:", this.props.value);
