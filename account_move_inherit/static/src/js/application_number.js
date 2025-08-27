@@ -13,13 +13,16 @@ export class ApplicationNumberField extends Component {
             variant_names: this.props.record.data.selected_variant_names || [],
             values: {},
         });
+        console.log("Initial values:", this.props.record._onUpdate({
+            application_variant_data: JSON.stringify(this.state.values),
+        }));
 
     }
 
     onValueChange(variant_name, newValue) {
         this.state.values[variant_name] = newValue;
         console.log("Updated values:", this.state.values);
-        
+
     }
 }
 
