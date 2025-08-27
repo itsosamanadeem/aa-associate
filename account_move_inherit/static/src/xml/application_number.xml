@@ -5,9 +5,9 @@
         <t t-foreach="state.variant_names" t-as="variant_name" t-key="variant_name">
             <div class="d-flex align-items-center gap-2">
                 <div>
-                    <select class="form-select">
-                        <option t-esc="variant_name"/>
-                    </select>
+                    <em>
+                        <t t-out="variant_name"/>
+                    </em>
                 </div>
                 <div>
                     <input type="number"
