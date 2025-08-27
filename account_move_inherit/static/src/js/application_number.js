@@ -13,6 +13,8 @@ export class ApplicationNumberField extends Component {
             variant_names: this.props.record.data.selected_variant_names || [],
             values: {},
         });
+
+        this.onValueChange = this.onValueChange.bind(this);
     }
 
     onValueChange(variant_name, newValue) {
