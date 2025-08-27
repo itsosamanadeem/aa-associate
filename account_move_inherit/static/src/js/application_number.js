@@ -29,5 +29,6 @@ export class ApplicationNumberField extends Component {
 
 export const application_number_field = {
     component: ApplicationNumberField,
+    supportedTypes: ["json"],
 };
 registry.category("fields").add("application_number_field", application_number_field);
