@@ -1,18 +1,27 @@
 /** odoo-module **/
 
 import { registry } from "@web/core/registry";
-import { Component, useState, useEffect } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 
 export class ApplicationNumberField extends Component {
     static template = "account_move_inherit.ApplicationNumberField";
 
     setup() {
         console.log("ApplicationNumberField setup called", this.props);
-        this.variant_names= this.props.record.data.selected_variant_names || [];
-        this.variant_count = this.variant_names.length;
+
+        this.state = useState({
+            variant_names: this.props.record.data.selected_variant_names || [],
+            values: {}, // store input values per variant
+        });
+    }
+
+    onValueChange(variant_name, newValue) {
+        this.state.values[variant_name] = newValue;
+        console.log("Updated values:", this.state.values);
     }
 }
+
 export const application_number_field = {
     component: ApplicationNumberField,
 };
-registry.category("fields").add("simple_text", application_number_field);
+registry.category("fields").add("application_number_field", application_number_field);

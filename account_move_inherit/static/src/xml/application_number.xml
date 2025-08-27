@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <templates xml:space="preserve">
 
-    <t t-name="account_move_inherit.ApplicationNumberField" >
-        <t t-foreach="this.variant_count" t-key="this.variant_count">
+    <t t-name="account_move_inherit.ApplicationNumberField">
+        <t t-foreach="state.variant_names" t-as="variant_name" t-key="variant_name">
             <div class="d-flex align-items-center gap-2">
-                    <div>
-                        <select>
-                            <t t-foreach="this.variant_names" t-as="variant_name" t-key="variant_name">
-                                <option t-esc="variant_name"/>
-                            </t>
-                        </select>
-                    </div>
-                    <div>
-                        <input type="number" class="form-control" style="width:100px !important;"/>
-                    </div>
+                <div>
+                    <select class="form-select">
+                        <option t-esc="variant_name"/>
+                    </select>
+                </div>
+                <div>
+                    <input type="number"
+                           class="form-control"
+                           style="width:100px !important;"
+                           t-att-value="state.values[variant_name] || ''"
+                           t-on-change="(ev) => this.onValueChange(variant_name, ev.target.value)"/>
+                </div>
             </div>
         </t>
     </t>
