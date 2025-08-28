@@ -27,6 +27,9 @@ export class ApplicationNumberField extends Component {
 
     }
     onValueChange(variant_name, newValue) {
+        if (parseInt(newValue) < 0){
+            return;
+        }
         this.state.values[variant_name] = parseInt(newValue) || 0;
         this.props.record.update({
             [this.props.name]: this.state.values,
