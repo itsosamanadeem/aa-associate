@@ -15,6 +15,12 @@ class AccountMove(models.Model):
     attachment_name = fields.Char(string="Filename")
     logo_attachment_id = fields.Binary(string="Logo",help="Upload Logo of the required service!!!")
     country_id = fields.Many2one(string="Country", comodel_name='res.country', help="Country for which this logo is available")
+    
+    opposition_number = fields.Json(
+        string="Opposition Number",
+        help="Stores mapping of variant → input value",
+        store=True
+    )
     application_variant_data = fields.Json(
         string="Application Number",
         help="Stores mapping of variant → input value",
