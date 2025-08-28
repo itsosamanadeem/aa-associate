@@ -12,11 +12,13 @@ class AccountMove(models.Model):
         compute='_compute_product_template_id',
         search='_search_product_template_id',
         )
-
-    application_id = fields.Text(string="Application Number", store=True)
+    attachment_name = fields.Char(string="Filename")
+    logo_attachment_id = fields.Binary(string="Logo",help="Upload Logo of the required service!!!")
+    country_id = fields.Many2one(string="Country", comodel_name='res.country', help="Country for which this logo is available")
     application_variant_data = fields.Json(
-        string="Application Variants",
-        help="Stores mapping of variant → input value"
+        string="Application Number",
+        help="Stores mapping of variant → input value",
+        store=True
     )
     selected_variant_ids = fields.Json(
         string='Selected Variants',

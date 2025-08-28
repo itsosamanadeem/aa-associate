@@ -8,6 +8,15 @@
                 <field name="trademark_id"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='trademark_id']" position="after">
+                <field name="logo_attachment_id"
+                    string="Select File"
+                    aria-label="Select File"
+                    nolabel="1"
+                    widget="binary"
+                    filename="attachment_name"/>
+                <field name="attachment_name" invisible="1"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='trademark_id']" position="after">
                 <!-- <field name="application_id" 
                     widget="application_number_field"
                 /> -->
