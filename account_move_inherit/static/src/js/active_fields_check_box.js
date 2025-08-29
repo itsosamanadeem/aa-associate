@@ -31,10 +31,10 @@ export class ActiveFields extends Component {
         };
         console.log('this.env', this.env.searchModel);
         this.onUpdateTrademark = async (value) => {
-            // await this.props.record.update(
-            // {[this.props.name]: value}
-            // );
             console.log("Trademark updated to:", value);
+            await this.props.record.update(
+            {[this.props.name]: value}
+            );
         };
     }
 }
