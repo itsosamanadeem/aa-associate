@@ -1,27 +1,36 @@
-/** @odoo-module **/
+/** odoo-module **/
 
 import { registry } from "@web/core/registry";
-import { Component } from "@odoo/owl";
+import { useService } from "@web/core/utils/hooks";
+import { listView } from "@web/views/list/list_view";
+import { ListRenderer } from "@web/views/list/list_renderer";
+import { ListController } from "@web/views/list/list_controller";
+import {
+    Component,
+    onMounted,
+    onWillPatch,
+    onWillRender,
+    onWillStart,
+    useEffect,
+    useRef,
+    useState,
+    useSubEnv,
+} from "@odoo/owl";
 import { Many2XAutocomplete } from "@web/views/fields/relational_utils";
-import { CheckBox } from "@web/core/checkbox/checkbox";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
+import { CheckBox } from "@web/core/checkbox/checkbox";
 
 export class ActiveFields extends Component {
-    static template = "account_move_inherit.ActiveFields";
-
-    // ✅ Declare allowed props
-    static props = {
+    static template = "account_move_inherit.ActiveFields"
+    static props ={
         ...standardFieldProps,
-    };
-
+    }
     static components = {
         Many2XAutocomplete,
         CheckBox,
     };
-
     setup() {
-        console.log("Trademark field:", this.props.record.fields.trademark_id);
-
+        console.log('this.env', this.props.record.fields.trademark_id);
         this.getDomain = () => {
             return [["partner_id", "=", this.props.record.data.partner_id]];
         };
@@ -33,14 +42,12 @@ export class ActiveFields extends Component {
                 newVal = [rec.id, rec.display_name];
             }
             await this.props.record.update({ trademark_id: newVal });
-        };
 
-        this.onToggleActive = async () => {
-            await this.props.record.update({
-                active: !this.props.record.data.active,
-            });
         };
     }
 }
+export const active_fields = {
+    component: ActiveFields
+};
 
-registry.category("fields").add("active_fields", ActiveFields);
+registry.category("fields").add("active_fields", active_fields);
