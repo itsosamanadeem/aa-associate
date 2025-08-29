@@ -39,7 +39,7 @@ export class ActiveFields extends Component {
                 newVal = [rec.id, rec.display_name];
             }
 
-            await this.props.update(newVal);
+            // await this.props.update(newVal);
         };
     }
 }
