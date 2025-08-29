@@ -21,8 +21,11 @@ import { Many2XAutocomplete } from "@web/views/fields/relational_utils";
 export class ActiveFields extends Component{
     static template="account_move_inherit.ActiveFields"
     static components = { Many2XAutocomplete };
-    setup(){
-        console.log('this list is inherited');
+    setup() {
+        this.getDomain = () => {
+            // Example: filter by partner_id
+            return [["partner_id", "=", this.props.record.data.partner_id]];
+        };
     }
 }
 export const active_fields = {
