@@ -32,9 +32,14 @@ export class ActiveFields extends Component {
         console.log('this.env', this.env.searchModel);
         this.onUpdateTrademark = async (value) => {
             console.log("Trademark updated to:", value);
-            await this.props.record.update(
-            {[this.props.name]: value}
-            );
+
+            let newVal = false;
+            if (value && value.length) {
+                const rec = value[0];
+                newVal = [rec.id, rec.display_name];
+            }
+
+            await this.props.update(newVal);
         };
     }
 }
