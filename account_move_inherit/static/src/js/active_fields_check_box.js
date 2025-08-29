@@ -22,7 +22,7 @@ import { CheckBox } from "@web/core/checkbox/checkbox";
 
 export class ActiveFields extends Component {
     static template = "account_move_inherit.ActiveFields"
-    static props ={
+    static props = {
         ...standardFieldProps,
     }
     static components = {
@@ -42,7 +42,12 @@ export class ActiveFields extends Component {
                 newVal = [rec.id, rec.display_name];
             }
             await this.props.record.update({ trademark_id: newVal });
+        };
 
+        this.onToggleActive = async () => {
+            await this.props.record.update({
+                active: !this.props.record.data.active,
+            });
         };
     }
 }
