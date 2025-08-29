@@ -2,7 +2,14 @@
 <templates xml:space="preserve">
 
     <t t-name="account_move_inherit.ActiveFields">
-        <Many2XAutocomplete t-props="props.record.fields"/>
+        <Many2XAutocomplete
+            value="props.record.data[props.name] && props.record.data[props.name][1]"
+            resModel="props.field.relation"
+            fieldString="props.field.string"
+            update.bind="this.onUpdateTrademark"
+            getDomain="this.getDomain"
+            activeActions="{}"
+        />
         Hello!!
     </t>
 
