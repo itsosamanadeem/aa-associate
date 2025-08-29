@@ -10,6 +10,8 @@ export class ApplicationNumberField extends Component {
         ...standardFieldProps,
     };
     setup() {
+        console.log("this is the log", this.props.record);
+        
         let initialValue = this.props.record.data[this.props.name];
 
         if (typeof initialValue === "string") {
