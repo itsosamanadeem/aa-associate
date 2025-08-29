@@ -18,12 +18,14 @@ import {
 } from "@odoo/owl";
 import { Many2XAutocomplete } from "@web/views/fields/relational_utils";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
+import { CheckBox } from "@web/core/checkbox/checkbox";
 
 export class ActiveFields extends Component {
     static template = "account_move_inherit.ActiveFields"
     static components = {
-        Many2XAutocomplete,
         ...standardFieldProps,
+        Many2XAutocomplete,
+        CheckBox,
     };
     setup() {
         console.log('this.env', this.props.record.fields.trademark_id);

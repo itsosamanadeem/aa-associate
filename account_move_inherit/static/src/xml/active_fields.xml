@@ -2,16 +2,34 @@
 <templates xml:space="preserve">
 
     <t t-name="account_move_inherit.ActiveFields">
-        <Many2XAutocomplete
-            record="props.record"
-            resModel="'res.partner.trademark'"
-            name="'trademark_id'"
-            value="(props.record.data[props.name] &amp;&amp; props.record.data[props.name][1]) || '' "
-            field="props.record.fields.trademark_id"
-            getDomain="this.getDomain"
-            update.bind="this.onUpdateTrademark"
-        />
-        Hello!!
+        <div class="o_field_widget o_field_many2one o_input d-flex align-items-center gap-3">
+            
+            <!-- Trademark field -->
+            <div class="flex-grow-1">
+                <label class="fw-bold text-muted small mb-1 d-block">
+                    Trademark
+                </label>
+                <Many2XAutocomplete
+                    record="props.record"
+                    resModel="'res.partner.trademark'"
+                    name="'trademark_id'"
+                    value="(props.record.data[props.name] &amp;&amp; props.record.data[props.name][1]) || ''"
+                    field="props.record.fields.trademark_id"
+                    getDomain="this.getDomain"
+                    update.bind="this.onUpdateTrademark"
+                />
+            </div>
+
+            <!-- Checkbox -->
+            <div class="d-flex align-items-center">
+                <CheckBox
+                    class="form-check-input"
+                    t-att-checked="props.record.data.active || false"
+                />
+                <span class="ms-2 text-muted small">Active</span>
+            </div>
+
+        </div>
     </t>
 
 </templates>
