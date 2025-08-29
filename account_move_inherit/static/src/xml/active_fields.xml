@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
 
     <t t-name="account_move_inherit.ActiveFields">
-        <Many2XAutocomplete t-porps="props.record.fields"/>
+        <Many2XAutocomplete t-props="props.record.fields"/>
         Hello!!
     </t>
 
