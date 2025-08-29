@@ -23,7 +23,6 @@ export class ActiveFields extends Component{
     static components = { Many2XAutocomplete };
     setup() {
         this.getDomain = () => {
-            // Example: filter by partner_id
             return [["partner_id", "=", this.props.record.data.partner_id]];
         };
     }

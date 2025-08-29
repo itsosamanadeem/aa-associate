@@ -7,7 +7,7 @@
             name="'trademark_id'"
             field="props.record.fields.trademark_id"
             update="props.update"
-            getDomain="props.getDomain"
+            getDomain="this.getDomain"
         />
         Hello!!
     </t>
