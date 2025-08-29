@@ -7,8 +7,7 @@
             <!-- Trademark field -->
             <Many2XAutocomplete
                 resModel="'res.partner.trademark'"
-                name="'trademark_id'" 
-                value="(props.record.data[props.name] && props.record.data[props.name][1]) || ''"
+                value="(props.record.data[props.name] &amp;&amp; props.record.data[props.name][1]) || '' "
                 getDomain="this.getDomain"
                 update.bind="this.onUpdateTrademark"
                 fieldString="'Trademark'"
@@ -28,6 +27,7 @@
 
 </templates>
 <!-- checked="props.record.data.active || false" --> 
+ <!-- name="'trademark_id'" --> 
 <!-- class="form-check-input" --> 
 <!-- field="props.record.fields.trademark_id" --> 
 <!-- record="props.record" -->
