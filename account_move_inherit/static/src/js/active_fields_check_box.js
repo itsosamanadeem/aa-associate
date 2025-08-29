@@ -31,16 +31,10 @@ export class ActiveFields extends Component {
         };
         console.log('this.env', this.env.searchModel);
         this.onUpdateTrademark = async (value) => {
-            // 1. Update Odoo record value
-            await this.props.record.update(
-            {[this.props.name]: value}
-            );
-
-            // 2. Run custom logic
+            // await this.props.record.update(
+            // {[this.props.name]: value}
+            // );
             console.log("Trademark updated to:", value);
-
-            // e.g., call a method on the record, reload, etc.
-            // this.env.bus.trigger("some_event", { recordId: this.props.record.resId });
         };
     }
 }
