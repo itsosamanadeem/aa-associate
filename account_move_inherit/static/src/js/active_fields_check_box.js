@@ -42,6 +42,7 @@ export class ActiveFields extends Component {
                 newVal = [rec.id, rec.display_name];
             }
             await this.props.record.update({ trademark_id: newVal });
+
         };
 
         this.onToggleActive = async () => {
