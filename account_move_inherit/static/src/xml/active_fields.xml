@@ -17,7 +17,7 @@
             <!-- Checkbox -->
             <div class="d-flex align-items-center">
                 <CheckBox
-                    checked="props.record.data.active || false"
+                    value="props.record.data.active || false"
                     t-on-change="() => this.onToggleActive()"
                 />
             </div>
