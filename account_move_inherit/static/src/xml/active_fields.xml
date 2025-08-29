@@ -6,7 +6,7 @@
             record="props.record"
             resModel="'res.partner.trademark'"
             name="'trademark_id'"
-            value="(props.record.data[props.name] && props.record.data[props.name][1]) || ''"
+            value="(props.record.data[props.name] &amp;&amp; props.record.data[props.name][1]) || '' "
             field="props.record.fields.trademark_id"
             getDomain="this.getDomain"
             update.bind="this.onUpdateTrademark"
