@@ -3,7 +3,7 @@
 
     <t t-name="account_move_inherit.ActiveFields">
         <Many2XAutocomplete
-            value="props.record.data[props.name] && props.record.data[props.name][1]"
+            value="props.record.data[props.name] &amp;&amp; props.record.data[props.name][1]"
             resModel="props.field.relation"
             fieldString="props.field.string"
             update.bind="this.onUpdateTrademark"
