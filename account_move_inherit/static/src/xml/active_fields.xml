@@ -16,7 +16,6 @@
 
             <div class="d-flex align-items-center">
                 <CheckBox
-                    class="form-check-input"
                     checked="props.record.data.active || false"
                 />
             </div>
@@ -25,6 +24,7 @@
     </t>
 
 </templates>
+                    <!-- class="form-check-input" -->
                 <!-- field="props.record.fields.trademark_id" -->
                 <!-- record="props.record" -->
                 <!-- name="'trademark_id'" -->
