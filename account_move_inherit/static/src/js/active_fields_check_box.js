@@ -31,14 +31,14 @@ export class ActiveFields extends Component {
             return [["partner_id", "=", this.props.record.data.partner_id]];
         };
 
-        // wrapper around Odoo's update
         this.onUpdateTrademark = async (value) => {
             let newVal = false;
             if (value && value.length) {
                 const rec = value[0];
                 newVal = [rec.id, rec.display_name];
             }
-            await this.props.update(newVal);
+            await this.props.record.update({ trademark_id: newVal });
+
         };
     }
 }
