@@ -24,7 +24,7 @@
             <div class="d-flex align-items-center">
                 <CheckBox
                     class="form-check-input"
-                    t-att-checked="props.record.data.active || false"
+                    checked="props.record.data.active || false"
                 />
                 <span class="ms-2 text-muted small">Active</span>
             </div>
