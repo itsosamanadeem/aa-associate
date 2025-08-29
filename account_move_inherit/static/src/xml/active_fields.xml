@@ -7,15 +7,18 @@
             <!-- Trademark field -->
             <Many2XAutocomplete
                 resModel="'res.partner.trademark'"
-                value="(props.record.data[props.name] &amp;&amp; props.record.data[props.name][1]) || ''"
+                value="(props.record.data[props.name] && props.record.data[props.name][1]) || ''"
                 getDomain="this.getDomain"
                 update.bind="this.onUpdateTrademark"
                 fieldString="'Trademark'"
                 activeActions="{}"
             />
 
+            <!-- Checkbox -->
             <div class="d-flex align-items-center">
                 <CheckBox
+                    checked="props.record.data.active || false"
+                    t-on-change="() => this.onToggleActive()"
                 />
             </div>
 
@@ -23,9 +26,3 @@
     </t>
 
 </templates>
-                    <!-- checked="props.record.data.active || false" -->
-                    <!-- class="form-check-input" -->
-                <!-- field="props.record.fields.trademark_id" -->
-                <!-- record="props.record" -->
-                <!-- name="'trademark_id'" -->
-                <!-- class="flex-grow-1 " -->
