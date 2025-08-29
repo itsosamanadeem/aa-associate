@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
 
     <t t-name="account_move_inherit.ActiveFields">
-        <div class="o_field_widget o_field_many2one o_input d-flex flex-row align-items-center gap-4">
+        <div class="d-flex flex-row align-items-center gap-4">
 
             <!-- Trademark field -->
             <Many2XAutocomplete
@@ -16,13 +16,11 @@
                 class="flex-grow-1"
             />
 
-            <!-- Checkbox + Label -->
             <div class="d-flex align-items-center">
                 <CheckBox
                     class="form-check-input"
                     checked="props.record.data.active || false"
                 />
-                <span class="ms-2 text-muted small">Active</span>
             </div>
 
         </div>
