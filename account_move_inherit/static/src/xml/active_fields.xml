@@ -8,7 +8,6 @@
             <Many2XAutocomplete
                 resModel="'res.partner.trademark'"
                 value="(props.record.data[props.name] &amp;&amp; props.record.data[props.name][1]) || ''"
-                field="props.record.fields.trademark_id"
                 getDomain="this.getDomain"
                 update.bind="this.onUpdateTrademark"
                 fieldString="'Trademark'"
@@ -26,6 +25,7 @@
     </t>
 
 </templates>
+                <!-- field="props.record.fields.trademark_id" -->
                 <!-- record="props.record" -->
                 <!-- name="'trademark_id'" -->
                 <!-- class="flex-grow-1 " -->
