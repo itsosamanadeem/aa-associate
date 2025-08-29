@@ -6,7 +6,6 @@
             record="props.record"
             name="'trademark_id'"
             field="props.record.fields.trademark_id"
-            value="props.record.data.trademark_id"
             update="props.update"
         />
         Hello!!
