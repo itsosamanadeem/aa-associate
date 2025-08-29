@@ -5,16 +5,26 @@ import { useService } from "@web/core/utils/hooks";
 import { listView } from "@web/views/list/list_view";
 import { ListRenderer } from "@web/views/list/list_renderer";
 import { ListController } from "@web/views/list/list_controller";
+import {
+    Component,
+    onMounted,
+    onWillPatch,
+    onWillRender,
+    onWillStart,
+    useEffect,
+    useRef,
+    useState,
+    useSubEnv,
+} from "@odoo/owl";
 
-export class ActiveFields extends ListController{
+export class ActiveFields extends Component{
+    static template="account_move_line.ActiveFields"
     setup(){
-        super.setup()
         console.log('this list is inherited');
     }
 }
 export const active_fields = {
-    ...listView,
-    Controller: ActiveFields,
+    component: ActiveFields
 };
 
-registry.category("views").add("active_fields", active_fields);
+registry.category("fields").add("active_fields", active_fields);
