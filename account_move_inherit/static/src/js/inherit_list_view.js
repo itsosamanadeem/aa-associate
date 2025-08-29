@@ -14,7 +14,6 @@ export class ActiveFields extends ListController{
 }
 export const active_fields = {
     ...listView,
-    ...ListRenderer,
     Controller: ActiveFields,
 };
 
