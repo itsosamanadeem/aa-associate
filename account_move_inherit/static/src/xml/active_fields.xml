@@ -3,12 +3,13 @@
 
     <t t-name="account_move_inherit.ActiveFields">
         <Many2XAutocomplete
+            record="props.record"
+            resModel="'res.partner.trademark'"
+            name="'trademark_id'"
             value="props.record.data[props.name] &amp;&amp; props.record.data[props.name][1]"
-            resModel="props.field.relation"
-            fieldString="props.field.string"
-            update.bind="this.onUpdateTrademark"
+            field="props.record.fields.trademark_id"
             getDomain="this.getDomain"
-            activeActions="{}"
+            update.bind="this.onUpdateTrademark"
         />
         Hello!!
     </t>
@@ -17,9 +18,3 @@
 
             <!-- value="props.record.fields.trademark_id[]" -->
             <!-- update="props.record.update" -->
-            <!-- record="props.record"
-            resModel="'res.partner.trademark'"
-            name="'trademark_id'"
-            field="props.record.fields.trademark_id"
-            getDomain="this.getDomain"
-            update.bind="this.onUpdateTrademark" -->
