@@ -7,10 +7,13 @@
             resModel="'res.partner.trademark'"
             name="'trademark_id'"
             field="props.record.fields.trademark_id"
-            update="props.record.update"
             getDomain="this.getDomain"
+            onSelected="this.onTrademarkSelected"
+
         />
         Hello!!
     </t>
 
 </templates>
+
+            <!-- update="props.record.update" -->

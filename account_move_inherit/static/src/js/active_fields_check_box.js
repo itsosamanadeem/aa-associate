@@ -18,12 +18,16 @@ import {
 } from "@odoo/owl";
 import { Many2XAutocomplete } from "@web/views/fields/relational_utils";
 
-export class ActiveFields extends Component{
-    static template="account_move_inherit.ActiveFields"
+export class ActiveFields extends Component {
+    static template = "account_move_inherit.ActiveFields"
     static components = { Many2XAutocomplete };
     setup() {
         this.getDomain = () => {
             return [["partner_id", "=", this.props.record.data.partner_id]];
+        };
+        this.onTrademarkSelected = (ev) => {
+            const trademark = ev.detail; // selected record
+            this.props.record.update({ trademark_id: trademark.id });
         };
     }
 }
