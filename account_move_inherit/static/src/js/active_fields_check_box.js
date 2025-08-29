@@ -18,7 +18,7 @@ import {
 } from "@odoo/owl";
 
 export class ActiveFields extends Component{
-    static template="account_move_line.ActiveFields"
+    static template="account_move_inherit.ActiveFields"
     setup(){
         console.log('this list is inherited');
     }
