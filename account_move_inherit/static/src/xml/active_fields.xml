@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-    <t t-name="account_move_inherit.ActiveFields" owl="1">
-    <div class="d-flex flex-row align-items-center gap-4">
-        <Many2XAutocomplete
-            resModel="'res.partner.trademark'"
-            value="props.record.data.trademark_id && props.record.data.trademark_id[0]"
-            update.bind="this.onUpdateTrademark"
-            getDomain.bind="this.getDomain"
-            fieldString="'Trademark'"
-            activeActions="{}"
-        />
-        <CheckBox
-            class="'form-check-input'"
-            checked="props.record.data.active or false"
-        />
-    </div>
+    <t t-name="account_move_inherit.ActiveFields">
+        <div class="d-flex flex-row align-items-center gap-4">
+
+            <!-- Trademark field -->
+            <Many2XAutocomplete
+                resModel="'res.partner.trademark'"
+                value="(props.record.data[props.name] &amp;&amp; props.record.data[props.name][1]) || ''"
+                field="props.record.fields.trademark_id"
+                getDomain="this.getDomain"
+                update.bind="this.onUpdateTrademark"
+                fieldString="'Trademark'"
+                activeActions="{}"
+            />
+
+            <div class="d-flex align-items-center">
+                <CheckBox
+                    class="form-check-input"
+                    checked="props.record.data.active || false"
+                />
+            </div>
+
+        </div>
     </t>
 
-
 </templates>
+                <!-- record="props.record" -->
+                <!-- name="'trademark_id'" -->
+                <!-- class="flex-grow-1 " -->
