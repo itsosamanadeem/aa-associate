@@ -29,7 +29,7 @@ export class ActiveFields extends Component {
         this.getDomain = () => {
             return [["partner_id", "=", this.props.record.data.partner_id]];
         };
-        console.log('this.env', this.env.searchModel);
+        console.log('this.env', this.props.record.fields.trademark_id);
         this.onUpdateTrademark = async (value) => {
             console.log("Trademark updated to:", value);
 

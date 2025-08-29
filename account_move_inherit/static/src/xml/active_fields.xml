@@ -7,7 +7,6 @@
             resModel="'res.partner.trademark'"
             name="'trademark_id'"
             field="props.record.fields.trademark_id"
-            value="props.record.fields.trademark_id"
             getDomain="this.getDomain"
             update.bind="this.onUpdateTrademark"
         />
@@ -16,4 +15,5 @@
 
 </templates>
 
+            <!-- value="props.record.fields.trademark_id[]" -->
             <!-- update="props.record.update" -->
