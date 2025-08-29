@@ -16,9 +16,11 @@ import {
     useState,
     useSubEnv,
 } from "@odoo/owl";
+import { Many2XAutocomplete } from "@web/views/fields/relational_utils";
 
 export class ActiveFields extends Component{
     static template="account_move_inherit.ActiveFields"
+    static components = { Many2XAutocomplete };
     setup(){
         console.log('this list is inherited');
     }

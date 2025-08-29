@@ -2,6 +2,13 @@
 <templates xml:space="preserve">
 
     <t t-name="account_move_inherit.ActiveFields">
+        <Many2XAutocomplete
+            record="props.record"
+            name="'trademark_id'"
+            field="props.record.fields.trademark_id"
+            value="props.record.data.trademark_id"
+            update="props.update"
+        />
         Hello!!
     </t>
 
