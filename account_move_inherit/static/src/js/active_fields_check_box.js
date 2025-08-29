@@ -25,10 +25,8 @@ export class ActiveFields extends Component {
         this.getDomain = () => {
             return [["partner_id", "=", this.props.record.data.partner_id]];
         };
-        this.onTrademarkSelected = (ev) => {
-            const trademark = ev.detail; // selected record
-            this.props.record.update({ trademark_id: trademark.id });
-        };
+        console.log('this.env', this.env);
+        
     }
 }
 export const active_fields = {
