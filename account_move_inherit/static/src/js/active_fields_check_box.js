@@ -60,7 +60,7 @@ export class ActiveFields extends Component {
         const fieldName = this.props.name;
 
         
-        this.activeFields.toggle(record.resId, fieldName, ev.detail);
+        this.activeFields.toggle(record.resId, fieldName, ev.target.checked);
 
         console.log('record', record, 'fieldName', fieldName, 'toggle', ev.target.checked);
         
