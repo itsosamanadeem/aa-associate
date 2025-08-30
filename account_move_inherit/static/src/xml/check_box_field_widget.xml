@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-    <t t-name="account_move_inherit.InvoiceLineListRendererWithCheckbox" t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="extension">
+    <t t-name="account_move_inherit.InvoiceLineListRendererWithCheckbox" t-inherit="web.ListRenderer.Row" t-inherit-mode="extension">
         <xpath expr="//td[hasclass('o_data_cell')]" position="inside">
-            Ponka
+            <!-- Ponka -->
+            <CheckBox value="true" t-on-change="this.onToggle"/>
             <!-- <td>
-                <CheckBox value="true" t-on-change="this.onToggle"/>
             </td> -->
         </xpath>
     </t>
