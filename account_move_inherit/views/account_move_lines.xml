@@ -12,7 +12,7 @@
                     string="Select File"
                     aria-label="Select File"
                     nolabel="1"
-                    widget="upload"
+                    widget="binary"
                     filename="attachment_name" optional="hide"/>
                 <field name="attachment_name" column_invisible="1"/>
             </xpath>
@@ -45,6 +45,7 @@
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='quantity']" position="attributes">
                 <attribute name="optional">hide</attribute>
+                <attribute name="widget">field_with_checkbox</attribute>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='tax_ids']" position="attributes">
                 <attribute name="optional">hide</attribute>

@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
+    <t t-name="account_move_inherit.FieldWithCheckbox">
+        <div class="d-flex flex-row align-items-center gap-2">
+            <!-- Original field -->
+            <t t-component="props.InnerField"
+               t-props="props" />
 
-    <t t-name="account_move_inherit.CheckboxCheck">
-        <div class="d-flex flex-row align-items-center gap-4">
-            <div class="d-flex align-items-center">
-                <CheckBox
-                    value="props.record.data.extra_flags?.props.name || false"
-                    t-on-change="this.onToggle"
-                />
-            </div>
+            <!-- Checkbox -->
+            <CheckBox
+                value="props.record.data.extra_flags?.[props.name] || false"
+                t-on-change="onToggle"
+            />
         </div>
     </t>
-
 </templates>

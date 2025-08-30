@@ -1,18 +1,18 @@
-/** odoo-module **/
+/** @odoo-module **/
 
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 import { CheckBox } from "@web/core/checkbox/checkbox";
-import { Component, useState, onWillUpdateProps, onWillStart } from "@odoo/owl";
+import { Component } from "@odoo/owl";
 
-export class CheckboxCheck extends Component {
-    static template = "account_move_inherit.CheckboxCheck"
+export class FieldWithCheckbox extends Component {
+    static template = "account_move_inherit.FieldWithCheckbox";
     static props = {
         ...standardFieldProps,
-    }
-    static components = {
-        CheckBox,
+        InnerField: { type: Function },   // we’ll render the original field
     };
+    static components = { CheckBox };
+
     setup() {}
 
     onToggle(ev) {
@@ -25,10 +25,10 @@ export class CheckboxCheck extends Component {
 
         record.update({ extra_flags: newFlags });
     }
-
 }
-export const checkbox_check = {
-    component: CheckboxCheck
+
+export const fieldWithCheckbox = {
+    component: FieldWithCheckbox,
 };
 
-registry.category("fields").add("checkbox_check", checkbox_check);
+registry.category("fields").add("field_with_checkbox", fieldWithCheckbox);
