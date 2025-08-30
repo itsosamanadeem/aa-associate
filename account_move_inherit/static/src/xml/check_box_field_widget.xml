@@ -4,7 +4,6 @@
        t-inherit="web.ListRenderer.RecordRow"
        t-inherit-mode="primary">
 
-        <!-- Add checkbox as first element inside each cell, before the actual field -->
         <xpath expr="//td[hasclass('o_data_cell cursor-pointer')]" position="before">
             <td class="o_list_checkbox_cell">
                 <input type="checkbox"

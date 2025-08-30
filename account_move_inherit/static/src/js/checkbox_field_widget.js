@@ -21,7 +21,7 @@ export class InvoiceLineOne2ManyWithFieldCheckbox extends X2ManyField {
     };
 }
 
-registry.category("fields").add("invoiceLine_list_renderer_with_field_checkbox", {
+registry.category("fields").add("invoiceLine_list_renderer_with_checkbox", {
     ...x2ManyField,
     component: InvoiceLineOne2ManyWithFieldCheckbox,
 });
