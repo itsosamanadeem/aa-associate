@@ -22,7 +22,7 @@
                 /> -->
                 <input type="checkbox"
                     t-att-checked="props.value"
-                    t-on-change="this.onToggle"/>
+                    t-on-change="(ev)=>this.onToggle(ev)"/>
                 <!-- <t t-esc="props.value"/> -->
             </div>
 

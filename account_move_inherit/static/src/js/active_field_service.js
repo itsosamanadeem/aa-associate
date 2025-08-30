@@ -15,6 +15,8 @@ export const activeFieldsService = {
                     state[lineId] = {};
                 }
                 state[lineId][fieldName] = value;
+
+                return state;
             },
         };
     },
