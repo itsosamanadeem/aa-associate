@@ -28,7 +28,7 @@ export class InvoiceLineOne2ManyWithCheckbox extends X2ManyField{
 }
 export const invoiceLineListRendererWithCheckbox = {
     ...x2ManyField,
-    component: InvoiceLineListRendererWithCheckbox,
+    component: InvoiceLineOne2ManyWithCheckbox,
     // additionalClasses: sectionAndNoteFieldOne2Many.additionalClasses,
 };
 
