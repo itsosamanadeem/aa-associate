@@ -24,7 +24,7 @@ import {
 import { CheckBox } from "@web/core/checkbox/checkbox";
 
 export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
-    static template ="account_move_inherit.InvoiceLineListRendererWithCheckbox"
+    static template = "account_move_inherit.ListRendererWithFooterCheckbox"
     static components={
         ...ListRenderer.components,
         CheckBox
