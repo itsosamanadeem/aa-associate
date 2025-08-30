@@ -16,7 +16,7 @@ import {
 export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
     setup() {
         super.setup()
-        console.log('inherited', this.props.record);
+        console.log('inherited', this.props);
 
     }
 }
