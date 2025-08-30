@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-    <t t-name="account_move_inherit.InvoiceLineListRendererWithCheckbox" t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="primary">
+    <t t-name="account_move_inherit.InvoiceLineListRendererWithCheckbox" t-inherit="web.ListRenderer.RecordRow">
         <xpath expr="//Field[@t-else='']" position="after">
-            <CheckBox 
-                value="true"
-                t-on-change="this.onToggle"
-            />
+            <td>
+                <CheckBox value="true" t-on-change="this.onToggle"/>
+            </td>
         </xpath>
     </t>
 
