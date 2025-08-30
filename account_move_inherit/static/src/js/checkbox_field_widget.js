@@ -13,43 +13,12 @@ import {
     sectionAndNoteFieldOne2Many,
 } from "@account/components/section_and_note_fields_backend/section_and_note_fields_backend";
 
-export class InvoiceLineListRenderer extends ListRenderer {
+export class InvoiceLineListRendererWithCheckbox extends ProductLabelSectionAndNoteOne2Many {
     setup() {
         super.setup()
-        console.log('inherited!!!!!!!!');
-
-        // this.renderBodyCell({column, record, isAnchor, rowIndex, colIndex})
-    }
-    renderBodyCell({ column, record, isAnchor, rowIndex, colIndex }) {
-        const td = super.renderBodyCell({ column, record, isAnchor, rowIndex, colIndex });
-        console.log(td);
-        
-        if (record.resModel === "account.move.line") {
-            const fieldName = column.name;
-
-            const checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.style.marginLeft = "4px";
-            checkbox.checked = record.data.extra_flags?.[fieldName] || false;
-
-            checkbox.addEventListener("change", () => {
-                const newFlags = Object.assign({}, record.data.extra_flags || {});
-                newFlags[fieldName] = checkbox.checked;
-                record.update({ extra_flags: newFlags });
-            });
-
-            td.appendChild(checkbox);
-        }
-        return td;
+        console.log('inherited');
     }
 }
-export class InvoiceLineListRendererWithCheckbox extends X2ManyField {
-    static components = {
-        ...X2ManyField.components,
-        ListRenderer: InvoiceLineListRenderer,
-    };
-}
-
 export const invoiceLineListRendererWithCheckbox = {
     ...x2ManyField,
     component: InvoiceLineListRendererWithCheckbox,
