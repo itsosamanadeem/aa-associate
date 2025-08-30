@@ -18,28 +18,28 @@ export class InvoiceLineListRendererWithCheckbox extends ProductLabelSectionAndN
         super.setup()
         console.log('inherited');
 
-        renderBodyCell({ column, record, isAnchor, rowIndex, colIndex }) {
-            const td = super.renderBodyCell({ column, record, isAnchor, rowIndex, colIndex });
+        
+    }
+    renderBodyCell({ column, record, isAnchor, rowIndex, colIndex }) {
+        const td = super.renderBodyCell({ column, record, isAnchor, rowIndex, colIndex });
 
-            if (record.resModel === "account.move.line") {
-                const fieldName = column.name;
+        if (record.resModel === "account.move.line") {
+            const fieldName = column.name;
 
-                const checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.style.marginLeft = "4px";
-                checkbox.checked = record.data.extra_flags?.[fieldName] || false;
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.style.marginLeft = "4px";
+            checkbox.checked = record.data.extra_flags?.[fieldName] || false;
 
-                checkbox.addEventListener("change", () => {
-                    const newFlags = Object.assign({}, record.data.extra_flags || {});
-                    newFlags[fieldName] = checkbox.checked;
-                    record.update({ extra_flags: newFlags });
-                });
+            checkbox.addEventListener("change", () => {
+                const newFlags = Object.assign({}, record.data.extra_flags || {});
+                newFlags[fieldName] = checkbox.checked;
+                record.update({ extra_flags: newFlags });
+            });
 
-                td.appendChild(checkbox);
-            }
-            return td;
+            td.appendChild(checkbox);
         }
-
+        return td;
     }
 }
 export const invoiceLineListRendererWithCheckbox = {
