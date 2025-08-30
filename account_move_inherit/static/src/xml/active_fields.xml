@@ -22,7 +22,7 @@
                 /> -->
                 <input type="checkbox"
                     t-att-checked="props.value"
-                    t-on-change="(ev)=>this.onToggle(props.record.resId, props.name, ev)"/>
+                    t-on-change="(ev)=>this.onToggle(props.record.resId, props.name, ev.detail)"/>
             </div>
 
         </div>
