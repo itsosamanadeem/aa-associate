@@ -26,9 +26,3 @@
     </t>
 
 </templates>
-<!-- checked="props.record.data.active || false" --> 
- <!-- name="'trademark_id'" --> 
-<!-- class="form-check-input" --> 
-<!-- field="props.record.fields.trademark_id" --> 
-<!-- record="props.record" -->
- <!-- class="flex-grow-1 " -->

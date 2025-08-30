@@ -31,7 +31,6 @@ export class ActiveFields extends Component {
     };
     setup() {
         console.log('this.env', this.props.record.data);
-        this.activeFields = useService("active_fields_service");
         this.getDomain = () => {
             return [["partner_id", "=", this.props.record.data.partner_id]];
         };
@@ -46,19 +45,16 @@ export class ActiveFields extends Component {
 
         };
 
-        // this.onToggleActive = this.onToggle.bind(this)
     }
 
     onToggle(ev) {
         const record = this.props.record;
-        const fieldName = this.props.name;   // e.g. "trademark_id"
+        const fieldName = this.props.name;
         const checked = ev.target.checked;
 
-        // Clone old state to avoid mutation issues
         const newFlags = Object.assign({}, record.data.extra_flags || {});
         newFlags[fieldName] = checked;
 
-        // Write back to DB
         record.update({ extra_flags: newFlags });
     }
 

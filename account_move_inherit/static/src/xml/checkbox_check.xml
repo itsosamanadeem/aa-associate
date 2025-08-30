@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="account_move_inherit.CheckboxCheck">
+        <div class="d-flex flex-row align-items-center gap-4">
+            <div class="d-flex align-items-center">
+                <CheckBox
+                    value="props.record.data.extra_flags?.props.name || false"
+                    t-on-change="this.onToggle"
+                />
+            </div>
+        </div>
+    </t>
+
+</templates>

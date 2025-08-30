@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="account_move_inherit.UploadField" t-inherit="web.BinaryField">
+        <xpath expr="//label[hasclass('o_clear_file_button')]" position="after">
+            <CheckboxCheck
+                name="props.name"
+                record="props.record"
+                value="props.value"
+            />
+        </xpath>
+    </t>
+
+</templates>
