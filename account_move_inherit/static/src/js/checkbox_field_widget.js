@@ -25,14 +25,19 @@ import { CheckBox } from "@web/core/checkbox/checkbox";
 
 export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
     static template = "account_move_inherit.ListRendererWithFooterCheckbox"
-    static components={
+    static components = {
         CheckBox
     }
     setup() {
         super.setup()
         console.log('inherited', this.props);
-        onWillRender(()=>{
+        onWillRender(() => {
         })
+        this.titleField = "name";
+        useEffect(
+            (editedRecord) => this.focusToName(editedRecord),
+            () => [this.editedRecord]
+        )
 
     }
     onToggle(ev) {
@@ -50,9 +55,52 @@ export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
 
         // record.update({ extra_flags: newFlags });
     }
+    focusToName(editRec) {
+        if (editRec && editRec.isNew && this.isSectionOrNote(editRec)) {
+            const col = this.columns.find((c) => c.name === this.titleField);
+            this.focusCell(col, null);
+        }
+    }
+
+    isSectionOrNote(record = null) {
+        record = record || this.record;
+        return ['line_section', 'line_note'].includes(record.data.display_type);
+    }
+
+    getRowClass(record) {
+        const existingClasses = super.getRowClass(record);
+        return `${existingClasses} o_is_${record.data.display_type}`;
+    }
+
+    getCellClass(column, record) {
+        const classNames = super.getCellClass(column, record);
+        if (this.isSectionOrNote(record) && column.widget !== "handle" && column.name !== this.titleField) {
+            return `${classNames} o_hidden`;
+        }
+        return classNames;
+    }
+
+    getColumns(record) {
+        const columns = super.getColumns(record);
+        if (this.isSectionOrNote(record)) {
+            return this.getSectionColumns(columns);
+        }
+        return columns;
+    }
+
+    getSectionColumns(columns) {
+        const sectionCols = columns.filter((col) => col.widget === "handle" || col.type === "field" && col.name === this.titleField);
+        return sectionCols.map((col) => {
+            if (col.name === this.titleField) {
+                return { ...col, colspan: columns.length - sectionCols.length + 1 };
+            } else {
+                return { ...col };
+            }
+        });
+    }
 }
-export class InvoiceLineOne2ManyWithCheckbox extends X2ManyField{
-    static components={
+export class InvoiceLineOne2ManyWithCheckbox extends X2ManyField {
+    static components = {
         ...X2ManyField.components,
         ListRenderer: InvoiceLineListRendererWithCheckbox
     }

@@ -4,14 +4,14 @@
        t-inherit-mode="primary"
        t-name="account_move_inherit.ListRendererWithFooterCheckbox">
 
-        <!-- Target the footer aggregate cell -->
         <xpath expr="//td[@t-if='aggregate']" position="inside">
             <CheckBox
                 value="true"
-                t-on-change="(ev) => this.onFooterCheckboxToggle(column, aggregate, ev)"
             />
         </xpath>
 
     </t>
 
 </templates>
+
+                <!-- t-on-change="(ev) => this.onFooterCheckboxToggle(column, aggregate, ev)" -->
