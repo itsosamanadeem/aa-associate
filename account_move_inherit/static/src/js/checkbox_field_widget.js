@@ -23,6 +23,12 @@ import {
     useEffect
 } from "@odoo/owl";
 import { CheckBox } from "@web/core/checkbox/checkbox";
+import { Dropdown } from "@web/core/dropdown/dropdown";
+import { DropdownItem } from "@web/core/dropdown/dropdown_item";
+import { Field, getPropertyFieldInfo } from "@web/views/fields/field";
+import { ViewButton } from "@web/views/view_button/view_button";
+import { Pager } from "@web/core/pager/pager";
+import { Widget } from "@web/views/widgets/widget";
 
 export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
     static template = "account_move_inherit.ListRendererWithFooterCheckbox"
