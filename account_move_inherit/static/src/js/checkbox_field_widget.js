@@ -26,6 +26,13 @@ import { CheckBox } from "@web/core/checkbox/checkbox";
 
 export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
     static template = "account_move_inherit.ListRendererWithFooterCheckbox"
+    static rowsTemplate = "web.ListRenderer.Rows";
+    static recordRowTemplate = "web.ListRenderer.RecordRow";
+    static groupRowTemplate = "web.ListRenderer.GroupRow";
+    static useMagicColumnWidths = true;
+    static LONG_TOUCH_THRESHOLD = 400;
+    static components = { DropdownItem, Field, ViewButton, CheckBox, Dropdown, Pager, Widget };
+    static defaultProps = { hasSelectors: false, cycleOnTab: true };
     // static components = {
     //     CheckBox
     // }
