@@ -2,8 +2,8 @@
 <templates xml:space="preserve">
 
     <!-- Extend default record row to add a checkbox column -->
-    <t t-name="account_move_inherit.ListRendererWithCheckbox" t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="primary">
-        <xpath expr="//tr" position="inside">
+    <t t-name="account_move_inherit.ListRendererWithCheckbox" t-inherit="web.ListRenderer" t-inherit-mode="primary">
+        <xpath expr="//tbody[hasclass('ui-sortable')]" position="inside">
             <td>
                 <input type="checkbox"/>
             </td>
