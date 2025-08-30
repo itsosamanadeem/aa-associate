@@ -4,23 +4,24 @@ import { registry } from "@web/core/registry";
 import { ListRenderer } from "@web/views/list/list_renderer";
 import { X2ManyField, x2ManyField } from "@web/views/fields/x2many/x2many_field";
 
-export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
-    static recordRowTemplate = "account_move_inherit.ListRendererWithCheckbox";
-    onToggle(record, ev) {
-        console.log("Checkbox toggled for record", record.id, "checked?", ev.target.checked);
-        // you can update the record if you want:
-        // record.update({ my_checkbox: ev.target.checked });
+export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
+    static components = { ...ListRenderer.components };
+    static recordRowTemplate = "account_move_inherit.ListRenderer.RecordRowWithCheckbox";
+
+    onFieldCheckboxToggle(record, ev) {
+        const checked = ev.target.checked;
+        console.log(`Row checkbox for record ${record.id}:`, checked);
     }
 }
 
-export class InvoiceLineOne2ManyWithCheckbox extends X2ManyField {
+export class InvoiceLineOne2ManyWithFieldCheckbox extends X2ManyField {
     static components = {
         ...X2ManyField.components,
-        ListRenderer: InvoiceLineListRendererWithCheckbox,
+        ListRenderer: InvoiceLineListRendererWithFieldCheckbox,
     };
 }
 
-registry.category("fields").add("invoiceLine_list_renderer_with_checkbox", {
+registry.category("fields").add("invoiceLine_list_renderer_with_field_checkbox", {
     ...x2ManyField,
-    component: InvoiceLineOne2ManyWithCheckbox,
+    component: InvoiceLineOne2ManyWithFieldCheckbox,
 });

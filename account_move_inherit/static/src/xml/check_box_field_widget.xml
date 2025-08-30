@@ -1,13 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-    <!-- Extend default record row to add a checkbox column -->
-    <t t-name="account_move_inherit.ListRendererWithCheckbox" t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="primary">
-        <xpath expr="//Field[@t-else='']" position="inside">
-            <td>
-                <input type="checkbox"/>
+    <t t-name="account_move_inherit.ListRenderer.RecordRowWithCheckbox"
+       t-inherit="web.ListRenderer.RecordRow"
+       t-inherit-mode="primary">
+
+        <!-- Add checkbox as first element inside each cell, before the actual field -->
+        <xpath expr="//td[hasclass('o_data_cell cursor-pointer')]" position="before">
+            <td class="o_list_checkbox_cell">
+                <input type="checkbox"
+                       t-att-checked="record.data.x_is_checked"
+                       t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
             </td>
         </xpath>
     </t>
-
 </templates>
