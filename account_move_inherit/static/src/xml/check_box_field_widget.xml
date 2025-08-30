@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-    <t t-name="account_move_inherit.ListRendererWithFooterCheckbox" t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="primary">
-        <xpath expr="//td[last()]" position="after">
+    <!-- Extend default record row to add a checkbox column -->
+    <t t-name="account_move_inherit.ListRendererWithCheckbox" t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="primary">
+        <xpath expr="//tr" position="inside">
             <td>
-                <CheckBox
-                    value="false"
-                />
+                <input type="checkbox"/>
             </td>
         </xpath>
     </t>
 
 </templates>
-
-            <!-- <td>
-                <CheckBox value="true" t-on-change="this.onToggle"/>
-                    t-on-change="(ev) => this.onToggle(record, ev)"
-            </td> -->

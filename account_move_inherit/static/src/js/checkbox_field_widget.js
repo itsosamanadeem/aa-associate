@@ -3,137 +3,25 @@
 import { registry } from "@web/core/registry";
 import { ListRenderer } from "@web/views/list/list_renderer";
 import { X2ManyField, x2ManyField } from "@web/views/fields/x2many/x2many_field";
-import {
-    productLabelSectionAndNoteOne2Many,
-    ProductLabelSectionAndNoteOne2Many,
-    ProductLabelSectionAndNoteListRender,
-} from '@account/components/product_label_section_and_note_field/product_label_section_and_note_field';
-import {
-    SectionAndNoteListRenderer,
-    sectionAndNoteFieldOne2Many,
-} from "@account/components/section_and_note_fields_backend/section_and_note_fields_backend";
-import {
-    Component,
-    onMounted,
-    onPatched,
-    onWillPatch,
-    onWillRender,
-    useExternalListener,
-    useRef,
-    useEffect
-} from "@odoo/owl";
-import { CheckBox } from "@web/core/checkbox/checkbox";
-import { Dropdown } from "@web/core/dropdown/dropdown";
-import { DropdownItem } from "@web/core/dropdown/dropdown_item";
-import { Field, getPropertyFieldInfo } from "@web/views/fields/field";
-import { ViewButton } from "@web/views/view_button/view_button";
-import { Pager } from "@web/core/pager/pager";
-import { Widget } from "@web/views/widgets/widget";
 
 export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
-    static template = "account_move_inherit.ListRendererWithFooterCheckbox"
-    static rowsTemplate = "web.ListRenderer.Rows";
-    static recordRowTemplate = "web.ListRenderer.RecordRow";
-    static groupRowTemplate = "web.ListRenderer.GroupRow";
-    static useMagicColumnWidths = true;
-    static LONG_TOUCH_THRESHOLD = 400;
-    static components = { DropdownItem, Field, ViewButton, CheckBox, Dropdown, Pager, Widget };
-    static defaultProps = { hasSelectors: false, cycleOnTab: true };
-    // static components = {
-    //     CheckBox
-    // }
-    /**
-     * The purpose of this extension is to allow sections and notes in the one2many list
-     * primarily used on Sales Orders and Invoices
-     *
-     * @override
-     */
-    setup() {
-        super.setup()
-        console.log('inherited', this.props);
-        onWillRender(() => {
-        })
-        this.titleField = "name";
-        useEffect(
-            (editedRecord) => this.focusToName(editedRecord),
-            () => [this.editedRecord]
-        )
+    static template = "account_move_inherit.ListRendererWithCheckbox";
 
-    }
-    onToggle(ev) {
-        console.log("test");
-        const checked = ev.target.checked;
-        console.log(`Checkbox toggled for ${column.name} on record ${record.id}:`, checked);
-
-
-        // const record = this.props.record;
-        // const fieldName = this.props.name;
-        // const checked = ev.target.checked;
-
-        // const newFlags = Object.assign({}, record.data.extra_flags || {});
-        // newFlags[fieldName] = checked;
-
-        // record.update({ extra_flags: newFlags });
-    }
-    focusToName(editRec) {
-        if (editRec && editRec.isNew && this.isSectionOrNote(editRec)) {
-            const col = this.columns.find((c) => c.name === this.titleField);
-            this.focusCell(col, null);
-        }
-    }
-
-    isSectionOrNote(record = null) {
-        record = record || this.record;
-        return ['line_section', 'line_note'].includes(record.data.display_type);
-    }
-
-    getRowClass(record) {
-        const existingClasses = super.getRowClass(record);
-        if (!record || !record.data) {
-            return existingClasses;
-        }
-        return `${existingClasses} o_is_${record.data.display_type}`;
-    }
-
-
-    getCellClass(column, record) {
-        const classNames = super.getCellClass(column, record);
-        if (this.isSectionOrNote(record) && column.widget !== "handle" && column.name !== this.titleField) {
-            return `${classNames} o_hidden`;
-        }
-        return classNames;
-    }
-
-    getColumns(record) {
-        const columns = super.getColumns(record);
-        if (this.isSectionOrNote(record)) {
-            return this.getSectionColumns(columns);
-        }
-        return columns;
-    }
-
-    getSectionColumns(columns) {
-        const sectionCols = columns.filter((col) => col.widget === "handle" || col.type === "field" && col.name === this.titleField);
-        return sectionCols.map((col) => {
-            if (col.name === this.titleField) {
-                return { ...col, colspan: columns.length - sectionCols.length + 1 };
-            } else {
-                return { ...col };
-            }
-        });
+    onToggle(record, ev) {
+        console.log("Checkbox toggled for record", record.id, "checked?", ev.target.checked);
+        // you can update the record if you want:
+        // record.update({ my_checkbox: ev.target.checked });
     }
 }
+
 export class InvoiceLineOne2ManyWithCheckbox extends X2ManyField {
     static components = {
         ...X2ManyField.components,
-        ListRenderer: InvoiceLineListRendererWithCheckbox
-    }
+        ListRenderer: InvoiceLineListRendererWithCheckbox,
+    };
 }
-export const invoiceLineRendererWithCheckbox = {
+
+registry.category("fields").add("invoiceLine_list_renderer_with_checkbox", {
     ...x2ManyField,
     component: InvoiceLineOne2ManyWithCheckbox,
-    // additionalClasses: sectionAndNoteFieldOne2Many.additionalClasses,
-};
-
-registry.category("fields").add("invoiceLine_list_renderer_with_checkbox", invoiceLineRendererWithCheckbox);
-
+});
