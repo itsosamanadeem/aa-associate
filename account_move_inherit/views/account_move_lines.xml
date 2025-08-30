@@ -12,7 +12,7 @@
                     string="Select File"
                     aria-label="Select File"
                     nolabel="1"
-                    widget="binary"
+                    widget="upload"
                     filename="attachment_name" optional="hide"/>
                 <field name="attachment_name" column_invisible="1"/>
             </xpath>
