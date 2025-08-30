@@ -30,7 +30,7 @@ export class ActiveFields extends Component {
         CheckBox,
     };
     setup() {
-        console.log('this.env', this.props.record.data);
+        // console.log('this.env', this.props.record.data);
         this.getDomain = () => {
             return [["partner_id", "=", this.props.record.data.partner_id]];
         };

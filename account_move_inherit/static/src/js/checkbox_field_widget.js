@@ -12,7 +12,10 @@ export class FieldWithCheckbox extends Component {
     };
     static components = { CheckBox };
 
-    setup() {}
+    setup() {
+        console.log('field values', this.props.record.data[this.props.name]);
+        
+    }
 
     onToggle(ev) {
         const record = this.props.record;

@@ -1,10 +1,7 @@
 <templates xml:space="preserve">
     <t t-name="account_move_inherit.FieldWithCheckbox">
         <div class="d-flex flex-row align-items-center gap-2">
-            <!-- Render the field's normal value -->
             <span><t t-esc="props.value"/></span>
-
-            <!-- Checkbox -->
             <CheckBox
                 value="props.record.data.extra_flags?.[props.name] || false"
                 t-on-change="onToggle"
