@@ -56,7 +56,12 @@ export class ActiveFields extends Component {
     onToggle(ev) {
         const record = this.props.record;
         const fieldName = this.props.name;
+
+        
         this.activeFields.toggle(record.resId, fieldName, ev.target.checked);
+
+        console.log('record', record, 'fieldName', fieldName, 'toggle', this.activeFields.toggle());
+        
     }
 
 }
