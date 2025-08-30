@@ -20,6 +20,7 @@ import {
     onWillRender,
     useExternalListener,
     useRef,
+    useEffect
 } from "@odoo/owl";
 import { CheckBox } from "@web/core/checkbox/checkbox";
 
