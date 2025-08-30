@@ -4,16 +4,21 @@ import { registry } from "@web/core/registry";
 import { ListRenderer } from "@web/views/list/list_renderer";
 import { X2ManyField, x2ManyField } from "@web/views/fields/x2many/x2many_field";
 import {
+    productLabelSectionAndNoteOne2Many,
+    ProductLabelSectionAndNoteOne2Many,
+    ProductLabelSectionAndNoteListRender,
+} from '@account/components/product_label_section_and_note_field/product_label_section_and_note_field';
+import {
+    SectionAndNoteListRenderer,
     sectionAndNoteFieldOne2Many,
 } from "@account/components/section_and_note_fields_backend/section_and_note_fields_backend";
 
-/**
- * Step 1: Custom renderer extending SectionAndNoteListRenderer
- */
-export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
-    
+export class InvoiceLineListRenderer extends ListRenderer {
+    setup() {
+        super.setup()
+        console.log('inherited');
+    }
     renderBodyCell({ column, record, isAnchor, rowIndex, colIndex }) {
-        console.log('inherited!!!!!!');
         const td = super.renderBodyCell({ column, record, isAnchor, rowIndex, colIndex });
 
         if (record.resModel === "account.move.line") {
@@ -35,22 +40,20 @@ export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
         return td;
     }
 }
-
-/**
- * Step 2: Custom X2Many using our renderer
- */
-export class InvoiceLineX2ManyWithCheckbox extends X2ManyField {
+export class InvoiceLineListRendererWithCheckbox extends X2ManyField {
     static components = {
         ...X2ManyField.components,
-        ListRenderer: InvoiceLineListRendererWithCheckbox,
+        ListRenderer: InvoiceLineListRenderer,
     };
 }
 
-/**
- * Step 3: Register widget
- */
-registry.category("fields").add("invoiceLine_list_renderer_with_checkbox", {
+export const invoiceLineListRendererWithCheckbox = {
     ...x2ManyField,
-    component: InvoiceLineX2ManyWithCheckbox,
+    component: InvoiceLineListRendererWithCheckbox,
     additionalClasses: sectionAndNoteFieldOne2Many.additionalClasses,
-});
+};
+
+registry
+    .category("fields")
+    .add("invoiceLine_list_renderer_with_checkbox", invoiceLineListRendererWithCheckbox);
+
