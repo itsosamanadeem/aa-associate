@@ -3,6 +3,7 @@
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 import { CheckBox } from "@web/core/checkbox/checkbox";
+import { Component, useState, onWillUpdateProps, onWillStart } from "@odoo/owl";
 
 export class CheckboxCheck extends Component {
     static template = "account_move_inherit.CheckboxCheck"
