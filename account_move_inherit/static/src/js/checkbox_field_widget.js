@@ -5,6 +5,13 @@ import { ListRenderer } from "@web/views/list/list_renderer";
 import { X2ManyField, x2ManyField } from "@web/views/fields/x2many/x2many_field";
 
 export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
+    setup(){
+        super.setup()
+
+        console.log('inherited');
+        
+    }
+    
     renderBodyCell({ column, record, isAnchor, rowIndex, colIndex }) {
         const td = super.renderBodyCell({ column, record, isAnchor, rowIndex, colIndex });
 
