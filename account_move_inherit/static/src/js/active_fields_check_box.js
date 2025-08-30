@@ -52,7 +52,7 @@ export class ActiveFields extends Component {
             });
         };
 
-        this.onToggle = this.onToggle.bind(this)
+        // this.onToggle = this.onToggle.bind(this)
     }
 
     onToggle(ev) {
