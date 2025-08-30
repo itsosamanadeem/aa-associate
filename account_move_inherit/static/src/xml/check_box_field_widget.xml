@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
 
     <t t-name="account_move_inherit.InvoiceLineListRendererWithCheckbox" t-inherit="web.ListRenderer.RecordRow">
-        <xpath expr="//td[hasClass('o_data_cell')]" position="inside">
+        <xpath expr="//td[hasclass('o_data_cell')]" position="inside">
             Ponka
             <!-- <td>
                 <CheckBox value="true" t-on-change="this.onToggle"/>
