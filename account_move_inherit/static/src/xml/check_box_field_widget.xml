@@ -4,12 +4,10 @@
        t-inherit="web.ListRenderer.RecordRow"
        t-inherit-mode="primary">
 
-        <xpath expr="//td[hasclass('o_data_cell cursor-pointer')]" position="inside">
-            <td class="o_list_checkbox_cell">
-                <input type="checkbox"
-                       t-att-checked="record.data.x_is_checked"
-                       t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
-            </td>
+        <xpath expr="//Field[@t-else='']" position="after">
+            <input type="checkbox"
+                    t-att-checked="record.data.x_is_checked"
+                    t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
         </xpath>
     </t>
 </templates>
