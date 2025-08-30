@@ -3,9 +3,9 @@
 
     <t t-name="account_move_inherit.InvoiceLineListRendererWithCheckbox" t-inherit="web.ListRenderer.RecordRow">
         <xpath expr="//Field[@t-else='']" position="after">
-            <td>
+            <!-- <td>
                 <CheckBox value="true" t-on-change="this.onToggle"/>
-            </td>
+            </td> -->
         </xpath>
     </t>
 

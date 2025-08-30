@@ -30,8 +30,8 @@ export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
     }
     setup() {
         super.setup()
+        console.log('inherited', this.props);
         onWillRender(()=>{
-            console.log('inherited', this.props);
         })
 
     }
