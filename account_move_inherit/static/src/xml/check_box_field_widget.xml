@@ -2,11 +2,13 @@
 <templates xml:space="preserve">
 
     <!-- Extend default record row to add a checkbox column -->
-    <t t-name="account_move_inherit.ListRendererWithCheckbox" t-inherit="web.ListRenderer" t-inherit-mode="primary">
-        <xpath expr="//tbody[hasclass('ui-sortable')]" position="inside">
-            <td>
-                <input type="checkbox"/>
-            </td>
+    <t t-name="account_move_inherit.ListRendererWithCheckbox" t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="primary">
+        <xpath expr="//Field[@t-else='']" position="inside">
+            <t t-foreach="props.list.recors" t-as="record" t-key="record.id">
+                <td>
+                    <input type="checkbox"/>
+                </td>
+            </t>
         </xpath>
     </t>
 
