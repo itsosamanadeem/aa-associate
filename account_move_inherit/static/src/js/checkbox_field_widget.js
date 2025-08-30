@@ -13,20 +13,24 @@ import {
     sectionAndNoteFieldOne2Many,
 } from "@account/components/section_and_note_fields_backend/section_and_note_fields_backend";
 
-export class InvoiceLineListRendererWithCheckbox extends ProductLabelSectionAndNoteOne2Many {
+export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
     setup() {
         super.setup()
         console.log('inherited', this.props.record);
 
     }
 }
+export class InvoiceLineOne2ManyWithCheckbox extends X2ManyField{
+    static components={
+        ...X2ManyField.components,
+        ListRenderer: InvoiceLineListRendererWithCheckbox
+    }
+}
 export const invoiceLineListRendererWithCheckbox = {
     ...x2ManyField,
     component: InvoiceLineListRendererWithCheckbox,
-    additionalClasses: sectionAndNoteFieldOne2Many.additionalClasses,
+    // additionalClasses: sectionAndNoteFieldOne2Many.additionalClasses,
 };
 
-registry
-    .category("fields")
-    .add("invoiceLine_list_renderer_with_checkbox", invoiceLineListRendererWithCheckbox);
+registry.category("fields").add("invoiceLine_list_renderer_with_checkbox", invoiceLineListRendererWithCheckbox);
 
