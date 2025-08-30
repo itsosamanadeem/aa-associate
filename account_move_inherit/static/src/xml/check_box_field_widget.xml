@@ -7,7 +7,7 @@
         <!-- Target the footer aggregate cell -->
         <xpath expr="//td[@t-if='aggregate']" position="inside">
             <CheckBox
-                value="aggregate._checked"
+                value="true"
                 t-on-change="(ev) => this.onFooterCheckboxToggle(column, aggregate, ev)"
             />
         </xpath>
