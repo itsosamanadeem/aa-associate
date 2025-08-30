@@ -1,9 +1,12 @@
 <templates xml:space="preserve">
     <t t-name="account_move_inherit.FieldWithCheckbox">
         <div class="d-flex flex-row align-items-center gap-2">
-            <span><t t-esc="props.value"/></span>
+            <!-- Render original field widget -->
+            <t t-component="props.InnerField" t-props="props" />
+
+            <!-- Extra checkbox -->
             <CheckBox
-                value="props.record.data.extra_flags?.[props.name] || false"
+                value="props.record.data.field_flags?.[props.name] || false"
                 t-on-change="onToggle"
             />
         </div>
