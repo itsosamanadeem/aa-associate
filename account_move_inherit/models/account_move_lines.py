@@ -6,6 +6,8 @@ import json
 class AccountMove(models.Model):
     _inherit = 'account.move.line'
 
+    extra_flags = fields.Json("Extra Flags", default=dict)
+    
     product_template_id = fields.Many2one(
         string="Product Variants",
         comodel_name='product.template',

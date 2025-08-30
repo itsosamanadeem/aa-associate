@@ -46,23 +46,20 @@ export class ActiveFields extends Component {
 
         };
 
-        this.onToggleActive = async () => {
-            await this.props.record.update({
-                active: !this.props.record.data.active,
-            });
-        };
-
+        this.onToggleActive = this.onToggle.bind(this)
     }
 
     onToggle(ev) {
         const record = this.props.record;
-        const fieldName = this.props.name;
+        const fieldName = this.props.name;   // e.g. "trademark_id"
+        const checked = ev.target.checked;
 
-        
-        const result=this.activeFields.toggle(record.resId, fieldName, ev.target.checked);
+        // Clone old state to avoid mutation issues
+        const newFlags = Object.assign({}, record.data.extra_flags || {});
+        newFlags[fieldName] = checked;
 
-        console.log(result);
-        
+        // Write back to DB
+        record.update({ extra_flags: newFlags });
     }
 
 }
