@@ -18,12 +18,8 @@
             <div class="d-flex align-items-center">
                 <CheckBox
                     value="props.record.data.extra_flags?.trademark_id || false"
-                    t-on-change="() => this.onToggleActive()"
+                    t-on-change="this.onToggle"
                 />
-                <!-- <input type="checkbox"
-                    t-att-checked="props.value"
-                    t-on-change="(ev)=>this.onToggle(ev)"/> -->
-                <!-- <t t-esc="props.value"/> -->
             </div>
 
         </div>

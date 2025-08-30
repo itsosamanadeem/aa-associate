@@ -46,7 +46,7 @@ export class ActiveFields extends Component {
 
         };
 
-        this.onToggleActive = this.onToggle.bind(this)
+        // this.onToggleActive = this.onToggle.bind(this)
     }
 
     onToggle(ev) {
