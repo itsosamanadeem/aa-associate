@@ -8,6 +8,8 @@ export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
     static template = "account_move_inherit.ListRendererWithCheckbox";
     setup(){
         super.setup()
+        console.log("values ", this.props);
+        
     }
     onToggle(record, ev) {
         console.log("Checkbox toggled for record", record.id, "checked?", ev.target.checked);
