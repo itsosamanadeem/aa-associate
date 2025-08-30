@@ -21,14 +21,31 @@ import {
     useExternalListener,
     useRef,
 } from "@odoo/owl";
+import { CheckBox } from "@web/core/checkbox/checkbox";
 
 export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
+    static template ="account_move_inherit.InvoiceLineListRendererWithCheckbox"
+    static components={
+        CheckBox
+    }
     setup() {
         super.setup()
         onWillRender(()=>{
             console.log('inherited', this.props);
         })
 
+    }
+    onToggle(ev) {
+        console.log("test");
+        
+        // const record = this.props.record;
+        // const fieldName = this.props.name;
+        // const checked = ev.target.checked;
+
+        // const newFlags = Object.assign({}, record.data.extra_flags || {});
+        // newFlags[fieldName] = checked;
+
+        // record.update({ extra_flags: newFlags });
     }
 }
 export class InvoiceLineOne2ManyWithCheckbox extends X2ManyField{
@@ -37,11 +54,11 @@ export class InvoiceLineOne2ManyWithCheckbox extends X2ManyField{
         ListRenderer: InvoiceLineListRendererWithCheckbox
     }
 }
-export const invoiceLineListRendererWithCheckbox = {
+export const invoiceLineRendererWithCheckbox = {
     ...x2ManyField,
     component: InvoiceLineOne2ManyWithCheckbox,
     // additionalClasses: sectionAndNoteFieldOne2Many.additionalClasses,
 };
 
-registry.category("fields").add("invoiceLine_list_renderer_with_checkbox", invoiceLineListRendererWithCheckbox);
+registry.category("fields").add("invoiceLine_list_renderer_with_checkbox", invoiceLineRendererWithCheckbox);
 
