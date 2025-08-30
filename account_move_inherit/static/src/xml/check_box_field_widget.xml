@@ -4,7 +4,7 @@
        t-inherit="web.ListRenderer.RecordRow"
        t-inherit-mode="primary">
 
-        <xpath expr="//td[hasclass('o_data_cell cursor-pointer')]" position="before">
+        <xpath expr="//td[hasclass('o_data_cell cursor-pointer')]" position="inside">
             <td class="o_list_checkbox_cell">
                 <input type="checkbox"
                        t-att-checked="record.data.x_is_checked"
