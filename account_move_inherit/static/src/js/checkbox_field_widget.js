@@ -1,38 +1,36 @@
 /** @odoo-module **/
 
 import { registry } from "@web/core/registry";
-import { CheckBox } from "@web/core/checkbox/checkbox";
-import { standardFieldProps } from "@web/views/fields/standard_field_props";
-import { Component, onWillStart } from "@odoo/owl";
+import { ListRenderer } from "@web/views/list/list_renderer";
 
-export class FieldWithCheckbox extends Component {
-    static template = "account_move_inherit.FieldWithCheckbox";
-    static props = {
-        ...standardFieldProps,
-        InnerField: { type: Object },   // original field widget
-    };
-    static components = { CheckBox };
+export class InvoiceLineRendererWithCheckbox extends ListRenderer {
+    renderBodyCell({ column, record, isAnchor, rowIndex, colIndex }) {
+        const td = super.renderBodyCell({ column, record, isAnchor, rowIndex, colIndex });
 
-    onToggle(ev) {
-        const record = this.props.record;
-        const fieldName = this.props.name;
-        const checked = ev.target.checked;
+        // only apply on invoice lines
+        if (record.model === "account.move.line") {
+            const fieldName = column.name;
 
-        const newFlags = Object.assign({}, record.data.field_flags || {});
-        newFlags[fieldName] = checked;
+            // create checkbox
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.style.marginLeft = "5px";
+            checkbox.checked = record.data.extra_flags?.[fieldName] || false;
 
-        record.update({ field_flags: newFlags });
+            checkbox.addEventListener("change", () => {
+                const newFlags = Object.assign({}, record.data.extra_flags || {});
+                newFlags[fieldName] = checkbox.checked;
+                record.update({ extra_flags: newFlags });  // updates in DB
+            });
+
+            td.appendChild(checkbox);
+        }
+
+        return td;
     }
 }
 
-registry.category("fields").add("with_checkbox", {
-    component: FieldWithCheckbox,
-    extractProps: (fieldInfo, dynamicInfo) => {
-        // wrap original field widget
-        const original = registry.category("fields").get(fieldInfo.widget || fieldInfo.type);
-        return {
-            InnerField: original.component,
-            ...dynamicInfo,
-        };
-    },
+registry.category("views").add("invoice_line_list_with_checkbox", {
+    ...registry.category("views").get("list"),
+    Renderer: InvoiceLineRendererWithCheckbox,
 });
