@@ -9,7 +9,6 @@ export class FieldWithCheckbox extends Component {
     static template = "account_move_inherit.FieldWithCheckbox";
     static props = {
         ...standardFieldProps,
-        InnerField: { type: Function },   // we’ll render the original field
     };
     static components = { CheckBox };
 

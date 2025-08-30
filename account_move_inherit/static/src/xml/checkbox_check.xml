@@ -1,9 +1,8 @@
 <templates xml:space="preserve">
     <t t-name="account_move_inherit.FieldWithCheckbox">
         <div class="d-flex flex-row align-items-center gap-2">
-            <!-- Original field -->
-            <t t-component="props.InnerField"
-               t-props="props" />
+            <!-- Render the field's normal value -->
+            <span><t t-esc="props.value"/></span>
 
             <!-- Checkbox -->
             <CheckBox
