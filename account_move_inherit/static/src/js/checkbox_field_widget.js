@@ -16,7 +16,7 @@ import {
 export class InvoiceLineListRenderer extends ListRenderer {
     setup() {
         super.setup()
-        console.log('inherited');
+        console.log('inherited!!!!!!!!');
     }
     renderBodyCell({ column, record, isAnchor, rowIndex, colIndex }) {
         const td = super.renderBodyCell({ column, record, isAnchor, rowIndex, colIndex });
