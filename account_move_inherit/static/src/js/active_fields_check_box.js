@@ -62,7 +62,7 @@ export class ActiveFields extends Component {
         
         this.activeFields.toggle(record.resId, fieldName, ev.detail);
 
-        console.log('record', record, 'fieldName', fieldName, 'toggle', ev.detail);
+        console.log('record', record, 'fieldName', fieldName, 'toggle', ev.target.checked);
         
     }
 
