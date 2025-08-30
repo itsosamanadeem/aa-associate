@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-    <t t-inherit="web.ListRenderer.RecordRow"
-       t-inherit-mode="extension"
-       t-name="account_move_inherit.ListRendererWithCheckboxPerField">
+    <t t-inherit="web.ListRenderer"
+       t-inherit-mode="primary"
+       t-name="account_move_inherit.ListRendererWithFooterCheckbox">
 
-        <!-- After each <Field ...> add a CheckBox -->
-        <xpath expr="//Field[@t-else='']" position="after">
+        <!-- Target the footer aggregate cell -->
+        <xpath expr="//td[@t-if='aggregate']" position="inside">
             <CheckBox
-                value="record.data[column.name + '_checked'] || true"
-                t-on-change="(ev) => this.onToggle(record, column, ev)"
+                value="aggregate._checked"
+                t-on-change="(ev) => this.onFooterCheckboxToggle(column, aggregate, ev)"
             />
         </xpath>
 
