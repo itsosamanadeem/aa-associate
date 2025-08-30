@@ -26,9 +26,15 @@ import { CheckBox } from "@web/core/checkbox/checkbox";
 
 export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
     static template = "account_move_inherit.ListRendererWithFooterCheckbox"
-    static components = {
-        CheckBox
-    }
+    // static components = {
+    //     CheckBox
+    // }
+    /**
+     * The purpose of this extension is to allow sections and notes in the one2many list
+     * primarily used on Sales Orders and Invoices
+     *
+     * @override
+     */
     setup() {
         super.setup()
         console.log('inherited', this.props);

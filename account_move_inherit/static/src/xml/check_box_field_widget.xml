@@ -1,13 +1,10 @@
 <templates xml:space="preserve">
 
-    <t t-inherit="web.ListRenderer"
-       t-inherit-mode="extension"
-       t-name="account_move_inherit.ListRendererWithFooterCheckbox">
+    <t t-name="account_move_inherit.ListRendererWithFooterCheckbox" t-inherit="web.ListRenderer" t-inherit-mode="primary">
 
         <xpath expr="//td[@t-if='aggregate']" position="inside">
-            <CheckBox
-                value="true"
-            />
+            <!-- <CheckBox value="true" /> -->
+            Ponka
         </xpath>
 
     </t>
