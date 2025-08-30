@@ -16,7 +16,8 @@ import {
 export class InvoiceLineListRendererWithCheckbox extends ProductLabelSectionAndNoteOne2Many {
     setup() {
         super.setup()
-        console.log('inherited');
+        console.log('inherited', this.props.record);
+
     }
 }
 export const invoiceLineListRendererWithCheckbox = {
