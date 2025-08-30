@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-    <t t-name="account_move_inherit.InvoiceLineListRendererWithCheckbox" t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="extension">
-        <xpath expr="//td[hasclass('o_data_cell')]" position="inside">
-            <!-- Ponka -->
-            <CheckBox value="true" t-on-change="this.onToggle"/>
-            <!-- <td>
-            </td> -->
+    <t t-inherit="web.ListRenderer.RecordRow"
+       t-inherit-mode="extension"
+       t-name="account_move_inherit.ListRendererWithCheckboxPerField">
+
+        <!-- After each <Field ...> add a CheckBox -->
+        <xpath expr="//Field[@t-else='']" position="after">
+            <CheckBox
+                value="record.data[column.name + '_checked'] || true"
+                t-on-change="(ev) => this.onToggle(record, column, ev)"
+            />
         </xpath>
+
     </t>
 
 </templates>

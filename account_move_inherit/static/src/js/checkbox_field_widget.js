@@ -26,6 +26,7 @@ import { CheckBox } from "@web/core/checkbox/checkbox";
 export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
     static template ="account_move_inherit.InvoiceLineListRendererWithCheckbox"
     static components={
+        ...ListRenderer.components,
         CheckBox
     }
     setup() {
@@ -37,7 +38,10 @@ export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
     }
     onToggle(ev) {
         console.log("test");
-        
+        const checked = ev.target.checked;
+        console.log(`Checkbox toggled for ${column.name} on record ${record.id}:`, checked);
+
+
         // const record = this.props.record;
         // const fieldName = this.props.name;
         // const checked = ev.target.checked;
