@@ -4,11 +4,13 @@ import { registry } from "@web/core/registry";
 export const activeFieldsService = {
     dependencies: [],
     start() {
-        let state = {};  // {line_id: {field_name: true/false}}
+        let state = {}; 
 
         return {
             getState: () => state,
             toggle(lineId, fieldName, value) {
+                console.log('line id', lineId, 'fieldName',fieldName, 'value', value);
+                
                 if (!state[lineId]) {
                     state[lineId] = {};
                 }
