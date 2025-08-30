@@ -16,10 +16,13 @@
 
             <!-- Checkbox -->
             <div class="d-flex align-items-center">
-                <CheckBox
+                <!-- <CheckBox
                     value="true"
                     t-on-change="() => this.onToggleActive()"
-                />
+                /> -->
+                <input type="checkbox"
+                    t-att-checked="props.value"
+                    t-on-change="() => this.onToggle(props.record, props.name, $event)"/>
             </div>
 
         </div>

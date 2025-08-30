@@ -31,6 +31,7 @@ export class ActiveFields extends Component {
     };
     setup() {
         console.log('this.env', this.props.record.data);
+        this.activeFields = useService("active_fields_service");
         this.getDomain = () => {
             return [["partner_id", "=", this.props.record.data.partner_id]];
         };
@@ -50,6 +51,10 @@ export class ActiveFields extends Component {
                 active: !this.props.record.data.active,
             });
         };
+    }
+
+    onToggle(record, fieldName, ev) {
+        this.activeFields.toggle(record.resId, fieldName, ev.target.checked);
     }
 }
 export const active_fields = {
