@@ -51,6 +51,8 @@ export class ActiveFields extends Component {
                 active: !this.props.record.data.active,
             });
         };
+
+        // this.onToggle = this.onToggle.bind(this)
     }
 
     onToggle(ev) {
