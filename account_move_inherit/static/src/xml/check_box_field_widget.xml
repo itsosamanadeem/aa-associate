@@ -2,8 +2,12 @@
 <templates xml:space="preserve">
 
     <t t-name="account_move_inherit.ListRendererWithFooterCheckbox" t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="primary">
-        <xpath expr="//Field[@t-else='']" position="inside">
-            Ponka
+        <xpath expr="//td[last()]" position="after">
+            <td>
+                <CheckBox
+                    value="false"
+                />
+            </td>
         </xpath>
     </t>
 
@@ -11,4 +15,5 @@
 
             <!-- <td>
                 <CheckBox value="true" t-on-change="this.onToggle"/>
+                    t-on-change="(ev) => this.onToggle(record, ev)"
             </td> -->

@@ -89,8 +89,12 @@ export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
 
     getRowClass(record) {
         const existingClasses = super.getRowClass(record);
+        if (!record || !record.data) {
+            return existingClasses;
+        }
         return `${existingClasses} o_is_${record.data.display_type}`;
     }
+
 
     getCellClass(column, record) {
         const classNames = super.getCellClass(column, record);
