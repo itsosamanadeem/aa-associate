@@ -11,7 +11,9 @@ import {
  * Step 1: Custom renderer extending SectionAndNoteListRenderer
  */
 export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
+    
     renderBodyCell({ column, record, isAnchor, rowIndex, colIndex }) {
+        console.log('inherited!!!!!!');
         const td = super.renderBodyCell({ column, record, isAnchor, rowIndex, colIndex });
 
         if (record.resModel === "account.move.line") {
