@@ -12,11 +12,22 @@ import {
     SectionAndNoteListRenderer,
     sectionAndNoteFieldOne2Many,
 } from "@account/components/section_and_note_fields_backend/section_and_note_fields_backend";
+import {
+    Component,
+    onMounted,
+    onPatched,
+    onWillPatch,
+    onWillRender,
+    useExternalListener,
+    useRef,
+} from "@odoo/owl";
 
 export class InvoiceLineListRendererWithCheckbox extends ListRenderer {
     setup() {
         super.setup()
-        console.log('inherited', this.props);
+        onWillRender(()=>{
+            console.log('inherited', this.props);
+        })
 
     }
 }
