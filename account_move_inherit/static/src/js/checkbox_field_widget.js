@@ -17,10 +17,13 @@ export class InvoiceLineListRenderer extends ListRenderer {
     setup() {
         super.setup()
         console.log('inherited!!!!!!!!');
+
+        // this.renderBodyCell({column, record, isAnchor, rowIndex, colIndex})
     }
     renderBodyCell({ column, record, isAnchor, rowIndex, colIndex }) {
         const td = super.renderBodyCell({ column, record, isAnchor, rowIndex, colIndex });
-
+        console.log(td);
+        
         if (record.resModel === "account.move.line") {
             const fieldName = column.name;
 
