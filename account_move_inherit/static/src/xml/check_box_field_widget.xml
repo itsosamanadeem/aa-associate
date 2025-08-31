@@ -11,21 +11,11 @@
                     <Field t-else="" name="column.name" record="record" type="column.widget" class="getFieldClass(column)" fieldInfo="column" t-props="getFieldProps(record, column)"/>
                 </div>
                 <div>
-                    <t t-esc="column.name"/>
-                    <CheckBox value="true" t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
-                    <!-- <input type="checkbox"
-                        class="ms-auto"
-                        t-att-checked="record.data.x_is_checked"
-                        t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/> -->
+                    <t t-if="column.name != 'sequence'" >
+                        <CheckBox value="true" t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
+                    </t>
                 </div>
             </div>
         </t>
-        <!-- Inside every field cell -->
-        <!-- <xpath expr="//td[hasclass('o_data_cell cursor-pointer')]" position="inside">
-            <div class="d-flex justify-between align-items-center w-100">
-            </div>
-        </xpath> -->
     </t>
 </templates>
-
-                <!-- checkbox aligned to the right -->
