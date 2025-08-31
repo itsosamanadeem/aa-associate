@@ -5,9 +5,16 @@
        t-inherit-mode="primary">
 
         <xpath expr="//Field[@t-else='']" position="after">
-            <input type="checkbox"
+            <CheckBox
+                value="true"
+                t-on-change="this.onToggle"
+            />
+            <!-- <input type="checkbox"
                     t-att-checked="record.data.x_is_checked"
-                    t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
+                    t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/> -->
+        </xpath>
+        <xpath expr="//Field[@t-else='']" position="attributes">
+            <attribute name="class" add="d-flex flex-wrap gap-1" separator=" "/>
         </xpath>
     </t>
 </templates>
