@@ -10,7 +10,7 @@
                     t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
         </xpath>
         <xpath expr="//td[hasclass('o_data_cell cursor-pointer')]" position="attributes">
-            <attribute name="class" add="d-flex flex-wrap gap-1" separator=" "/>
+            <attribute name="class" add="d-flex gap-1" separator=" "/>
         </xpath>
     </t>
 </templates>
