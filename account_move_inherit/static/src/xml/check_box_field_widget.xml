@@ -12,10 +12,11 @@
                 </div>
                 <t t-esc="record.name"/>
                 <div>
-                    <input type="checkbox"
+                    <CheckBox value="true" t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
+                    <!-- <input type="checkbox"
                         class="ms-auto"
                         t-att-checked="record.data.x_is_checked"
-                        t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
+                        t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/> -->
                 </div>
             </div>
         </t>
