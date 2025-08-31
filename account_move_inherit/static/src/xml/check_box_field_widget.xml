@@ -4,15 +4,22 @@
        t-inherit="web.ListRenderer.RecordRow"
        t-inherit-mode="primary">
 
+        <t t-if="!isInvisible" position="replace">
+            <div class="d-flex justify-between align-items-center gap-1">
+                <t t-if="canUseFormatter(column, record)" t-out="getFormattedValue(column, record)"/>
+                <Field t-else="" name="column.name" record="record" type="column.widget" class="getFieldClass(column)" fieldInfo="column" t-props="getFieldProps(record, column)"/>
+            </div>
+        </t>
         <!-- Inside every field cell -->
-        <xpath expr="//td[hasclass('o_data_cell cursor-pointer')]" position="inside">
+        <!-- <xpath expr="//td[hasclass('o_data_cell cursor-pointer')]" position="inside">
             <div class="d-flex justify-between align-items-center w-100">
-                <!-- checkbox aligned to the right -->
                 <input type="checkbox"
                        class="ms-auto"
                        t-att-checked="record.data.x_is_checked"
                        t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
             </div>
-        </xpath>
+        </xpath> -->
     </t>
 </templates>
+
+                <!-- checkbox aligned to the right -->
