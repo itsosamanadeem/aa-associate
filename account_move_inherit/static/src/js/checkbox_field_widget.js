@@ -8,7 +8,11 @@ import { CheckBox } from "@web/core/checkbox/checkbox";
 export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
     static components = { ...ListRenderer.components, CheckBox };
     static recordRowTemplate = "account_move_inherit.ListRenderer.RecordRowWithCheckbox";
-
+    setup(){
+        super.setup()
+        console.log('record!!!!', this.props);
+        
+    }
     onFieldCheckboxToggle(record, ev) {
         const checked = ev.target.checked;
         console.log(`Row checkbox for record ${record.id}:`, checked);
