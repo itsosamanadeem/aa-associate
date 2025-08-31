@@ -14,10 +14,5 @@
                        t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
             </div>
         </xpath>
-
-        <!-- Optional: clean up td style -->
-        <xpath expr="//td[hasclass('o_data_cell cursor-pointer')]" position="attributes">
-            <attribute name="class" add="d-flex gap-2 align-items-center" separator=" "/>
-        </xpath>
     </t>
 </templates>
