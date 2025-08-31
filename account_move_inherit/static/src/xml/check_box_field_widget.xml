@@ -7,9 +7,6 @@
         <!-- Inside every field cell -->
         <xpath expr="//td[hasclass('o_data_cell cursor-pointer')]" position="inside">
             <div class="d-flex justify-between align-items-center w-100">
-                <!-- existing field rendering -->
-                <t t-foreach="0" /> <!-- placeholder so Odoo doesn't break -->
-
                 <!-- checkbox aligned to the right -->
                 <input type="checkbox"
                        class="ms-auto"
