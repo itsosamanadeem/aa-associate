@@ -14,14 +14,16 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
         
     }
     onToggle(ev) {
-        const record = this.props.record;
-        const fieldName = this.props.name;
-        const checked = ev.target.checked;
+        console.log('update extra_flag');
+        
+        // const record = this.props.record;
+        // const fieldName = this.props.name;
+        // const checked = ev.target.checked;
 
-        const newFlags = Object.assign({}, record.data.extra_flags || {});
-        newFlags[fieldName] = checked;
+        // const newFlags = Object.assign({}, record.data.extra_flags || {});
+        // newFlags[fieldName] = checked;
 
-        record.update({ extra_flags: newFlags });
+        // record.update({ extra_flags: newFlags });
     }
 
 }
