@@ -13,7 +13,7 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
         console.log('record', this.props);
         
     }
-    onToggle(ev) {
+    onFieldCheckboxToggle(record,ev) {
         console.log('update extra_flag');
         
         // const record = this.props.record;

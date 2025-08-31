@@ -5,13 +5,9 @@
        t-inherit-mode="primary">
 
         <xpath expr="//Field[@t-else='']" position="after">
-            <CheckBox
-                value="true"
-                t-on-change="this.onToggle"
-            />
-            <!-- <input type="checkbox"
+            <input type="checkbox"
                     t-att-checked="record.data.x_is_checked"
-                    t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/> -->
+                    t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
         </xpath>
         <xpath expr="//td[hasclass('o_data_cell cursor-pointer')]" position="attributes">
             <attribute name="class" add="d-flex flex-wrap gap-1" separator=" "/>
