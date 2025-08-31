@@ -11,7 +11,7 @@
                     <Field t-else="" name="column.name" record="record" type="column.widget" class="getFieldClass(column)" fieldInfo="column" t-props="getFieldProps(record, column)"/>
                 </div>
                 <div>
-                    <t t-esc="record.name"/>
+                    <t t-esc="column.name"/>
                     <CheckBox value="true" t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
                     <!-- <input type="checkbox"
                         class="ms-auto"
