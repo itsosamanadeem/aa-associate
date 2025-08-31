@@ -4,13 +4,23 @@
        t-inherit="web.ListRenderer.RecordRow"
        t-inherit-mode="primary">
 
-        <xpath expr="//Field[@t-else='']" position="after">
-            <input type="checkbox"
-                    t-att-checked="record.data.x_is_checked"
-                    t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
+        <!-- Inside every field cell -->
+        <xpath expr="//td[hasclass('o_data_cell cursor-pointer')]" position="inside">
+            <div class="d-flex justify-between align-items-center w-100">
+                <!-- existing field rendering -->
+                <t t-foreach="0" /> <!-- placeholder so Odoo doesn't break -->
+
+                <!-- checkbox aligned to the right -->
+                <input type="checkbox"
+                       class="ms-auto"
+                       t-att-checked="record.data.x_is_checked"
+                       t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
+            </div>
         </xpath>
+
+        <!-- Optional: clean up td style -->
         <xpath expr="//td[hasclass('o_data_cell cursor-pointer')]" position="attributes">
-            <attribute name="class" add="d-flex gap-1" separator=" "/>
+            <attribute name="class" add="d-flex gap-2 align-items-center" separator=" "/>
         </xpath>
     </t>
 </templates>
