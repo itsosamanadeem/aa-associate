@@ -12,7 +12,10 @@
                 </div>
                 <div>
                     <t t-if="column.name != 'sequence'" >
-                        <CheckBox value="true" t-on-change="(ev) => this.onFieldCheckboxToggle(record, ev)"/>
+                        <CheckBox 
+                            t-att-checked="record.data.extra_flags &amp;&amp; record.data.extra_flags[column.name]"
+                            t-on-change="(ev) => this.onFieldCheckboxToggle(record, column.name, ev)"
+                        />
                     </t>
                 </div>
             </div>

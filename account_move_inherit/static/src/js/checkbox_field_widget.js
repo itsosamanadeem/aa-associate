@@ -12,23 +12,21 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
     static props = {
         ...standardFieldProps,
     }
-    setup(){
+    setup() {
         super.setup()
         // console.log('record!!!!', this.props);
-        
-    }
-    onFieldCheckboxToggle(record, ev) {
-        const rec = record
-        const fieldName= this.props.name
-        const checked = ev.target.checked;
 
-        console.log('rec', rec, 'fieldName', fieldName, 'checked', checked);
-        
-        const newFlags = Object.assign({}, rec.data.extra_flags || {});
+    }
+    onFieldCheckboxToggle(record, fieldName, ev) {
+        const checked = ev.target.checked;
+        console.log('rec', record, 'fieldName', fieldName, 'checked', checked);
+
+        const newFlags = Object.assign({}, record.data.extra_flags || {});
         newFlags[fieldName] = checked;
 
         record.update({ extra_flags: newFlags });
     }
+
 }
 
 export class InvoiceLineOne2ManyWithFieldCheckbox extends X2ManyField {
