@@ -10,7 +10,7 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
     static recordRowTemplate = "account_move_inherit.ListRenderer.RecordRowWithCheckbox";
     setup(){
         super.setup()
-        console.log('record!!!!', this.props);
+        // console.log('record!!!!', this.props);
         
     }
     onFieldCheckboxToggle(record, ev) {
