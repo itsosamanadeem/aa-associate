@@ -4,20 +4,30 @@ import { registry } from "@web/core/registry";
 import { ListRenderer } from "@web/views/list/list_renderer";
 import { X2ManyField, x2ManyField } from "@web/views/fields/x2many/x2many_field";
 import { CheckBox } from "@web/core/checkbox/checkbox";
+import { standardFieldProps } from "@web/views/fields/standard_field_props";
 
 export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
     static components = { ...ListRenderer.components, CheckBox };
     static recordRowTemplate = "account_move_inherit.ListRenderer.RecordRowWithCheckbox";
+    static props = {
+        ...standardFieldProps,
+    }
     setup(){
         super.setup()
         // console.log('record!!!!', this.props);
         
     }
     onFieldCheckboxToggle(record, ev) {
-        console.log('this is the passing record', record);
-        
+        const rec = record
+        const fieldName= this.props.name
         const checked = ev.target.checked;
-        console.log(`Row checkbox for record ${record.id}:`, checked);
+
+        console.log('rec', rec, 'fieldName', fieldName, 'checked', checked);
+        
+        const newFlags = Object.assign({}, rec.data.extra_flags || {});
+        newFlags[fieldName] = checked;
+
+        record.update({ extra_flags: newFlags });
     }
 }
 
