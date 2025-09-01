@@ -47,7 +47,7 @@
                 <field name="country_id" optional="hide"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='country_id']" position="after">
-                <field name="city_selection" widget="badge" optional="hide"/>
+                <field name="city_selection" optional="hide"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='product_template_id']" position="after">
                 <field name="filing_date" optional="hide" />
