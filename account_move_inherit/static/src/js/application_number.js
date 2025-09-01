@@ -3,12 +3,15 @@
 import { registry } from "@web/core/registry";
 import { Component, useState, onWillUpdateProps, onWillStart } from "@odoo/owl";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
-
+import { Field } from "@web/views/fields/field";
 export class ApplicationNumberField extends Component {
     static template = "account_move_inherit.ApplicationNumberField";
     static props = {
         ...standardFieldProps,
     };
+    static components={
+        Field,
+    }
     setup() {
         
         let initialValue = this.props.record.data[this.props.name];
