@@ -12,10 +12,6 @@
                 </div>
                 <div>
                     <t t-if="column.name != 'sequence'" >
-                        <!-- <CheckBox 
-                            value="record.data.extra_flags[column.name] || false"
-                            t-on-change="(ev) => this.onFieldCheckboxToggle(record, column.name, ev)"
-                        /> -->
                         <CheckBox 
                             value="record.data.extra_flags 
                                 &amp;&amp; record.data.extra_flags[record.resId || record.id] 

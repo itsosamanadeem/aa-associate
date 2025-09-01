@@ -14,18 +14,14 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
     }
     onFieldCheckboxToggle(record, fieldName, ev) {
         const checked = ev.target.checked;
-        const recId = record.resId || record.id;   // use real db ID if exists, else virtual ID
+        const recId = record.resId || record.id;   
         console.log('Toggle for', recId, fieldName, checked);
 
-        // Clone current flags
         const newFlags = Object.assign({}, record.data.extra_flags || {});
 
-        // Ensure line entry exists
         if (!newFlags[recId]) {
             newFlags[recId] = [];
         }
-
-        // Add or remove field from array
         if (checked) {
             if (!newFlags[recId].includes(fieldName)) {
                 newFlags[recId].push(fieldName);
