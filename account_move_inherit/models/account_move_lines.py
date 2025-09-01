@@ -10,7 +10,7 @@ class AccountMove(models.Model):
     extra_flags = fields.Json("Extra Flags", default=dict)
     
     product_template_id = fields.Many2one(
-        string="Product Variants",
+        string="Classes",
         comodel_name='product.template',
         compute='_compute_product_template_id',
         search='_search_product_template_id',
@@ -107,14 +107,15 @@ class AccountMove(models.Model):
             return ""
 
         value = getattr(self, field_name, False)
-
         if not value:
             return ""
 
         # Handle Many2one
         if field.type == "many2one":
-            if field.string=="Trademark":
+            if field.name == "trademark_id" and value:
                 return value.trademark_name
+            if field.name == "product_template_id" and self.selected_variant_names:
+                return ", ".join(self.selected_variant_names or [])
             return value.display_name
 
         # Handle Date / Datetime
@@ -123,18 +124,26 @@ class AccountMove(models.Model):
         if field.type == "datetime":
             return fields.Datetime.to_string(value)
 
-        # Handle Binary
+        # Handle Binary (image/logo)
         if field.type == "binary":
-            # value is already base64-encoded in Odoo
-            return f"data:image/png;base64,{value}"
-        
+            mimetype = "image/png"  # default
+            if hasattr(self, "logo_attachment_id") and self.attachment_name:
+                if self.attachment_name.lower().endswith(".jpg") or self.attachment_name.lower().endswith(".jpeg"):
+                    mimetype = "image/jpeg"
+                elif self.attachment_name.lower().endswith(".gif"):
+                    mimetype = "image/gif"
+                elif self.attachment_name.lower().endswith(".svg"):
+                    mimetype = "image/svg+xml"
+            return f"data:{mimetype};base64,{value}"
+
+        # Handle Dict
         if isinstance(value, dict):
-            # "Class 1: 8, Class 2: 10"
             return ", ".join(f"{k}: {v}" for k, v in value.items())
 
-        # Handle List
+        # Handle List/Tuple
         if isinstance(value, (list, tuple)):
             return ", ".join(str(v) for v in value)
-        
+
         # Default fallback
         return str(value)
+
