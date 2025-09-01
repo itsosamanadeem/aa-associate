@@ -23,6 +23,15 @@
                 <field name="trademark_id" optional="hide" />
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='attachment_name']" position="after">
+                <field name="rectification_no" optional="hide" />
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='attachment_name']" position="after">
+                <field name="registration_no" optional="hide" />
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='product_template_id']" position="after">
+                <field name="filing_date" optional="hide" />
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='attachment_name']" position="after">
                 <field name="opposition_number" widget="application_number_field" optional="hide"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='trademark_id']" position="after">

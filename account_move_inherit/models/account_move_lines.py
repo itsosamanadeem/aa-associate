@@ -7,6 +7,7 @@ from odoo.tools import format_date
 class AccountMove(models.Model):
     _inherit = 'account.move.line'
 
+    
     product_id = fields.Many2one(
         comodel_name='product.product',
         string='Description of service',
@@ -28,12 +29,23 @@ class AccountMove(models.Model):
     
     opposition_number = fields.Json(
         string="Opposition Number",
-        help="Stores mapping of variant → input value",
+        help="Stores mapping of classes → input value",
+        store=True
+    )
+    filing_date= fields.Date(String="Filing Date")
+    rectification_no = fields.Json(
+        string="Rectification Number",
+        help="Stores mapping of classes → input value",
+        store=True
+    )
+    registration_no =fields.Json(
+        string="Registration Number",
+        help="Stores mapping of classes → input value",
         store=True
     )
     application_variant_data = fields.Json(
         string="Application Number",
-        help="Stores mapping of variant → input value",
+        help="Stores mapping of classes → input value",
         store=True
     )
     selected_variant_ids = fields.Json(
