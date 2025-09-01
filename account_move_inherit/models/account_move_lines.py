@@ -125,7 +125,15 @@ class AccountMove(models.Model):
 
         # Handle Binary
         if field.type == "binary":
-            return "[Binary Data]"
+            return f"/web/image/{self._name}/{self.id}/{field_name}"
+        
+        if isinstance(value, dict):
+            # "Class 1: 8, Class 2: 10"
+            return ", ".join(f"{k}: {v}" for k, v in value.items())
 
+        # Handle List
+        if isinstance(value, (list, tuple)):
+            return ", ".join(str(v) for v in value)
+        
         # Default fallback
         return str(value)
