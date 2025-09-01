@@ -126,7 +126,9 @@ class AccountMove(models.Model):
 
         # Handle Binary (image/logo)
         if field.type == "binary":
-            raise UserError(value)
+            # raise UserError(value)
+            if isinstance(value, bytes):
+                value = value.decode("utf-8")
             mimetype = "image/png"  # default
             if hasattr(self, "logo_attachment_id") and self.attachment_name:
                 if self.attachment_name.lower().endswith(".jpg") or self.attachment_name.lower().endswith(".jpeg"):
