@@ -10,12 +10,12 @@
                     </em>
                 </div>
                 <div>
-                    <Field
-                        name="'dynamic_field_' + variant_name"
-                        type="'integer'"
-                        value="state.values[variant_name] || 0"
-                        onChange="(val) => this.onValueChange(variant_name, val)"
-                    />
+                    <input type="number"
+                           class="form-control"
+                           style="width:100px !important;"
+                           t-att-value="state.values[variant_name] || ''"
+                           t-att-readonly="this.props.record._parentRecord.data.state !== 'draft'"
+                           t-on-change="(ev) => this.onValueChange(variant_name, ev.target.value)"/>
                 </div>
             </div>
         </t>
