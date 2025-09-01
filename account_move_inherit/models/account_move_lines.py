@@ -93,13 +93,8 @@ class AccountMove(models.Model):
         # raise UserError(_("Application Number: %s") % self.application_id)
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
     
-    def get_dynamic_field(self, field_name):
-        """
-        Returns a (record, field_name) tuple that QWeb can use with t-field.
-        Example: line.get_dynamic_field("product_id") -> (line, "product_id")
-        """
-        if not field_name:
-            return None
-        if hasattr(self, field_name):
-            return (self, field_name)
-        return None
+    def get_field_label(self, field_name):
+        field = self._fields.get(field_name)
+        if field:
+            return field.string
+        return field_name
