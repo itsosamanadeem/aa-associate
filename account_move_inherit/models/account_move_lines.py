@@ -125,7 +125,8 @@ class AccountMove(models.Model):
 
         # Handle Binary
         if field.type == "binary":
-            return f"/web/image/{self._name}/{self.id}/{field_name}"
+            # value is already base64-encoded in Odoo
+            return f"data:image/png;base64,{value}"
         
         if isinstance(value, dict):
             # "Class 1: 8, Class 2: 10"
