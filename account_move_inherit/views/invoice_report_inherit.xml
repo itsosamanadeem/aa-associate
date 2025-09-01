@@ -20,7 +20,7 @@
                             <t t-foreach="headers" t-as="header">
                                 <td>
                                     <t t-if="line._fields.get(header) and line._fields.get(header).type == 'binary'">
-                                        <img t-att-src="line.get_field_value(header)" style="height:150px; width:150px;"/>
+                                        <img t-att-src="line.get_field_value(header)" style="height:80px; width:80px;"/>
                                     </t>
                                     <t t-else="">
                                         <t t-esc="line.get_field_value(header) or '-'"/>
