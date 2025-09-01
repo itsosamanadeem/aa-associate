@@ -7,6 +7,7 @@ from odoo.tools import format_date
 class AccountMove(models.Model):
     _inherit = 'account.move.line'
 
+    # product
     extra_flags = fields.Json("Extra Flags", default=dict)
     
     product_template_id = fields.Many2one(

@@ -12,11 +12,11 @@
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='product_id']" position="after">
                 <field name="logo_attachment_id"
-                    string="Select File"
+                    string="Logo Attachment"
                     aria-label="Select File"
-                    nolabel="1"
                     widget="binary"
-                    filename="attachment_name" optional="hide"/>
+                    filename="attachment_name"
+                    optional="hide"/>
                 <field name="attachment_name" column_invisible="1"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='attachment_name']" position="after">
