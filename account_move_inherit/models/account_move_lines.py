@@ -2,6 +2,7 @@
 from odoo import models, api, _ , fields
 from odoo.exceptions import UserError
 import json
+from odoo.tools import format_date
 
 class AccountMove(models.Model):
     _inherit = 'account.move.line'
@@ -98,3 +99,33 @@ class AccountMove(models.Model):
         if field:
             return field.string
         return field_name
+
+    def get_field_value(self, field_name):
+        """Return a display-ready value for a given field name"""
+        field = self._fields.get(field_name)
+        if not field:
+            return ""
+
+        value = getattr(self, field_name, False)
+
+        if not value:
+            return ""
+
+        # Handle Many2one
+        if field.type == "many2one":
+            if field.string=="Trademark":
+                return value.trademark_name
+            return value.display_name
+
+        # Handle Date / Datetime
+        if field.type == "date":
+            return format_date(self.env, value)
+        if field.type == "datetime":
+            return fields.Datetime.to_string(value)
+
+        # Handle Binary
+        if field.type == "binary":
+            return "[Binary Data]"
+
+        # Default fallback
+        return str(value)
