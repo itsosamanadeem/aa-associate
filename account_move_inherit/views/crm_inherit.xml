@@ -15,7 +15,7 @@
                                         <group>
                                             <field name="trademark_name"/>
                                             <field name="trademark_number"/>
-                                            <!-- <field name="trademark_price" /> -->
+                                            <field name="trademark_price" invisible="1"/>
                                         </group>
                                     </group>
                                     <field name="name"/>
