@@ -56,17 +56,19 @@
                                 </td>
                                 <td>
                                     <t t-set="class_count" t-value="len(line.selected_variant_names or [])"/>
-                                    <t t-set="unit_price" t-value="line.price_unit"/>
-                                    <t t-set="fee_total" t-value="class_count * unit_price"/>
-                                    <t t-if="class_count != 0">
-                                        <span>
-                                            <t t-esc="unit_price"/> * <t t-esc="class_count"/> = <t t-esc="fee_total"/>
-                                        </span>
-                                    </t>
-                                    <t t-else="">
-                                        <span>
-                                            <t t-esc="unit_price"/>
-                                        </span>
+                                    <t t-if="line.name == 'Professional Fees'">
+                                        <t t-set="unit_price" t-value="line.price_unit"/>
+                                        <t t-set="fee_total" t-value="class_count * unit_price"/>
+                                        <t t-if="class_count != 0">
+                                            <span>
+                                                <t t-esc="unit_price"/> * <t t-esc="class_count"/> = <t t-esc="fee_total"/>
+                                            </span>
+                                        </t>
+                                        <t t-else="">
+                                            <span>
+                                                <t t-esc="unit_price"/>
+                                            </span>
+                                        </t>
                                     </t>
                                 </td>
                             </tr>

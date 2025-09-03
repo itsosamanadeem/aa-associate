@@ -31,20 +31,19 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
             newFlags[recId] = newFlags[recId].filter(f => f !== fieldName);
         }
 
-        // ✅ Custom sorting
         const priority = {
             product_id: 1,
             log_attachment_id: 2,
-            price_unit: 9999, // ensure it's always at the end
+            price_unit: 9999, 
         };
 
         newFlags[recId] = newFlags[recId].sort((a, b) => {
-            const pa = priority[a] || 100;  // default priority for others
+            const pa = priority[a] || 100;  
             const pb = priority[b] || 100;
             if (pa !== pb) {
-                return pa - pb;  // compare by priority
+                return pa - pb;  
             }
-            return a.localeCompare(b);  // same priority → alphabetical
+            return a.localeCompare(b); 
         });
 
         record.update({ extra_flags: newFlags });
