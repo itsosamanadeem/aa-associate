@@ -12,7 +12,6 @@ class ResPartnerTrademark(models.Model):
     trademark_number = fields.Char(string="Trademark Number")
     name = fields.Char(string="Display Name")  
     trademark_price = fields.Float(string="Trademark Price", default=0.0)
-    
     @api.model
     def create(self, vals):
         """Auto-fill partner name if coming from Partner form context"""
