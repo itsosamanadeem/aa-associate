@@ -38,13 +38,26 @@ export class ApplicationNumberField extends Component {
         if (parseInt(newValue) < 0) {
             return;
         }
+
+        // Update the value for this variant
         this.state.values[variant_name] = parseInt(newValue) || 0;
+
+        // Keep only currently selected variants
+        const filteredValues = Object.fromEntries(
+            Object.entries(this.state.values).filter(([key]) =>
+                this.state.variant_names.includes(key)
+            )
+        );
+
+        // Replace state and update record
+        this.state.values = filteredValues;
         this.props.record.update({
-            [this.props.name]: this.state.values,
+            [this.props.name]: filteredValues,
         });
 
-        console.log("Updated values:", this.state.values);
+        console.log("Updated values:", filteredValues);
     }
+
 
 }
 
