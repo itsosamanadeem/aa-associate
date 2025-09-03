@@ -8,7 +8,7 @@
             <xpath expr="//form/sheet/notebook" position="inside">
                 <page string="Trademark History" name="trademark_history_page">
                     <field name="trademark_history_ids">
-                        <tree >
+                        <list >
                             <field name="name"/>
                             <!-- <field name="services_taken"/> -->
                             <!-- <field name="start_date"/> -->
@@ -18,7 +18,7 @@
                             <!-- <field name="fee_per_class"/> -->
                             <!-- <field name="currency_id"/> -->
                             <!-- <field name="status"/> -->
-                        </tree>
+                        </list>
                         <form>
                             <sheet>
                                 <group>
