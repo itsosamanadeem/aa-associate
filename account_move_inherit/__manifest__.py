@@ -23,7 +23,7 @@ the Sale Order product configurator.
         'contacts',
     ],
     'data': [
-        "security/security_groups.xml",
+        "security/security_group.xml",
         'security/ir.model.access.csv',
         'views/account_move_lines.xml',
         'views/crm_inherit.xml',
