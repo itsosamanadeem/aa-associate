@@ -85,7 +85,7 @@ class AccountMove(models.Model):
             if not price_list:
                 raise UserError(_("No price list items found for the selected partner."))
             if self.product_id in price_list.mapped('services_taken'):
-                self.price_unit = price_list.filtered(lambda x : x.tradmark_id == self.trademark_id).fee_per_class
+                self.price_unit = price_list.filtered(lambda x : x.trademark_id == self.trademark_id).fee_per_class
             # if self.product_id.product_tmpl_id in price_list.mapped('product_tmpl_id'):
             #     self.price_unit = price_list.filtered(
             #         lambda item: item.product_tmpl_id == self.product_id.product_tmpl_id
