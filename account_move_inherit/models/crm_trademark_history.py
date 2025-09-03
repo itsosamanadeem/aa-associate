@@ -1,6 +1,5 @@
 from odoo import models, fields, _
 from odoo.exceptions import AccessError
-
 class TrademarkHistory(models.Model):
     _name = "trademark.history"
     _description = "Trademark History"
@@ -9,13 +8,11 @@ class TrademarkHistory(models.Model):
 
     sequence = fields.Integer(default=10)
 
-    # Partner is always the same as the selected trademark’s partner
     partner_id = fields.Many2one(
         "res.partner",
         string="Partner",
-        related="trademark_id.partner_id",
-        store=True,
-        readonly=True,
+        required=True,
+        ondelete="cascade",
     )
 
     name = fields.Char(string="Case Name")
@@ -26,7 +23,6 @@ class TrademarkHistory(models.Model):
     add_file_filename = fields.Char(string="File Name")
     case_description = fields.Text(string="Case Description")
 
-    # Link to partner’s trademark
     trademark_id = fields.Many2one(
         "res.partner.trademark",
         string="Trademark",
@@ -47,12 +43,17 @@ class TrademarkHistory(models.Model):
         default="draft",
     )
 
+    @api.onchange("trademark_id")
+    def _onchange_trademark_id(self):
+        if self.trademark_id:
+            self.partner_id = self.trademark_id.partner_id
+
     def write(self, vals):
         """ Restrict reverting from Done unless user is a Trademark Manager """
         if "status" in vals:
             for rec in self:
                 if rec.status == "done" and vals["status"] in ("draft", "in_progress"):
-                    if not self.env.user.has_group("aa_associate.group_trademark_manager"):
+                    if not self.env.user.has_group("account_move_inherit.group_trademark_manager"):
                         raise AccessError(
                             _("Only Trademark Managers can revert status from Done.")
                         )

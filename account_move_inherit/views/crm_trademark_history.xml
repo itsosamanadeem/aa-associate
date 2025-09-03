@@ -7,9 +7,8 @@
 
             <xpath expr="//form/sheet/notebook" position="inside">
                 <page string="Trademark History" name="trademark_history_page">
-                    <field name="trademark_history_ids" context="{'default_partner_id': active_id}">
+                    <field name="trademark_history_ids">
                         <tree editable="bottom">
-                            <!-- <field name="sequence" widget="handle"/> -->
                             <field name="name"/>
                             <field name="services_taken"/>
                             <field name="start_date"/>
