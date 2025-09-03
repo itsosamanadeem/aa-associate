@@ -41,8 +41,10 @@
                             <strong style="color:#4e4e4e; font-size:14px;">Professional Fees</strong>
                         </tr>
                     </thead>
+                    <t t-set="professional_fee_line" 
+                       t-value="o.invoice_line_ids.filtered(lambda l: l.product_id.name == 'Professional Fees')[:1]"/>
+                    
                     <tbody class="invoice_tbody">
-                        <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
                         <t t-foreach="lines" t-as="line">
                             <tr>
                                 <td>
@@ -56,7 +58,8 @@
                                 </td>
                                 <td>
                                     <t t-set="class_count" t-value="len(line.selected_variant_names or [])"/>
-                                    <t t-set="unit_price" t-value="line.product_id.name == 'Professional Fees' and line.price_unit"/>
+                                    <t t-set="unit_price" 
+                                       t-value="professional_fee_line.price_unit if professional_fee_line else line.price_unit"/>
                                     <t t-set="fee_total" t-value="class_count * unit_price"/>
                                     <t t-if="class_count != 0">
                                         <span>
@@ -64,14 +67,13 @@
                                         </span>
                                     </t>
                                     <t t-else="">
-                                        <span>
-                                            <t t-esc="unit_price"/>
-                                        </span>
+                                        <span><t t-esc="unit_price"/></span>
                                     </t>
                                 </td>
                             </tr>
                         </t>
                     </tbody>
+
                 </table>
             </div>
         </xpath>
