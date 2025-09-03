@@ -78,14 +78,14 @@ class AccountMove(models.Model):
 
     @api.onchange('move_id.partner_id', 'product_id', 'trademark_id')
     def _onchange_partner_id_and_product_id(self):
-        """ Update the price_unit based on Trademark History (fee_per_service) """
+        """ Update the price_unit based on Trademark History (fee_per_class) """
         self.ensure_one()
         if self.move_id.partner_id and self.product_id and self.trademark_id:
             history_line = self.move_id.partner_id.trademark_history_ids.filtered(
                 lambda h: h.services_taken == self.product_id and h.trademark_id == self.trademark_id
             )
             if history_line:
-                self.price_unit = history_line.fee_per_service
+                self.price_unit = history_line.fee_per_class
             else:
                 self.price_unit = 0.0
 
