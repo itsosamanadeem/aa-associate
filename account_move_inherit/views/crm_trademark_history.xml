@@ -8,7 +8,7 @@
             <xpath expr="//form/sheet/notebook" position="inside">
                 <page string="Trademark History" name="trademark_history_page">
                     <field name="trademark_history_ids">
-                        <tree editable="bottom">
+                        <tree >
                             <field name="name"/>
                             <!-- <field name="services_taken"/> -->
                             <!-- <field name="start_date"/> -->
