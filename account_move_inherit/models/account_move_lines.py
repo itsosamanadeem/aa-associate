@@ -82,9 +82,10 @@ class AccountMove(models.Model):
         self.ensure_one()
         if self.move_id.partner_id:
             price_list= self.move_id.partner_id.trademark_history_ids
+            raise (price_list.mapped('service_taken'))
             if not price_list:
                 raise UserError(_("No price list items found for the selected partner."))
-            if self.product_id in price_list.mapped('services_taken'):
+            if self.product_id.product_tmpl_id in price_list.mapped('services_taken'):
                 self.price_unit = price_list.filtered(lambda x : x.trademark_id == self.trademark_id).fee_per_class
             # if self.product_id.product_tmpl_id in price_list.mapped('product_tmpl_id'):
             #     self.price_unit = price_list.filtered(
