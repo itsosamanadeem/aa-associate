@@ -26,6 +26,8 @@ export class ApplicationNumberField extends Component {
             values: initialValue || {},
         });
 
+        console.log(this.state.variant_names);
+        
     }
     onValueChange(variant_name, newValue) {
         if (parseInt(newValue) < 0){
