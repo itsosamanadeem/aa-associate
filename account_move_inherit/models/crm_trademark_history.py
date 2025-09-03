@@ -1,4 +1,4 @@
-from odoo import models, fields, _
+from odoo import models, fields, _, api
 from odoo.exceptions import AccessError
 class TrademarkHistory(models.Model):
     _name = "trademark.history"
