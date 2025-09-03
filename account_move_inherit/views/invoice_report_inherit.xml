@@ -34,19 +34,45 @@
         </xpath>
         <xpath expr="//div[@id='payment_term']" position="after">
             <div class="mt-5 clearfix overflow-auto" style="border: 1px solid #dee2e6; border-radius: 6px; padding: 10px; width: 100% !important;">
-                <strong style="color:#4e4e4e; font-size:14px;">Service Descriptions</strong>
-                <div class="mt-2" style="padding-left:8px;">
-                    <t t-set="descriptions" t-value="set(o.invoice_line_ids.mapped('product_id'))"/>
-                    <t t-foreach="descriptions" t-as="description">
-                        <div style="margin-bottom:6px; padding:6px 10px; border-bottom:1px solid #e9ecef;">
-                            <span style="font-weight:10; color:#212529;" t-out="description.name"/> :
-                            <small style="color:#6c757d;">
-                                <em t-out="description.product_tmpl_id.description_purchase"/>
-                            </small>
-                            <br/>
-                        </div>
-                    </t>
-                </div>
+                <table class="o_has_total_table table o_main_table table-borderless">
+                    <thead>
+                        <tr>
+                            <strong style="color:#4e4e4e; font-size:14px;">Service Descriptions</strong>
+                            <strong style="color:#4e4e4e; font-size:14px;">Professional Fees</strong>
+                        </tr>
+                    </thead>
+                    <tbody class="invoice_tbody">
+                        <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
+                        <t t-foreach="lines" t-as="line">
+                            <tr>
+                                <td>
+                                    <div style="margin-bottom:6px; padding:6px 10px; border-bottom:1px solid #e9ecef;">
+                                        <span style="font-weight:10; color:#212529;" t-out="line.name"/> :
+                                        <small style="color:#6c757d;">
+                                            <em t-out="line.product_id.product_tmpl_id.description_purchase"/>
+                                        </small>
+                                        <br/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <t t-set="class_count" t-value="len(line.selected_variant_names or [])"/>
+                                    <t t-set="unit_price" t-value="line.price_unit"/>
+                                    <t t-set="fee_total" t-value="class_count * unit_price"/>
+                                    <t t-if="class_count != 0">
+                                        <span>
+                                            <t t-esc="unit_price"/> * <t t-esc="class_count"/> = <t t-esc="fee_total"/>
+                                        </span>
+                                    </t>
+                                    <t t-else="">
+                                        <span>
+                                            <t t-esc="unit_price"/>
+                                        </span>
+                                    </t>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
             </div>
         </xpath>
     </template>
