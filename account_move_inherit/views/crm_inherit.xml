@@ -13,7 +13,7 @@
                                 <sheet string="Trademark">
                                     <group>
                                         <group>
-                                            <field name="partner_id" readonly="1"/>
+                                            <field name="partner_name" readonly="1"/>
                                             <field name="trademark_name"/>
                                             <field name="trademark_number"/>
                                             <field name="trademark_price" invisible="1"/>
