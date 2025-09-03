@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api, _
 
 class ResPartnerTrademark(models.Model):
     _name = "res.partner.trademark"
@@ -12,6 +12,13 @@ class ResPartnerTrademark(models.Model):
     trademark_number = fields.Char(string="Trademark Number")
     name = fields.Char(string="Display Name")  
     trademark_price = fields.Float(string="Trademark Price", default=0.0)
+    
+    @api.model
+    def create(self, vals):
+        """Auto-fill partner name if coming from Partner form context"""
+        if not vals.get("partner_id") and self.env.context.get("default_partner_id"):
+            vals["partner_id"] = self.env.context["default_partner_id"]
+        return super().create(vals)
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
