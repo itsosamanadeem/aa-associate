@@ -12,7 +12,8 @@ export class ApplicationNumberField extends Component {
     setup() {
         
         let initialValue = this.props.record.data[this.props.name];
-
+        console.log('this', this.props.record.data);
+        
         if (typeof initialValue === "string") {
             try {
                 initialValue = JSON.parse(initialValue);
