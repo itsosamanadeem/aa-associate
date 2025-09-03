@@ -76,28 +76,20 @@ class AccountMove(models.Model):
         domain="[('partner_id', '=', parent.partner_id)]",
     )
 
-
     @api.onchange('move_id.partner_id','product_id')
     def _onchange_partner_id_and_product_id(self):
         """ Update the trademark_id based on the partner and product selection """
         self.ensure_one()
         if self.move_id.partner_id:
-            price_list= self.move_id.partner_id.property_product_pricelist.item_ids
+            price_list= self.move_id.partner_id.trademark_history_ids
             if not price_list:
                 raise UserError(_("No price list items found for the selected partner."))
-            
-            if self.product_id.product_tmpl_id in price_list.mapped('product_tmpl_id'):
-                self.price_unit = price_list.filtered(
-                    lambda item: item.product_tmpl_id == self.product_id.product_tmpl_id
-                ).fixed_price
-    
-    # @api.onchange('trademark_id')
-    # def _onchange_trademark_id(self):
-    #     self.ensure_one()
-    #     if not self.trademark_id:
-    #         self.price_unit = 0.0
-    #     if self.trademark_id:
-    #         self.price_unit = self.trademark_id.trademark_price
+            if self.product_id in price_list.mapped('services_taken'):
+                self.price_unit = price_list.filtered(lambda x : x.tradmark_id == self.trademark_id).fee_per_class
+            # if self.product_id.product_tmpl_id in price_list.mapped('product_tmpl_id'):
+            #     self.price_unit = price_list.filtered(
+            #         lambda item: item.product_tmpl_id == self.product_id.product_tmpl_id
+            #     ).fixed_price
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
