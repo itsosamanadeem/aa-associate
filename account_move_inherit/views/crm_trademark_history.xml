@@ -11,7 +11,7 @@
                         <field name="trademark_history_ids">
                             
                             <!-- List (tree) view -->
-                            <list editable="bottom">
+                            <list>
                                 <field name="sequence" widget="handle"/>
                                 <field name="name" string="Case Name"/>
                                 <field name="case_description" optional="show"/>
