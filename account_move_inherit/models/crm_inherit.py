@@ -7,7 +7,7 @@ class ResPartnerTrademark(models.Model):
     _rec_name = "trademark_name"
     
     sequence = fields.Integer(default=10)
-    partner_id = fields.Many2one("res.partner", string="Partner", ondelete="cascade")
+    partner_id = fields.Char(string="Partner")
     trademark_name = fields.Char(string="Trademark Name")
     trademark_number = fields.Char(string="Trademark Number")
     name = fields.Char(string="Display Name")  
