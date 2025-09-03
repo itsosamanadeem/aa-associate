@@ -26,3 +26,8 @@ class ResPartner(models.Model):
         "res.partner.trademark", "partner_id", string="Associated Trademarks"
     )
 
+    trademark_history_ids = fields.One2many(
+        "trademark.history",
+        "partner_id",
+        string="Trademark History"
+    )
