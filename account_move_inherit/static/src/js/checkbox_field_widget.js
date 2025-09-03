@@ -14,7 +14,7 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
     }
     onFieldCheckboxToggle(record, fieldName, ev) {
         const checked = ev.target.checked;
-        const recId = record.resId || record.id;   
+        const recId = record.resId || record.id;
         console.log('Toggle for', recId, fieldName, checked);
 
         const newFlags = Object.assign({}, record.data.extra_flags || {});
@@ -22,6 +22,7 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
         if (!newFlags[recId]) {
             newFlags[recId] = [];
         }
+
         if (checked) {
             if (!newFlags[recId].includes(fieldName)) {
                 newFlags[recId].push(fieldName);
@@ -29,6 +30,9 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
         } else {
             newFlags[recId] = newFlags[recId].filter(f => f !== fieldName);
         }
+
+        // ✅ Always keep alphabetically sorted
+        newFlags[recId] = newFlags[recId].sort((a, b) => a.localeCompare(b));
 
         record.update({ extra_flags: newFlags });
     }
