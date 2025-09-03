@@ -82,7 +82,7 @@ class AccountMove(models.Model):
         self.ensure_one()
         if self.move_id.partner_id and self.product_id and self.trademark_id:
             history_line = self.move_id.partner_id.trademark_history_ids.filtered(
-                lambda h: h.services_taken == self.product_id and h.trademark_id == self.trademark_id
+                lambda h: h.services_taken == self.product_id and h.trademark_id == self.trademark_id and self.product_id.name == "Professional Fees"
             )
             if history_line:
                 self.price_unit = history_line.fee_per_class
