@@ -16,7 +16,7 @@ class TrademarkHistory(models.Model):
     )
 
     name = fields.Char(string="Case Name")
-    services_taken = fields.Char(string="Services Taken")
+    services_taken = fields.Many2one('product.product',string="Services Taken")
     start_date = fields.Date(string="Start Date")
     end_date = fields.Date(string="End Date")
     add_file = fields.Binary(string="Attached File")
