@@ -13,7 +13,7 @@
                             <!-- <field name="services_taken"/> -->
                             <!-- <field name="start_date"/> -->
                             <!-- <field name="end_date"/> -->
-                            <field name="trademark_id"/>
+                            <!-- <field name="trademark_id"/> -->
                             <field name="total_fee"/>
                             <field name="fee_per_class"/>
                             <field name="currency_id"/>
