@@ -10,10 +10,10 @@ export class ApplicationNumberField extends Component {
         ...standardFieldProps,
     };
     setup() {
-        
+
         let initialValue = this.props.record.data[this.props.name];
         console.log('this', this.props.record.data);
-        
+
         if (typeof initialValue === "string") {
             try {
                 initialValue = JSON.parse(initialValue);
@@ -24,14 +24,18 @@ export class ApplicationNumberField extends Component {
 
         this.state = useState({
             variant_names: this.props.record.data.selected_variant_names || [],
-            values: initialValue || {},
+            values: Object.fromEntries(
+                Object.entries(initialValue || {}).filter(([key]) =>
+                    (this.props.record.data.selected_variant_names || []).includes(key)
+                )
+            ),
         });
 
         console.log(this.state.variant_names, this.state.values);
-        
+
     }
     onValueChange(variant_name, newValue) {
-        if (parseInt(newValue) < 0){
+        if (parseInt(newValue) < 0) {
             return;
         }
         this.state.values[variant_name] = parseInt(newValue) || 0;
