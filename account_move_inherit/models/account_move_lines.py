@@ -82,8 +82,9 @@ class AccountMove(models.Model):
         self.ensure_one()
         if self.move_id.partner_id:
             price_list= self.move_id.partner_id.trademark_history_ids
-            raise (price_list.mapped('services_taken'))
+            price=price_list.mapped('services_taken')
             
+            raise UserError(price)
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
