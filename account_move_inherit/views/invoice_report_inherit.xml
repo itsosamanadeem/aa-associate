@@ -54,16 +54,6 @@
                                         <br/>
                                     </div>
                                 </td>
-                                <td>
-                                    <t t-set="class_count" t-value="len(line.selected_variant_names or [])"/>
-                                    <t t-if="class_count">
-                                        <t t-set="price_unit" t-value="line.price_unit / class_count"/>
-                                        <span>
-                                            <t t-esc="price_unit"/> * <t t-esc="class_count"/>
-                                        </span>
-                                        <t t-set="multiplication_of_unit_price" t-value="price_unit * class_count"/>
-                                    </t>
-                                </td>
                             </tr>
                         </t>
                     </tbody>
