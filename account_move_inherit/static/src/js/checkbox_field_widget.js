@@ -38,6 +38,8 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
         };
 
         newFlags[recId] = newFlags[recId].sort((a, b) => {
+            console.log(a, b);
+            
             const pa = priority[a] || 100;  
             const pb = priority[b] || 100;
             if (pa !== pb) {
