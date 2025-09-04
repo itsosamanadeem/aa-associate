@@ -10,7 +10,7 @@ class AccountMove(models.Model):
     
     product_id = fields.Many2one(
         comodel_name='product.product',
-        string='Description of service',
+        string='Service',
         inverse='_inverse_product_id',
         ondelete='restrict',
         check_company=True,
