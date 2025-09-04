@@ -68,7 +68,7 @@ class AccountMove(models.Model):
     selected_variant_ids = fields.Json(
         string='Selected Variants',
     )
-    selected_variant_names = fields.Json(string="Variant Names")
+    selected_variant_names = fields.Json(string="Variant Names", default=list)
     
     trademark_id = fields.Many2one(
         comodel_name="res.partner.trademark",
@@ -83,8 +83,13 @@ class AccountMove(models.Model):
 
     def _compute_professional_fees_expression(self):
         for rec in self:
-            rec.professional_fees_calculation = f"{rec.professional_fees} * {len(rec.selected_variant_names) if len(rec.selected_variant_names) else 1} = {rec.professional_fees * len(rec.selected_variant_names)}"
-            rec.price_unit = rec.price_unit + (rec.professional_fees * len(rec.selected_variant_names) if len(rec.selected_variant_names) else 1)
+            variants = rec.selected_variant_names or []
+            if not isinstance(variants, (list, tuple)):
+                variants = []
+            count = len(variants) if variants else 1
+
+            rec.professional_fees_calculation = f"{rec.professional_fees} * {count} = {rec.professional_fees * count}"
+            rec.price_unit = rec.price_unit + (rec.professional_fees * count)
     
     @api.onchange('move_id.partner_id', 'product_id', 'trademark_id')
     def _onchange_partner_id_and_product_id(self):
