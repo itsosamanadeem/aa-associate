@@ -124,7 +124,7 @@ class AccountMove(models.Model):
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
         # self.application_id = application_number  
-        # raise UserError(_("Application Number: %s") % self.application_id)
+        raise UserError(_("Application Number: %s") % str(vals.get('variant_price')))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
     
     def get_field_label(self, field_name):
