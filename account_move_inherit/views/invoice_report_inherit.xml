@@ -38,7 +38,6 @@
                     <thead>
                         <tr>
                             <strong style="color:#4e4e4e; font-size:14px;">Service Descriptions</strong>
-                            <strong style="color:#4e4e4e; font-size:14px;">Professional Fees</strong>
                         </tr>
                     </thead>
                     <t t-set="professional_fee_line" 
