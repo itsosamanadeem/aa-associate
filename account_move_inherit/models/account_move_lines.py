@@ -83,8 +83,8 @@ class AccountMove(models.Model):
 
     def _compute_professional_fees_expression(self):
         for rec in self:
-            rec.professional_fees_calculation = f"{rec.professional_fees} * {len(rec.selected_variant_names)} = {rec.professional_fees * len(rec.selected_variant_names)}"
-            rec.price_unit = rec.price_unit + (rec.professional_fees * len(rec.selected_variant_names))
+            rec.professional_fees_calculation = f"{rec.professional_fees} * {len(rec.selected_variant_names) if len(rec.selected_variant_names) else 1} = {rec.professional_fees * len(rec.selected_variant_names)}"
+            rec.price_unit = rec.price_unit + (rec.professional_fees * len(rec.selected_variant_names) if len(rec.selected_variant_names) else 1)
     
     @api.onchange('move_id.partner_id', 'product_id', 'trademark_id')
     def _onchange_partner_id_and_product_id(self):
