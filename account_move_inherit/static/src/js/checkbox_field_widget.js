@@ -32,23 +32,24 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
         }
 
         const priority = {
-            product_id: 1,
-            product_template_id: 2,
-            trademark_id:3,
-            application_variant_data:4,
-            opposition_number:5,
-            registation_no:5,
-            suit_number:6,
-            appeal_number:7,
-            rectification_number:8,
-            filing_date:9,
-            country_id:10,
-            city_selection:11,
-            log_attachment_id: 12,
+            product_id: 1,                 // Service
+            product_template_id: 2,        // Classes
+            trademark_id: 3,               // Trademark
+            application_variant_data: 4,   // Application Number
+            opposition_number: 5,
+            registration_no: 6,
+            suit_number: 7,
+            appeal_number: 8,
+            rectification_no: 9,
+            filing_date: 10,
+            country_id: 11,
+            city_selection: 12,
+            logo_attachment_id: 13,
             professional_fees: 9990,
             professional_fees_calculation: 9991,
-            price_total: 9999, 
+            price_unit: 9999,  
         };
+
 
         newFlags[recId] = newFlags[recId].sort((a, b) => {
             const pa = priority[a] || 100;  
