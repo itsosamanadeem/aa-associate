@@ -37,44 +37,60 @@
                 <table class="o_has_total_table table o_main_table table-borderless">
                     <thead>
                         <tr>
-                            <strong style="color:#4e4e4e; font-size:14px;">Descriptions</strong>
+                            <th style="color:#4e4e4e; font-size:14px;">Descriptions</th>
+                            <!--<th style="color:#4e4e4e; font-size:14px;">Amount</th>-->
                         </tr>
                     </thead>
-                    <t t-set="professional_fee_line" 
-                       t-value="o.invoice_line_ids.filtered(lambda l: l.product_id.name == 'Professional Fees')[:1]"/>
-                    
                     <tbody class="invoice_tbody">
+                        <t t-set="multiplication_total" t-value="0"/>
                         <t t-foreach="lines" t-as="line">
-                            <tr>
-                                <td>
-                                    <div style="margin-bottom:6px; padding:6px 10px; border-bottom:1px solid #e9ecef;">
-                                        <span style="font-weight:10; color:#212529;" t-out="line.name"/> :
-                                        <small style="color:#6c757d;">
-                                            <em t-out="line.product_id.product_tmpl_id.description_purchase"/>
-                                        </small>
-                                        <br/>
-                                    </div>
-                                </td>
-                                <td>
-                                    <t t-set="class_count" t-value="len(line.selected_variant_names or [])"/>
-                                    <t t-set="unit_price" 
-                                       t-value="professional_fee_line.price_unit if professional_fee_line else line.price_unit"/>
-                                    <t t-set="fee_total" t-value="class_count * unit_price"/>
-                                    <t t-if="class_count != 0">
-                                        <span>
-                                            <t t-esc="unit_price"/> * <t t-esc="class_count"/> = <t t-esc="fee_total"/>
-                                        </span>
-                                    </t>
-                                    <t t-else="">
-                                        <span><t t-esc="unit_price"/></span>
-                                    </t>
-                                </td>
-                            </tr>
+                            <t t-if="line.product_id.name != 'Professional Fees'">
+                                <tr>
+                                    <td>
+                                        <div style="margin-bottom:6px; padding:6px 10px; border-bottom:1px solid #e9ecef;">
+                                            <span style="font-weight:10; color:#212529;" t-out="line.name"/> :
+                                            <small style="color:#6c757d;">
+                                                <em t-out="line.product_id.product_tmpl_id.description_purchase"/>
+                                            </small>
+                                            <br/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <t t-set="class_count" t-value="len(line.selected_variant_names or [])"/>
+                                        <t t-if="class_count">
+                                            <t t-set="price_unit" t-value="line.price_unit / class_count"/>
+                                            <span>
+                                                <t t-esc="price_unit"/> * <t t-esc="class_count"/>
+                                            </span>
+                                            <t t-set="multiplication_of_unit_price" t-value="price_unit * class_count"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            
+                            <t t-else="">
+                                <t t-call="account_move_inherit.document_totals">
+                                    <t t-set="tax_totals" t-value="o.tax_totals"/>
+                                    <t t-set="currency" t-value="o.currency_id"/>
+                                </t>
+                            </t>
                         </t>
                     </tbody>
-
                 </table>
             </div>
         </xpath>
     </template>
+
+    <template id="document_totals">
+    <!--Total amount with all taxes-->
+    <tr class="o_total">
+        <td><strong>Professional Fees</strong></td>
+        <td class="text-end">
+            <strong t-out="tax_totals['total_amount_currency']"
+                    t-options='{"widget": "monetary", "display_currency": currency}'
+            >31.05</strong>
+        </td>
+    </tr>
+</template>
+
 </odoo>
