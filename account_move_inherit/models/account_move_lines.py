@@ -76,7 +76,7 @@ class AccountMove(models.Model):
         domain="[('partner_id', '=', parent.partner_id)]",
     )
 
-    professional_fees = fields.Monetary(string="Professional Fees", required=True)
+    professional_fees = fields.Float(string="Professional Fees", required=True)
     professional_fees_calculation = fields.Text(string="Professional Fees Calculation", compute="_compute_professional_fees_expression", store=True, readonly=True)
 
     price_unit = fields.Float(string="Fees", readonly=False, store=True)
