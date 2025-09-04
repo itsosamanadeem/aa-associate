@@ -76,6 +76,10 @@
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='deferred_end_date']" position="attributes">
                 <attribute name="column_invisible">1</attribute>
             </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='price_total']" position="attributes">
+                <attribute name="column_invisible">0</attribute>
+                <attribute name="optional">show</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>

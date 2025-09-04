@@ -45,7 +45,7 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
             country_id:10,
             city_selection:11,
             log_attachment_id: 12,
-            price_unit: 9999, 
+            price_subtotal: 9999, 
         };
 
         newFlags[recId] = newFlags[recId].sort((a, b) => {
