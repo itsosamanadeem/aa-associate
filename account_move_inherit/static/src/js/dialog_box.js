@@ -126,11 +126,7 @@ export class ProductVariantDialog extends Component {
             "update_price_unit",
             [[this.props.line_id], {
                 price: total,
-                variant_price: this.state.variantList.filter((v)=>{
-                    return this.state.selectedIds.includes(v.id)
-                }).map((v)=>{
-                    return v.price
-                }),
+                variant_price: this.state.variantList[1].price,
                 selected_variant_ids: this.state.selectedIds,
                 selected_variant_names: this.state.variantList
                     .filter(v => this.state.selectedIds.includes(v.id))
