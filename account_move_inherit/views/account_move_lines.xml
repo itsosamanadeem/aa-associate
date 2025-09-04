@@ -72,7 +72,7 @@
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='price_unit']" position="attributes">
                 <attribute name="optional">show</attribute>
-                <attribute name="String">Fees</attribute>
+                <attribute name="string">Fees</attribute>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='price_subtotal']" position="attributes">
                 <attribute name="column_invisible">1</attribute>
