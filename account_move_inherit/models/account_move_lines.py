@@ -83,14 +83,28 @@ class AccountMove(models.Model):
 
     def _compute_professional_fees_expression(self):
         for rec in self:
-            variants = rec.selected_variant_names or []
-            if not isinstance(variants, (list, tuple)):
+            variants = rec.selected_variant_names
+
+            # normalize into a Python list
+            if not variants:
                 variants = []
+            elif isinstance(variants, str):
+                try:
+                    import json
+                    variants = json.loads(variants)
+                except Exception:
+                    variants = []
+
+            # how many variants?
             count = len(variants) if variants else 1
 
-            rec.professional_fees_calculation = f"{rec.professional_fees} * {count} = {rec.professional_fees * count}"
-            rec.price_unit = rec.price_unit + (rec.professional_fees * count)
-    
+            # build expression string
+            total = rec.professional_fees * count
+            rec.professional_fees_calculation = f"{rec.professional_fees} * {count} = {total}"
+
+            # update price_unit (decide: add or overwrite)
+            rec.price_unit = (rec.price_unit or 0.0) + total
+
     @api.onchange('move_id.partner_id', 'product_id', 'trademark_id')
     def _onchange_partner_id_and_product_id(self):
         """ Update the price_unit only if product is Professional Fees """
