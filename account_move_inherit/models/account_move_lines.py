@@ -76,6 +76,15 @@ class AccountMove(models.Model):
         domain="[('partner_id', '=', parent.partner_id)]",
     )
 
+    professional_fees = fields.Monetary(string="Professional Fees", required=True)
+    professional_fees_calculation = fields.Text(string="Professional Fees Calculation", compute="_compute_professional_fees_expression", store=True, readonly=True)
+
+    price_unit = fields.Float(string="Fees", readonly=False, store=True)
+
+    def _compute_professional_fees_expression(self):
+        self.professional_fees_calculation = f"{self.professional_fees} * {len(self.selected_variant_names)} = {self.professional_fees * len(self.selected_variant_names)}"
+        self.price_unit = self.price_unit + (self.professional_fees * len(self.selected_variant_names))
+    
     @api.onchange('move_id.partner_id', 'product_id', 'trademark_id')
     def _onchange_partner_id_and_product_id(self):
         """ Update the price_unit only if product is Professional Fees """
