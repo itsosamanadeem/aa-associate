@@ -82,8 +82,9 @@ class AccountMove(models.Model):
     price_unit = fields.Float(string="Fees", readonly=False, store=True)
 
     def _compute_professional_fees_expression(self):
-        self.professional_fees_calculation = f"{self.professional_fees} * {len(self.selected_variant_names)} = {self.professional_fees * len(self.selected_variant_names)}"
-        self.price_unit = self.price_unit + (self.professional_fees * len(self.selected_variant_names))
+        for rec in self:
+            rec.professional_fees_calculation = f"{rec.professional_fees} * {len(rec.selected_variant_names)} = {rec.professional_fees * len(rec.selected_variant_names)}"
+            rec.price_unit = rec.price_unit + (rec.professional_fees * len(rec.selected_variant_names))
     
     @api.onchange('move_id.partner_id', 'product_id', 'trademark_id')
     def _onchange_partner_id_and_product_id(self):
