@@ -77,10 +77,10 @@ class AccountMove(models.Model):
     )
 
     professional_fees = fields.Float(string="Professional Fees", required=True)
-    professional_fees_calculation = fields.Text(string="Professional Fees Calculation", compute="_compute_professional_fees_expression", store=True, readonly=True)
+    professional_fees_calculation = fields.Text(string="Professional Fees Calculation",)
 
-    price_unit = fields.Float(string="Fees", readonly=False, store=True)
-
+    # price_unit = fields.Float(string="Fees", readonly=False, store=True)
+    @api.onchange('professional_fees','selected_variant_names')
     def _compute_professional_fees_expression(self):
         for rec in self:
             variants = rec.selected_variant_names
