@@ -33,13 +33,22 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
 
         const priority = {
             product_id: 1,
-            log_attachment_id: 2,
+            product_template_id: 2,
+            trademark_id:3,
+            application_variant_data:4,
+            opposition_number:5,
+            registation_no:5,
+            suit_number:6,
+            appeal_number:7,
+            rectification_number:8,
+            filing_date:9,
+            country_id:10,
+            city_selection:11,
+            log_attachment_id: 12,
             price_unit: 9999, 
         };
 
         newFlags[recId] = newFlags[recId].sort((a, b) => {
-            console.log(a, b);
-            
             const pa = priority[a] || 100;  
             const pb = priority[b] || 100;
             if (pa !== pb) {
