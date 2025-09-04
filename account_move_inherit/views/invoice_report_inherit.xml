@@ -44,53 +44,31 @@
                     <tbody class="invoice_tbody">
                         <t t-set="multiplication_total" t-value="0"/>
                         <t t-foreach="lines" t-as="line">
-                            <t t-if="line.product_id.name != 'Professional Fees'">
-                                <tr>
-                                    <td>
-                                        <div style="margin-bottom:6px; padding:6px 10px; border-bottom:1px solid #e9ecef;">
-                                            <span style="font-weight:10; color:#212529;" t-out="line.name"/> :
-                                            <small style="color:#6c757d;">
-                                                <em t-out="line.product_id.product_tmpl_id.description_purchase"/>
-                                            </small>
-                                            <br/>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <t t-set="class_count" t-value="len(line.selected_variant_names or [])"/>
-                                        <t t-if="class_count">
-                                            <t t-set="price_unit" t-value="line.price_unit / class_count"/>
-                                            <span>
-                                                <t t-esc="price_unit"/> * <t t-esc="class_count"/>
-                                            </span>
-                                            <t t-set="multiplication_of_unit_price" t-value="price_unit * class_count"/>
-                                        </t>
-                                    </td>
-                                </tr>
-                            </t>
-                            
-                            <t t-else="">
-                                <t t-call="account_move_inherit.document_totals">
-                                    <t t-set="tax_totals" t-value="o.tax_totals"/>
-                                    <t t-set="currency" t-value="o.currency_id"/>
-                                </t>
-                            </t>
+                            <tr>
+                                <td>
+                                    <div style="margin-bottom:6px; padding:6px 10px; border-bottom:1px solid #e9ecef;">
+                                        <span style="font-weight:10; color:#212529;" t-out="line.name"/> :
+                                        <small style="color:#6c757d;">
+                                            <em t-out="line.product_id.product_tmpl_id.description_purchase"/>
+                                        </small>
+                                        <br/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <t t-set="class_count" t-value="len(line.selected_variant_names or [])"/>
+                                    <t t-if="class_count">
+                                        <t t-set="price_unit" t-value="line.price_unit / class_count"/>
+                                        <span>
+                                            <t t-esc="price_unit"/> * <t t-esc="class_count"/>
+                                        </span>
+                                        <t t-set="multiplication_of_unit_price" t-value="price_unit * class_count"/>
+                                    </t>
+                                </td>
+                            </tr>
                         </t>
                     </tbody>
                 </table>
             </div>
         </xpath>
     </template>
-
-    <template id="document_totals">
-    <!--Total amount with all taxes-->
-    <tr class="o_total">
-        <td><strong>Professional Fees</strong></td>
-        <td class="text-end">
-            <strong t-out="tax_totals['total_amount_currency']"
-                    t-options='{"widget": "monetary", "display_currency": currency}'
-            >31.05</strong>
-        </td>
-    </tr>
-</template>
-
 </odoo>
