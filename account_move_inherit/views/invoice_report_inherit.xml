@@ -23,7 +23,18 @@
                                         <img t-att-src="line.get_field_value(header)" style="height:80px; width:80px;"/>
                                     </t>
                                     <t t-else="">
-                                        <t t-esc="line.get_field_value(header) or '-'"/>
+                                        <t t-set="values" t-value="line.get_field_value(header) or '-'"/>
+                                        <t t-if="values and isinstance(values, dict)">
+                                            <t t-foreach="values.items()" t-as="item">
+                                                <span>
+                                                    <t t-esc="item[0]"/>:
+                                                    <span class="fw-bold"><t t-esc="item[1]"/></span>
+                                                </span>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="values"/>
+                                        </t>
                                     </t>
                                 </td>
                             </t>
