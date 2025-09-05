@@ -84,9 +84,10 @@ class AccountMove(models.Model):
     @api.depends('product_id')
     def _compute_per_class_fee(self):
         for rec in self:
-           product_classes = rec.product_id.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
-           variants = rec.env['product.template.attribute.value'].sudo().search([('attribute_id','in', product_classes)])
-            
+            product_classes = rec.product_id.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
+            variants = rec.env['product.template.attribute.value'].sudo().search([('attribute_id','in', product_classes)])
+            if variants:
+                rec.per_class_fee = variants[0].price_extra
         #    raise UserError(f"{variants}")
         
 
