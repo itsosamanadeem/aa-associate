@@ -203,11 +203,13 @@ class AccountMove(models.Model):
 
         # Handle Dict
         if isinstance(value, dict):
-            return ", ".join(f"{k}: {v}" for k, v in value.items())
+            # return ", ".join(f"{k}: {v}" for k, v in value.items())
+            return value
 
         # Handle List/Tuple
         if isinstance(value, (list, tuple)):
-            return ", ".join(str(v) for v in value)
+            # return ", ".join(str(v) for v in value)
+            return value
 
         # Default fallback
         return str(value)
