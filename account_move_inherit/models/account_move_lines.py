@@ -3,6 +3,7 @@ from odoo import models, api, _ , fields
 from odoo.exceptions import UserError
 import json
 from odoo.tools import format_date
+from odoo.tools.misc import formatLang
 
 class AccountMove(models.Model):
     _inherit = 'account.move.line'
@@ -220,6 +221,14 @@ class AccountMove(models.Model):
         if isinstance(value, (list, tuple)):
             # return ", ".join(str(v) for v in value)
             return value
+        
+        if field.type == 'float':
+            try:
+    # Use Odoo's formatLang for locale-aware formatting
+                return formatLang(self.env, value, digits=2)
+            except Exception:
+                # Fallback to standard formatting
+                return "{:,.2f}".format(value)
 
         # Default fallback
         return str(value)
