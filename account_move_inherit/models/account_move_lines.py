@@ -89,7 +89,7 @@ class AccountMove(models.Model):
             if variants:
                 rec.per_class_fee = variants[0].price_extra
 
-    @api.onchange('professional_fees','selected_variant_names')
+    @api.onchange('professional_fees','selected_variant_names','per_class_fee')
     def _compute_professional_fees_expression(self):
         for rec in self:
             variants = rec.selected_variant_names
