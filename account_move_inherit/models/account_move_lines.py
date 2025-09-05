@@ -89,7 +89,7 @@ class AccountMove(models.Model):
             if variants:
                 rec.per_class_fee = variants[0].price_extra
 
-    @api.onchange('professional_fees','selected_variant_names','per_class_fee')
+    @api.onchange('professional_fees', 'selected_variant_names', 'per_class_fee')
     def _compute_professional_fees_expression(self):
         for rec in self:
             variants = rec.selected_variant_names
@@ -98,20 +98,22 @@ class AccountMove(models.Model):
                 variants = []
             elif isinstance(variants, str):
                 try:
-                    import json
                     variants = json.loads(variants)
                 except Exception:
                     variants = []
 
-            # how many variants?
             count = len(variants) if variants else 1
 
-            # build expression string
             total = rec.professional_fees * count
-            rec.fees_calculation = f"({rec.professional_fees} * {count}) + ({rec.per_class_fee} * {count}) = {total + ({rec.per_class_fee} * {count})}"
+            per_class_total = rec.per_class_fee * count
+            final_total = total + per_class_total
 
-            # update price_unit (decide: add or overwrite)
-            rec.price_unit = (rec.price_unit or 0.0) + total
+            rec.fees_calculation = (
+                f"({rec.professional_fees} * {count}) + "
+                f"({rec.per_class_fee} * {count}) = {final_total}"
+            )
+
+            rec.price_unit = rec.price_unit + total
 
     @api.onchange('move_id.partner_id', 'product_id', 'trademark_id')
     def _onchange_partner_id_and_product_id(self):
