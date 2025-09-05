@@ -3,8 +3,8 @@
 <templates xml:space="preserve">
 
     <t t-name="account_move_inherit.InvoiceProductField" >
-        <div>
-            <div class="d-flex gap-1">
+        <div class="d-flex align-items-center gap-2">
+            <div>
                 <button type="button" class="btn btn-secondary fa fa-pencil px-2"
                         t-att-disabled="this.props.record._parentRecord.data.state !== 'draft'"
                         t-on-click="onEditConfiguration"/>
