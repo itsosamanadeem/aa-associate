@@ -77,7 +77,7 @@ class AccountMove(models.Model):
     )
 
     professional_fees = fields.Float(string="Professional Fees", required=True)
-    professional_fees_calculation = fields.Text(string="Professional Fees Calculation",)
+    fees_calculation = fields.Text(string="Professional Fees Calculation",)
     price_unit = fields.Float(string="Fees")
     per_class_fee = fields.Float(string="Per Class Fee", compute="_compute_per_class_fee", store=True, readonly=True)
 
@@ -88,15 +88,12 @@ class AccountMove(models.Model):
             variants = rec.env['product.template.attribute.value'].sudo().search([('attribute_id','in', product_classes)])
             if variants:
                 rec.per_class_fee = variants[0].price_extra
-        #    raise UserError(f"{variants}")
-        
 
     @api.onchange('professional_fees','selected_variant_names')
     def _compute_professional_fees_expression(self):
         for rec in self:
             variants = rec.selected_variant_names
 
-            # normalize into a Python list
             if not variants:
                 variants = []
             elif isinstance(variants, str):
@@ -111,7 +108,7 @@ class AccountMove(models.Model):
 
             # build expression string
             total = rec.professional_fees * count
-            rec.professional_fees_calculation = f"{rec.professional_fees} * {count} = {total}"
+            rec.fees_calculation = f"({rec.professional_fees} * {count}) + ({rec.per_class_fee} * {count}) = {total}"
 
             # update price_unit (decide: add or overwrite)
             rec.price_unit = (rec.price_unit or 0.0) + total
