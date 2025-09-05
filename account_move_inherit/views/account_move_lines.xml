@@ -11,7 +11,7 @@
                 <field name="extra_flags" column_invisible="1"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='product_id']" position="after">
-                <field name="product_template_id" widget="invoice_product_many2one" optional="show"/>
+                <field name="product_template_id" widget="invoice_product_many2one" optional="show"  style="width: 120px;"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='product_template_id']" position="after">
                 <field name="application_variant_data" widget="application_number_field" optional="show"/>
