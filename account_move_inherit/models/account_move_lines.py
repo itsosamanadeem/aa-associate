@@ -77,7 +77,7 @@ class AccountMove(models.Model):
     )
 
     professional_fees = fields.Float(string="Professional Fees", required=True)
-    fees_calculation = fields.Text(string="Fees Calculation",)
+    fees_calculation = fields.Text(string="Fees Calculation", readonly=True)
     price_unit = fields.Float(string="Fees")
     per_class_fee = fields.Float(string="Per Class Fee", compute="_compute_per_class_fee", store=True, readonly=True)
 
