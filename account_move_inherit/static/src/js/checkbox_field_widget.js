@@ -46,7 +46,8 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
             city_selection: 12,
             logo_attachment_id: 13,
             professional_fees: 9990,
-            professional_fees_calculation: 9991,
+            per_class_fee: 9991,
+            fees_calculation: 9992,
             price_unit: 9999,  
         };
 
