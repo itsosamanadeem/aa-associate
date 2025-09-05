@@ -59,7 +59,7 @@
                 <field name="per_class_fee" optional="show"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='per_class_fee']" position="after">
-                <field name="ees_calculation" optional="show"/>
+                <field name="fees_calculation" optional="show"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='sequence']" position="after">
                 <field name="selected_variant_ids" column_invisible="1" />
