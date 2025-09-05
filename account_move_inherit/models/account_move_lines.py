@@ -86,10 +86,10 @@ class AccountMove(models.Model):
         for rec in self:
            product_classes = rec.product_id.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
            variants = rec.env['product.template.attribute.value'].sudo().search([('attribute_id','in', product_classes)])
+            
+        #    raise UserError(f"{variants}")
+        
 
-           raise UserError(f"{variants}")
-        
-        
     @api.onchange('professional_fees','selected_variant_names')
     def _compute_professional_fees_expression(self):
         for rec in self:
