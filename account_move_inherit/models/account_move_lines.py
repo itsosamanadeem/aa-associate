@@ -33,6 +33,7 @@ class AccountMove(models.Model):
             ('karachi', 'Karachi'),
             ('islamabad', 'Islamabad'),
         ],
+        default='karachi',
         string="City",
     )
     opposition_number = fields.Json(
@@ -146,7 +147,7 @@ class AccountMove(models.Model):
 
     def update_price_unit(self, vals):
         """ Update price_subtotal of this account.move.line """
-        self.ensure_one()  # Only one line at a time
+        self.ensure_one()  
         price = vals.get("price")
         variants = vals.get("selected_variant_ids",[])
         variants_names = vals.get("selected_variant_names",[])
@@ -199,10 +200,9 @@ class AccountMove(models.Model):
 
         # Handle Binary (image/logo)
         if field.type == "binary":
-            # raise UserError(value)
             if isinstance(value, bytes):
                 value = value.decode("utf-8")
-            mimetype = "image/png"  # default
+            mimetype = "image/png"  
             if hasattr(self, "logo_attachment_id") and self.attachment_name:
                 if self.attachment_name.lower().endswith(".jpg") or self.attachment_name.lower().endswith(".jpeg"):
                     mimetype = "image/jpeg"
@@ -212,24 +212,17 @@ class AccountMove(models.Model):
                     mimetype = "image/svg+xml"
             return f"data:{mimetype};base64,{value}"
 
-        # Handle Dict
         if isinstance(value, dict):
-            # return ", ".join(f"{k}: {v}" for k, v in value.items())
             return value
 
-        # Handle List/Tuple
         if isinstance(value, (list, tuple)):
-            # return ", ".join(str(v) for v in value)
             return value
         
         if field.type == 'float':
             try:
-    # Use Odoo's formatLang for locale-aware formatting
                 return formatLang(self.env, value, digits=2)
             except Exception:
-                # Fallback to standard formatting
                 return "{:,.2f}".format(value)
 
-        # Default fallback
         return str(value)
 
