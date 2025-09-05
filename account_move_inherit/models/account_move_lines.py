@@ -108,7 +108,7 @@ class AccountMove(models.Model):
 
             # build expression string
             total = rec.professional_fees * count
-            rec.fees_calculation = f"({rec.professional_fees} * {count}) + ({rec.per_class_fee} * {count}) = {total}"
+            rec.fees_calculation = f"({rec.professional_fees} * {count}) + ({rec.per_class_fee} * {count}) = {total + {rec.per_class_fee} * {count}}"
 
             # update price_unit (decide: add or overwrite)
             rec.price_unit = (rec.price_unit or 0.0) + total
