@@ -79,7 +79,17 @@ class AccountMove(models.Model):
     professional_fees = fields.Float(string="Professional Fees", required=True)
     professional_fees_calculation = fields.Text(string="Professional Fees Calculation",)
     price_unit = fields.Float(string="Fees")
-    
+    per_class_fee = fields.Float(string="Per Class Fee", compute="_compute_per_class_fee", store=True, readonly=True)
+
+    @api.depends('product_id')
+    def _compute_per_class_fee(self):
+        for rec in self:
+           product_classes = rec.product_id.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
+           variants = rec.env['product.template.attribute.value'].sudo().search([('attribute_id','in', product_classes)])
+
+           raise UserError(f"{variants}")
+        
+        
     @api.onchange('professional_fees','selected_variant_names')
     def _compute_professional_fees_expression(self):
         for rec in self:
