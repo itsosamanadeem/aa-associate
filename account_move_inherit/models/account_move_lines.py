@@ -111,8 +111,8 @@ class AccountMove(models.Model):
             final_total = total + per_class_total
 
             rec.fees_calculation = (
-                f"({formatLang(self.env, rec.professional_fees, digits=2)} * {count}) + "
-                f"({formatLang(self.env, rec.per_class_fee, digits=2)} * {count}) = {formatLang(self.env, final_total, digits=2)}"
+                f"({"{:,.2f}".format(rec.professional_fees)} * {count}) + "
+                f"({"{:,.2f}".format(rec.per_class_fee)} * {count}) = {"{:,.2f}".format(final_total)}"
             )
 
             rec.price_unit = rec.price_unit + total
