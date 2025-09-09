@@ -16,9 +16,6 @@ the Sale Order product configurator.
     'depends': [
         'base',
         'account',
-        'product',
-        'sale',
-        'test_sale_product_configurators',
         'crm',
         'contacts',
     ],
