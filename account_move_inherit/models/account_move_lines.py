@@ -82,7 +82,7 @@ class AccountMove(models.Model):
     fees_calculation = fields.Text(string="Fees Calculation")
     price_unit = fields.Float(string="Fees")
     per_class_fee = fields.Float(string="Per Class Fee", compute="_compute_per_class_fee", store=True, readonly=True)
-
+    inv_label = fields.Char(string="Invoice Label")
     @api.depends('product_id')
     def _compute_per_class_fee(self):
         for rec in self:
@@ -122,18 +122,14 @@ class AccountMove(models.Model):
         """ Update the price_unit only if product is Professional Fees """
         self.ensure_one()
 
-        # Only trigger when product is "Professional Fees"
-        if not (self.product_id and self.product_id.name == "Professional Fees"):
-            return
-
         if self.move_id.partner_id and self.trademark_id:
             history_line = self.move_id.partner_id.trademark_history_ids.filtered(
                 lambda h: h.services_taken == self.product_id and h.trademark_id == self.trademark_id
             )
             if history_line:
-                self.price_unit = history_line.fee_per_class
+                self.inv_label = history_line.label
             else:
-                self.price_unit = 0.0
+                return
 
 
 
