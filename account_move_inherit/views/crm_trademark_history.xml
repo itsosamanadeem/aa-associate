@@ -29,7 +29,7 @@
                             <!-- Form view -->
                             <form>
                                 <header>
-                                    <field name="status" widget="statusbar" options="{'clickable': true}"/>
+                                    <field name="status" widget="statusbar" options="{'clickable': true}" groups="account_move_inherit.group_trademark_manager"/>
                                 </header>
                                 <sheet>
                                     <div class="oe_title">
