@@ -82,7 +82,7 @@ class AccountMove(models.Model):
     fees_calculation = fields.Text(string="Fees Calculation")
     price_unit = fields.Float(string="Fees")
     per_class_fee = fields.Float(string="Per Class Fee", compute="_compute_per_class_fee", store=True, readonly=True)
-    inv_label = fields.Char(string="Label")
+    inv_label = fields.Many2one(comodel="res.partner.label",string="Label",domain="[('partner_id', '=', parent.partner_id)]")
 
     @api.depends('product_id')
     def _compute_per_class_fee(self):
@@ -117,22 +117,6 @@ class AccountMove(models.Model):
             )
 
             rec.price_unit = rec.price_unit + total
-
-    @api.onchange('move_id.partner_id', 'product_id', 'trademark_id')
-    def _onchange_partner_id_and_product_id(self):
-        """ Update the price_unit only if product is Professional Fees """
-        self.ensure_one()
-
-        if self.move_id.partner_id and self.trademark_id:
-            history_line = self.move_id.partner_id.trademark_history_ids.filtered(
-                lambda h: h.services_taken == self.product_id and h.trademark_id == self.trademark_id
-            )
-            if history_line:
-                self.inv_label = history_line.label
-            else:
-                return
-
-
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
