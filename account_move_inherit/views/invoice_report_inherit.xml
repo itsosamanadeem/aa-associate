@@ -88,7 +88,7 @@
                 </table>
             </t>
         </xpath>
-        <xpath expr="//div[@class='mt-5 clearfix overflow-auto']" position="replace">
+        <xpath expr="//div[@id='total']" position="replace">
             <div id="total" class="clearfix row mt-n3">
                 <div class="ms-auto">
                     <table class="o_total_table table table-borderless avoid-page-break-inside">
