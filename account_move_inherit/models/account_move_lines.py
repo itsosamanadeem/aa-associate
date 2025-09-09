@@ -82,7 +82,13 @@ class AccountMove(models.Model):
     fees_calculation = fields.Text(string="Fees Calculation")
     price_unit = fields.Float(string="Fees")
     per_class_fee = fields.Float(string="Per Class Fee", compute="_compute_per_class_fee", store=True, readonly=True)
-    label_id = fields.Many2one(comodel="res.partner.label",string="Label")
+    label_id = fields.Many2one(
+        comodel_name="res.partner.label",
+        string="Label",
+        domain="[('partner_id', '=', parent.partner_id)]",
+        ondelete="set null"
+    )
+
 
     @api.depends('product_id')
     def _compute_per_class_fee(self):
