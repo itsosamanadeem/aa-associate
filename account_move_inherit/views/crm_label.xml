@@ -12,6 +12,7 @@
 
                             <list editable="bottom">
                                 <field name="sequence" widget="handle"/>
+                                <field name="partner_id" string="Customer" readonly="1"/>
                                 <field name="label" string="Label Name"/>
                             </list>
                         </field>
