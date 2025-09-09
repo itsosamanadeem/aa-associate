@@ -160,7 +160,7 @@
         </xpath>
     </template>
 
-    <template t-name="account_move_inherit.tax_totals_template">
+    <template id="account_move_inherit.tax_totals_template">
         <!--
             Invoice tax template to display tax totals in pdf reports.
             Used by invoices.
