@@ -11,31 +11,35 @@
                 <field name="extra_flags" column_invisible="1"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='product_id']" position="after">
-                <field name="product_template_id" widget="invoice_product_many2one" optional="show"  style="width: 120px;"/>
+                <field name="trademark_id" optional="hide"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='trademark_id']" position="after">
+                <field name="logo_attachment_id" string="Logo Attachment" aria-label="Select File" widget="binary" filename="attachment_name" optional="hide"/>
+                <field name="attachment_name" column_invisible="1"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='attachment_name']" position="after">
+                <field name="product_template_id" widget="invoice_product_many2one" optional="show" style="width: 120px;"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='product_template_id']" position="after">
                 <field name="application_variant_data" widget="application_number_field" optional="show"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='application_variant_data']" position="after">
-                <field name="rectification_no" widget="application_number_field" optional="hide" />
+                <field name="filing_date" optional="hide"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='filing_date']" position="after">
+                <field name="rectification_no" widget="application_number_field" optional="hide"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='rectification_no']" position="after">
-                <field name="appeal_number" widget="application_number_field" optional="hide" />
+                <field name="appeal_number" widget="application_number_field" optional="hide"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='appeal_number']" position="after">
-                <field name="suit_number" widget="application_number_field" optional="hide" />
+                <field name="suit_number" widget="application_number_field" optional="hide"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='suit_number']" position="after">
-                <field name="registration_no" widget="application_number_field" optional="hide" />
+                <field name="registration_no" widget="application_number_field" optional="hide"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='registration_no']" position="after">
                 <field name="opposition_number" widget="application_number_field" optional="hide"/>
-            </xpath>
-            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='opposition_number']" position="after">
-                <field name="trademark_id" optional="hide" />
-            </xpath>
-            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='trademark_id']" position="after">
-                <field name="filing_date" optional="hide" />
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='filing_date']" position="after">
                 <field name="country_id" optional="hide"/>
@@ -44,15 +48,6 @@
                 <field name="city_selection" optional="hide"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='city_selection']" position="after">
-                <field name="logo_attachment_id"
-                    string="Logo Attachment"
-                    aria-label="Select File"
-                    widget="binary"
-                    filename="attachment_name"
-                    optional="hide"/>
-                <field name="attachment_name" column_invisible="1"/>
-            </xpath>
-            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='attachment_name']" position="after">
                 <field name="professional_fees" optional="show"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='professional_fees']" position="after">
@@ -62,7 +57,7 @@
                 <field name="fees_calculation" optional="show"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='sequence']" position="after">
-                <field name="selected_variant_ids" column_invisible="1" />
+                <field name="selected_variant_ids" column_invisible="1"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='sequence']" position="after">
                 <field name="selected_variant_names" column_invisible="1"/>
