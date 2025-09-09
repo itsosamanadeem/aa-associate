@@ -8,7 +8,7 @@
             <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
                 <page string="Label Details" name="labels_detail_page">
                     <group name="label_group">
-                        <field name="label_ids" >
+                        <field name="label_ids" widget="one2many" >
 
                             <list editable="bottom">
                                 <field name="sequence" widget="handle"/>
