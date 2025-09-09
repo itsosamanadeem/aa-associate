@@ -155,7 +155,10 @@
                 </table>
             </div>
             <div class="mt-5 overflow-auto">
-                <span class="fw-bold">This is a system-generated invoice. No signature or stamp is required.</span>
+                <span class="fw-bold">This is a system-generated invoice. No signature or stamp is required.</span><br/>
+                <t t-if="o.invoice_line_ids.filtered(lambda x: x.product_id.product_tmpl_id.categ_id.name in ['Trademark Services','Design Services','Copyright Services'])">
+                    <span class="fw-bold">NOTE:  Please don’t deduct Tax from the official fees.</span>
+                </t>
             </div>
         </xpath>
     </template>
