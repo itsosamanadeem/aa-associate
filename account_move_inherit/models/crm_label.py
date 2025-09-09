@@ -6,6 +6,7 @@ class ResPartnerTrademark(models.Model):
     _order = "sequence, id"
     _rec_name = "label"
     
+    
     sequence = fields.Integer(default=10)
     partner_id = fields.Many2one("res.partner", string="Partner", ondelete="cascade")
     label= fields.Char(string="Label", required=True)
