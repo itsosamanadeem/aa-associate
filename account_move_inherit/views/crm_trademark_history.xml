@@ -22,7 +22,7 @@
                                 <field name="total_fee" optional="show"/>
                                 <field name="fee_per_class" optional="show"/>
                                 <field name="currency_id" optional="hide"/>
-                                <field name="label" optional="show"/>
+                                
                                 <field name="status"/>
                             </list>
 
@@ -45,7 +45,7 @@
                                             <field name="add_file" filename="add_file_filename" widget="file" readonly="status == 'done'"/>
                                             <field name="add_file_filename" invisible="1"/>
                                             <field name="case_description" readonly="status == 'done'"/>
-                                            <field name="label" readonly="status == 'done'"/>
+                                            
                                             <field name="trademark_id" domain="[('partner_id','=',parent.id)]" readonly="status == 'done'"/>
                                         </group>
                                         <group>
