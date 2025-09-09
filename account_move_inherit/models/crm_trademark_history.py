@@ -22,7 +22,7 @@ class TrademarkHistory(models.Model):
     add_file = fields.Binary(string="Attached File")
     add_file_filename = fields.Char(string="File Name")
     case_description = fields.Text(string="Case Description")
-    
+    label = fields.Char(string="Label")
     trademark_id = fields.Many2one(
         "res.partner.trademark",
         string="Trademark",
