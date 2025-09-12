@@ -1,0 +1,15 @@
+<odoo>
+    <record id="view_account_move_send_wizard_inherit_cc" model="ir.ui.view">
+        <field name="name">account.move.send.wizard.inherit.cc</field>
+        <field name="model">account.move.send.wizard</field>
+        <field name="inherit_id" ref="account.account_move_send_wizard_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Inject CC after To field -->
+            <field name="mail_partner_ids" position="after">
+                <field name="mail_cc" placeholder="CC (from template)"/>
+            </field>
+
+        </field>
+    </record>
+</odoo>

@@ -27,6 +27,7 @@ the Sale Order product configurator.
         'views/crm_label.xml',
         'views/crm_trademark_history.xml',
         'views/invoice_report_inherit.xml',
+        'views/account_move_send_wizard_inherit.xml',
     ],
     'assets': {
         'web.assets_backend': [
