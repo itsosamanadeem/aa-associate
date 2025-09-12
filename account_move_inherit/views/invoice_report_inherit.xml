@@ -130,7 +130,7 @@
         <xpath expr="//div[@id='payment_term']" position="after">
             <div class="mt-5 clearfix overflow-auto">
                 <h4 class="fw-bold text-secondary mb-3">Bank Account Information</h4>
-                <table class="table table-sm">
+                <table class="table table-sm w-75" style="font-size: 0.875rem; line-height: 1.2;">
                     <tbody>
                         <tr>
                             <td class="fw-bold">Bank Name:</td>
@@ -154,7 +154,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <p class="text-muted small mt-2">
+                <p class="fw-bold mt-3" style="font-size: 1rem; color: #6c757d;">
                     <em>Please Note: All bank charges are borne by the client.</em>
                 </p>
             </div>
