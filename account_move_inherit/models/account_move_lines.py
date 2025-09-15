@@ -79,8 +79,9 @@ class AccountMove(models.Model):
     )
 
     professional_fees = fields.Float(string="Professional Fees")
+    service_fee = fields.Float(string="Service Fee", related="product_id.lst_price", readonly=False, store=True)
     fees_calculation = fields.Text(string="Fees Calculation")
-    price_unit = fields.Float(string="Fees")
+    price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees")
     per_class_fee = fields.Float(string="Per Class Fee", compute="_compute_per_class_fee", store=True, readonly=True)
     
     label_id = fields.Many2one(
@@ -99,7 +100,7 @@ class AccountMove(models.Model):
             if variants:
                 rec.per_class_fee = variants[0].price_extra
 
-    @api.onchange('professional_fees', 'selected_variant_names', 'per_class_fee')
+    @api.onchange('professional_fees', 'selected_variant_names', 'per_class_fee', 'service_fee')
     def _compute_professional_fees_expression(self):
         for rec in self:
             variants = rec.selected_variant_names
@@ -123,7 +124,7 @@ class AccountMove(models.Model):
                 f"({"{:,.2f}".format(rec.per_class_fee)} * {count}) = {"{:,.2f}".format(final_total)}"
             )
 
-            rec.price_unit = rec.price_unit + total
+            rec.price_unit = final_total + (rec.service_fee or 0.0)
 
     @api.depends('product_id')
     def _compute_product_template_id(self):

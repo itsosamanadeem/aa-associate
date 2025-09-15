@@ -127,6 +127,13 @@
                 </div>
             </div>
         </xpath>
+        <div class="mb-3" t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference" position='replace'>
+            <div class="mb-3" t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference">
+                <p name="payment_communication">
+                    Payment Communication: <span class="fw-bold" t-field="o.payment_reference">INV/2023/00001</span>
+                </p>
+            </div>
+        </div>
         <xpath expr="//div[@id='payment_term']" position="after">
             <div class="mt-5 clearfix overflow-auto">
                 <h4 class="fw-bold text-secondary mb-3">Bank Account Information</h4>
@@ -172,9 +179,9 @@
                             <tr>
                                 <td>
                                     <div style="margin-bottom:6px; padding:6px 10px; border-bottom:1px solid #e9ecef;">
-                                        <span class="display-5" t-out="line.name"/> :
-                                        <small class="fs-1">
-                                            <em t-out="line.product_id.product_tmpl_id.description_purchase"/>
+                                        <small><span class="" t-out="line.name"/> :</small>
+                                        <small class="">
+                                            <em t-out="line.product_id.product_tmpl_id.x_studio_service_description"/>
                                         </small>
                                         <br/>
                                     </div>
