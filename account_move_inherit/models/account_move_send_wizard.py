@@ -76,20 +76,20 @@ class AccountMoveSend(models.AbstractModel):
 
         return mail_params
     
-    @api.model
-    def _send_mail(self, move, mail_params, **kwargs):
-        # Call parent first (creates mail.message + mail.mail)
-        new_message = super()._send_mail(move, mail_params, **kwargs)
+    # @api.model
+    # def _send_mail(self, move, mail_params, **kwargs):
+    #     # Call parent first (creates mail.message + mail.mail)
+    #     new_message = super()._send_mail(move, mail_params, **kwargs)
 
-        cc = mail_params        # Get our CC list from context
-        # cc_list = self.env.context.get('custom_cc_list')
-        # if cc_list:
-        #     mail_mail = self.env['mail.mail'].search([('mail_message_id', '=', new_message.id)], limit=1)
-        #     if mail_mail:
-        #         # Use write() so it persists in DB before send
-        #         mail_mail.write({'email_cc': cc_list})
-        raise UserError(f"CC partners: {cc} and kwargs: {kwargs}")
-        return new_message
+    #     cc = mail_params        # Get our CC list from context
+    #     # cc_list = self.env.context.get('custom_cc_list')
+    #     # if cc_list:
+    #     #     mail_mail = self.env['mail.mail'].search([('mail_message_id', '=', new_message.id)], limit=1)
+    #     #     if mail_mail:
+    #     #         # Use write() so it persists in DB before send
+    #     #         mail_mail.write({'email_cc': cc_list})
+    #     raise UserError(f"CC partners: {cc} and kwargs: {kwargs}")
+    #     return new_message
     
     @api.model
     def _get_default_sending_settings(self, move, from_cron=False, **custom_settings):

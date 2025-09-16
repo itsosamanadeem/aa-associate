@@ -3,6 +3,8 @@
     "name": "Invoice Product Attribute Wizard & CRM Service History",
     "version": "18.0.1.0.0",
     "sequence": -1000,
+    "price": 300,
+    "currency": "USD",
     "summary": "Direct invoice creation with product attributes, dynamic headers, and CRM service history tracking.",
     "description": """
 Invoice Product Attribute Wizard & CRM Service History
@@ -43,7 +45,7 @@ This module extends Odoo Accounting and CRM with the following features:
         "views/crm_label.xml",
         "views/crm_trademark_history.xml",
         "views/invoice_report_inherit.xml",
-        # "views/account_move_send_wizard_inherit.xml",
+        "views/account_move_send_wizard_inherit.xml",
     ],
     "assets": {
         "web.assets_backend": [
