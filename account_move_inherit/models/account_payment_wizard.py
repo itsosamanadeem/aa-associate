@@ -2,7 +2,7 @@
 from odoo import fields, models
 
 class AccountReconcileWizard(models.TransientModel):
-    _inherit = "account.reconcile.wizard"
+    _inherit = "account.payment.register"
 
     check_date = fields.Date(string="Check Date")
     check_number = fields.Char(string="Check Number")
