@@ -46,7 +46,7 @@ This module extends Odoo Accounting and CRM with the following features:
         "views/crm_trademark_history.xml",
         "views/invoice_report_inherit.xml",
         "views/account_move_send_wizard_inherit.xml",
-        'views/account_reconcile_wizard.xml',
+        # 'views/account_reconcile_wizard.xml',
     ],
     "assets": {
         "web.assets_backend": [
