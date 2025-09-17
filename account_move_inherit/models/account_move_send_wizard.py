@@ -68,29 +68,32 @@ class AccountMoveSend(models.AbstractModel):
             'partner_ids': move_data['mail_partner_ids'],
             'attachments': mail_attachments,
         }
-
-        # Inject CC if the wizard had them
-        cc_partners = move_data.get('email_cc')
+        cc_partners = move_data.get('mail_partner_cc_ids')
         if cc_partners:
-            mail_params.update({'partner_cc_ids': cc_partners.ids})
+            mail_params.update({'partner_cc_ids': cc_partners})
 
+        # raise UserError(f"Mail params: {mail_params}")
         return mail_params
     
-    # @api.model
-    # def _send_mail(self, move, mail_params, **kwargs):
-    #     # Call parent first (creates mail.message + mail.mail)
-    #     new_message = super()._send_mail(move, mail_params, **kwargs)
+    @api.model
+    def _send_mail(self, move, mail_template, **kwargs):
+        # Extract CC and TO safely
+        cc_partners = kwargs.pop('partner_cc_ids', [])
+        to_partners = kwargs.pop('partner_ids', [])
 
-    #     cc = mail_params        # Get our CC list from context
-    #     # cc_list = self.env.context.get('custom_cc_list')
-    #     # if cc_list:
-    #     #     mail_mail = self.env['mail.mail'].search([('mail_message_id', '=', new_message.id)], limit=1)
-    #     #     if mail_mail:
-    #     #         # Use write() so it persists in DB before send
-    #     #         mail_mail.write({'email_cc': cc_list})
-    #     raise UserError(f"CC partners: {cc} and kwargs: {kwargs}")
-    #     return new_message
-    
+        # Merge To + CC if you want them all notified
+        all_partners = list(set(to_partners) | set(cc_partners))
+
+        # Call parent safely with single partner_ids
+        new_message = super()._send_mail(
+            move,
+            mail_template,
+            partner_ids=all_partners,
+            **kwargs
+        )
+
+        return new_message
+
     @api.model
     def _get_default_sending_settings(self, move, from_cron=False, **custom_settings):
         # Call super to keep Odoo’s default behavior

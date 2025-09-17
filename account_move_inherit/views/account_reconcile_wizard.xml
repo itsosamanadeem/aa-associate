@@ -1,0 +1,14 @@
+<!-- views/account_reconcile_wizard_view.xml -->
+<odoo>
+    <record id="view_account_reconcile_wizard_inherit" model="ir.ui.view">
+        <field name="name">account.reconcile.wizard.inherit.check.fields</field>
+        <field name="model">account.reconcile.wizard</field>
+        <field name="inherit_id" ref="account_accountant.view_account_reconcile_wizard"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='to_check']" position="after">
+                <field name="check_date"/>
+                <field name="check_number"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

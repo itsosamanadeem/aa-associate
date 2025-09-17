@@ -24,15 +24,15 @@
         </field>
     </record>
     
-    <record id="view_mail_template_inherit_cc" model="ir.ui.view">
+    <!-- Insert CC right after the To field -->
+    <!-- <record id="view_mail_template_inherit_cc" model="ir.ui.view">
         <field name="name">mail.template.form.inherit.cc</field>
         <field name="model">mail.template</field>
         <field name="inherit_id" ref="mail.email_template_form"/>
         <field name="arch" type="xml">
-            <!-- Insert CC right after the To field -->
             <xpath expr="//field[@name='email_to']" position="after">
                 <field name="email_cc"/>
             </xpath>
         </field>
-    </record>
+    </record> -->
 </odoo>

@@ -180,7 +180,12 @@ class AccountMove(models.Model):
             if field.name == "product_template_id" and self.selected_variant_names:
                 return ", ".join(self.selected_variant_names or [])
             return value.display_name
+        
+        if field.type == "many2many":
+            if field.name == "tax_ids" and value:
+                return ", ".join([f"{int(t.amount) if float(t.amount).is_integer() else t.amount}%" for t in value])
 
+        
         # Handle Date / Datetime
         if field.type == "date":
             return format_date(self.env, value)
