@@ -27,8 +27,8 @@ This module extends Odoo Accounting and CRM with the following features:
 - Improve customer relationship tracking and after-sales support.
 
 """,
-    "author": "Your Name",
-    "website": "https://yourwebsite.com",
+    "author": "Muhammad Osama Nadeem",
+    "website": "https://xynotech.com",
     "category": "Accounting/Invoicing",
     "license": "LGPL-3",
     "depends": [
