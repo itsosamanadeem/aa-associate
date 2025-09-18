@@ -11,7 +11,7 @@ class AccountReconcileWizard(models.TransientModel):
         vals_list = super()._create_payment_vals_from_wizard(batch_result)
         vals_list.update({
             "check_date": self.check_date,
-            "check_number": self.check_number,
+            "check_numbers": self.check_number,
         })
         return vals_list
 
