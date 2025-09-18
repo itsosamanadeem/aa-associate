@@ -9,6 +9,11 @@
                 <field name="check_date"/>
                 <field name="check_number"/>
             </xpath>
+            
+            <xpath expr="//field[@name='communication']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+
         </field>
     </record>
 

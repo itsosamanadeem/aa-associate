@@ -19,5 +19,5 @@ class AccountReconcileWizard(models.TransientModel):
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 
-    check_date = fields.Date(string="Check Date")
-    check_number = fields.Char(string="Check Number")
+    check_date = fields.Date(string="Check Date", readonly=True,)
+    check_number = fields.Char(string="Check Number",readonly=True,)
