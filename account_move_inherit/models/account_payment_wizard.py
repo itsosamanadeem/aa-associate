@@ -8,7 +8,7 @@ class AccountReconcileWizard(models.TransientModel):
 
     def _create_payment_vals_from_wizard(self, batch_result):
         """Extend to add check fields into created payments"""
-        vals_list = super()._create_payment_vals_from_wizard(self, batch_result)
+        vals_list = super()._create_payment_vals_from_wizard(batch_result)
         for vals in vals_list:
             vals.update({
                 "check_date": self.check_date,
