@@ -10,7 +10,7 @@ class AccountMoveSendWizard(models.TransientModel):
     )
     mail_partner_cc_ids = fields.Many2many(
         'res.partner', string='CC', help='Partners to be CCed on the email.',
-        compute='_compute_mail_partners', store=True, readonly=False
+        compute='_compute_mail_partners', store=True, readonly=False, required=False
     )
 
 
@@ -82,16 +82,22 @@ class AccountMoveSend(models.AbstractModel):
         to_partners = kwargs.pop('partner_ids', [])
 
         # Merge To + CC if you want them all notified
-        all_partners = list(set(to_partners) | set(cc_partners))
-
-        # Call parent safely with single partner_ids
-        new_message = super()._send_mail(
-            move,
-            mail_template,
-            partner_ids=all_partners,
-            **kwargs
-        )
-
+        if cc_partners:
+            all_partners = list(set(to_partners) | set(cc_partners))
+            # Call parent safely with single partner_ids
+            new_message = super()._send_mail(
+                move,
+                mail_template,
+                partner_ids=all_partners,
+                **kwargs
+            )
+        else:
+            new_message = super()._send_mail(
+                move,
+                mail_template,
+                partner_ids=to_partners,
+                **kwargs
+            )
         return new_message
 
     @api.model

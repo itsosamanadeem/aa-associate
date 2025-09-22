@@ -17,7 +17,6 @@
                     placeholder="CC (from template)"
                     widget="many2many_tags_email"
                     options="{'no_quick_create': True}"
-                    required="'email' in sending_methods"
                     context="{'show_email': True, 'form_view_ref': 'base.view_partner_simple_form'}"/>
             </field>
 
