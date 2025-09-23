@@ -3,8 +3,8 @@ from odoo import fields, models
 class AccountReconcileWizard(models.TransientModel):
     _inherit = "account.payment.register"
 
-    check_date = fields.Date(string="Check Date")
-    check_number = fields.Char(string="Check Number")
+    check_date = fields.Date(string="Cheque Date")
+    check_number = fields.Char(string="Cheque Number")
 
     def _create_payment_vals_from_wizard(self, batch_result):
         """Extend to add check fields into created payments"""
@@ -19,5 +19,5 @@ class AccountReconcileWizard(models.TransientModel):
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 
-    check_date = fields.Date(string="Check Date", readonly=True,)
-    check_number = fields.Char(string="Check Number",readonly=True,)
+    check_date = fields.Date(string="Cheque Date", readonly=True,)
+    check_number = fields.Char(string="Cheque Number",readonly=True,)

@@ -135,8 +135,37 @@
             </div>
         </div>
         <xpath expr="//div[@id='payment_term']" position="after">
+                    <div class="mt-5 clearfix overflow-auto" style="border: 1px solid #dee2e6; border-radius: 6px; padding: 10px; width: 100% !important;">
+                <table class="o_has_total_table table o_main_table table-borderless">
+                    <thead>
+                        <tr>
+                            <th style="color:#4e4e4e; font-size:14px;">Descriptions</th>
+                            <!--<th style="color:#4e4e4e; font-size:14px;">Amount</th>-->
+                        </tr>
+                    </thead>
+                    <tbody class="invoice_tbody">
+                        <t t-set="multiplication_total" t-value="0"/>
+                        <t t-foreach="lines" t-as="line">
+                            <tr>
+                                <td>
+                                    <div style="margin-bottom:6px; padding:6px 10px; border-bottom:1px solid #e9ecef;">
+                                        <small><span class="" t-out="line.name"/> :</small>
+                                        <small class="">
+                                            <em t-out="line.product_id.product_tmpl_id.x_studio_service_description"/>
+                                        </small>
+                                        <br/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
             <div class="mt-5 clearfix overflow-auto">
                 <h4 class="fw-bold text-secondary mb-3">Bank Account Information</h4>
+                <t t-if="o.invoice_line_ids.filtered(lambda x: x.product_id.product_tmpl_id.categ_id.name in ['Trademark Services','Design Services','Copyright Services'])">
+                    <span class="fw-bold">NOTE:  Please don’t deduct Tax from the official fees.</span>
+                </t>
                 <table class="table table-sm w-75" style="font-size: 0.875rem; line-height: 1.2;">
                     <tbody>
                         <tr>
@@ -165,37 +194,8 @@
                     <em>Please Note: All bank charges are borne by the client.</em>
                 </p>
             </div>
-            <div class="mt-5 clearfix overflow-auto" style="border: 1px solid #dee2e6; border-radius: 6px; padding: 10px; width: 100% !important;">
-                <table class="o_has_total_table table o_main_table table-borderless">
-                    <thead>
-                        <tr>
-                            <th style="color:#4e4e4e; font-size:14px;">Descriptions</th>
-                            <!--<th style="color:#4e4e4e; font-size:14px;">Amount</th>-->
-                        </tr>
-                    </thead>
-                    <tbody class="invoice_tbody">
-                        <t t-set="multiplication_total" t-value="0"/>
-                        <t t-foreach="lines" t-as="line">
-                            <tr>
-                                <td>
-                                    <div style="margin-bottom:6px; padding:6px 10px; border-bottom:1px solid #e9ecef;">
-                                        <small><span class="" t-out="line.name"/> :</small>
-                                        <small class="">
-                                            <em t-out="line.product_id.product_tmpl_id.x_studio_service_description"/>
-                                        </small>
-                                        <br/>
-                                    </div>
-                                </td>
-                            </tr>
-                        </t>
-                    </tbody>
-                </table>
-            </div>
             <div class="mt-5 overflow-auto">
                 <span class="fw-bold">This is a system-generated invoice. No signature or stamp is required.</span><br/>
-                <t t-if="o.invoice_line_ids.filtered(lambda x: x.product_id.product_tmpl_id.categ_id.name in ['Trademark Services','Design Services','Copyright Services'])">
-                    <span class="fw-bold">NOTE:  Please don’t deduct Tax from the official fees.</span>
-                </t>
             </div>
         </xpath>
     </template>
