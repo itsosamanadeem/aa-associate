@@ -79,6 +79,8 @@ class AccountTax(models.Model):
             'partner_id': load('partner_id', self.env['res.partner']),
             'account_id': load('account_id', self.env['account.account']),
             'analytic_distribution': load('analytic_distribution', None),
+            'deferred_start_date': load('deferred_start_date', False),
+            'deferred_end_date': load('deferred_end_date', False),
         }
 
 class AccountMove(models.Model):
