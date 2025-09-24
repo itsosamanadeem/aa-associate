@@ -37,7 +37,7 @@ class AccountMove(models.Model):
                         total_tax_currency += line.amount_currency
                         total += line.balance
                         total_currency += line.amount_currency
-                        raise UserError(_("Line: %s, Balance: %s, Amount Currency: %s") % (line.name, total_tax, total_tax_currency))
+                        raise UserError(f"Tax Line: {line.name}, Professional Fees: {line.professional_fees}, Amount Currency: {line.amount_currency}, Balance: {line.balance}, Total: {total}, Total Currency: {total_currency}, Tax: {total_tax}, Tax Currency: {total_tax_currency}")
                     elif line.display_type in ('product', 'rounding'):
                         # Untaxed amount.
                         total_untaxed += line.balance
