@@ -37,7 +37,7 @@ class AccountMove(models.Model):
                         total_tax_currency += line.amount_currency
                         total += line.balance
                         total_currency += line.amount_currency
-                        raise UserError('1')
+                        # raise UserError('1')
                     elif line.display_type in ('product', 'rounding'):
                         # Untaxed amount.
                         total_untaxed += line.professional_fees
