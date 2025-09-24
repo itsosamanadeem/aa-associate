@@ -23,7 +23,10 @@ class AccountMove(models.Model):
     def _compute_amount(self):
         """ Compute the amounts of the move based on its lines. """
         values = super()._compute_amount()
-        raise UserError(f"Computed values: {values}")
+        if values.get('amount_untaxed') or values.get('amount_tax'):
+            # If the amounts are not computed, we raise an error.
+            # This is to ensure that the amounts are always computed correctly.
+            raise UserError(f"Computed values: {values}")
         # for move in self:
         #     total_untaxed, total_untaxed_currency = 0.0, 0.0
         #     total_tax, total_tax_currency = 0.0, 0.0
