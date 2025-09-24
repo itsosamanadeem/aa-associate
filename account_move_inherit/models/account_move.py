@@ -43,6 +43,7 @@ class AccountMove(models.Model):
                         total_untaxed_currency += line.amount_currency
                         total += line.balance
                         total_currency += line.amount_currency
+                        raise UserError(f"{line.name} - Total: {total}, Total Currency: {total_currency}, Tax: {total_untaxed}, Tax Currency: {total_untaxed_currency}")
                     elif line.display_type == 'payment_term':
                         # Residual amount.
                         total_residual += line.amount_residual
