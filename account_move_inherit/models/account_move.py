@@ -61,7 +61,7 @@ class AccountMove(models.Model):
                 # raise UserError(_("Line: %s, Balance: %s, Amount Currency: %s") % (line.name, line.balance, line.amount_currency))
 
             sign = move.direction_sign
-            raise UserError(sign)
+            # raise UserError(sign)
             move.amount_untaxed = sign * total_untaxed_currency
             move.amount_tax = sign * total_tax_currency
             move.amount_total = sign * total_currency
@@ -74,3 +74,38 @@ class AccountMove(models.Model):
             move.amount_total_in_currency_signed = abs(move.amount_total) if move.move_type == 'entry' else -(sign * move.amount_total)
 
             # raise UserError(_("Total Untaxed: %s, Total Tax: %s, Total: %s, Total Residual: %s") % (total_untaxed, move.amount_tax_signed, total, total_residual))
+    
+    @api.depends_context('lang')
+    @api.depends(
+        'invoice_line_ids.currency_rate',
+        'invoice_line_ids.tax_base_amount',
+        'invoice_line_ids.tax_line_id',
+        'invoice_line_ids.price_total',
+        'invoice_line_ids.price_subtotal',
+        'invoice_payment_term_id',
+        'partner_id',
+        'currency_id',
+    )
+    def _compute_tax_totals(self):
+        """ Computed field used for custom widget's rendering.
+            Only set on invoices.
+        """
+        for move in self:
+            if move.is_invoice(include_receipts=True):
+                base_lines, _tax_lines = move._get_rounded_base_and_tax_lines()
+                move.tax_totals = self.env['account.tax']._get_tax_totals_summary(
+                    base_lines=base_lines,
+                    currency=move.currency_id,
+                    company=move.company_id,
+                    cash_rounding=move.invoice_cash_rounding_id,
+                )
+                raise UserError(f"Tax Totals: {move.tax_totals}")
+                move.tax_totals['display_in_company_currency'] = (
+                    move.company_id.display_invoice_tax_company_currency
+                    and move.company_currency_id != move.currency_id
+                    and move.tax_totals['has_tax_groups']
+                    and move.is_sale_document(include_receipts=True)
+                )
+            else:
+                # Non-invoice moves don't support that field (because of multicurrency: all lines of the invoice share the same currency)
+                move.tax_totals = None
