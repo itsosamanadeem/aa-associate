@@ -19,7 +19,7 @@ class AccountMove(models.Model):
         'line_ids.amount_residual_currency',
         'line_ids.payment_id.state',
         'line_ids.full_reconcile_id',
-        'line_ids.professional_fees',
+        'line_ids.professional_fees'
         'state')
     def _compute_amount(self):
         for move in self:
@@ -33,31 +33,27 @@ class AccountMove(models.Model):
                     # === Invoices ===
                     if line.display_type == 'tax' or (line.display_type == 'rounding' and line.tax_repartition_line_id):
                         # Tax amount.
-                        total_tax += line.professional_fees
+                        total_tax += line.balance
                         total_tax_currency += line.amount_currency
                         total += line.balance
                         total_currency += line.amount_currency
-                        raise UserError('1')
-                        # raise UserError(f"Tax Line: {line.name}, Professional Fees: {line.professional_fees}, Amount Currency: {line.amount_currency}, Balance: {line.balance}, Total: {total}, Total Currency: {total_currency}, Tax: {total_tax}, Tax Currency: {total_tax_currency}")
                     elif line.display_type in ('product', 'rounding'):
                         # Untaxed amount.
-                        total_untaxed += line.balance
+                        total_untaxed += line.professional_fees
                         total_untaxed_currency += line.amount_currency
                         total += line.balance
                         total_currency += line.amount_currency
-                        raise UserError('2')
                     elif line.display_type == 'payment_term':
                         # Residual amount.
                         total_residual += line.amount_residual
                         total_residual_currency += line.amount_residual_currency
-                        raise UserError('3')
                 else:
                     # === Miscellaneous journal entry ===
                     if line.debit:
                         total += line.balance
                         total_currency += line.amount_currency
-                        raise UserError('4')
 
+                # raise UserError(_("Line: %s, Balance: %s, Amount Currency: %s") % (line.name, line.balance, line.amount_currency))
 
             sign = move.direction_sign
             move.amount_untaxed = sign * total_untaxed_currency
