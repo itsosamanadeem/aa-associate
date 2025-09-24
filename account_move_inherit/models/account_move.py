@@ -67,4 +67,4 @@ class AccountMove(models.Model):
             move.amount_residual_signed = total_residual
             move.amount_total_in_currency_signed = abs(move.amount_total) if move.move_type == 'entry' else -(sign * move.amount_total)
 
-            raise UserError(_("Total Untaxed: %s, Total Tax: %s, Total: %s, Total Residual: %s") % (total_untaxed, move.amount_tax_signed, total, total_residual))
+            # raise UserError(_("Total Untaxed: %s, Total Tax: %s, Total: %s, Total Residual: %s") % (total_untaxed, move.amount_tax_signed, total, total_residual))
