@@ -50,7 +50,7 @@ class AccountMove(models.Model):
                         # Residual amount.
                         total_residual += line.amount_residual
                         total_residual_currency += line.amount_residual_currency
-                        raise UserError('3')
+                        # raise UserError('3')
                 else:
                     # === Miscellaneous journal entry ===
                     if line.debit:
