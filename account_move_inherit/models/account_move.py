@@ -2,6 +2,85 @@
 from odoo import models, api, _, fields
 from odoo.exceptions import UserError
 
+
+class AccountTax(models.Model):
+    _inherit = "account.tax"
+    
+    @api.model
+    def _prepare_base_line_for_taxes_computation(self, record, **kwargs):
+        """ Convert any representation of a business object ('record') into a base line being a python
+        dictionary that will be used to use the generic helpers for the taxes computation.
+
+        The whole method is designed to ease the conversion from a business record.
+        For example, when passing either account.move.line, either sale.order.line or purchase.order.line,
+        providing explicitely a 'product_id' in kwargs is not necessary since all those records already have
+        an `product_id` field.
+
+        :param record:  A representation of a business object a.k.a a record or a dictionary.
+        :param kwargs:  The extra values to override some values that will be taken from the record.
+        :return:        A dictionary representing a base line.
+        """
+        def load(field, fallback):
+            return self._get_base_line_field_value_from_record(record, field, kwargs, fallback)
+
+        currency = (
+            load('currency_id', None)
+            or load('company_currency_id', None)
+            or load('company_id', self.env['res.company']).currency_id
+            or self.env['res.currency']
+        )
+
+        return {
+            **kwargs,
+            'record': record,
+            'id': load('id', 0),
+
+            # Basic fields:
+            'product_id': load('product_id', self.env['product.product']),
+            'tax_ids': load('tax_ids', self.env['account.tax']),
+            'price_unit': load('price_unit', 0.0),
+            'professional_fees': load('professional_fees', 0.0),
+            'quantity': load('quantity', 0.0),
+            'discount': load('discount', 0.0),
+            'currency_id': currency,
+
+            # The special_mode for the taxes computation:
+            # - False for the normal behavior.
+            # - total_included to force all taxes to be price included.
+            # - total_excluded to force all taxes to be price excluded.
+            'special_mode': kwargs.get('special_mode', False),
+
+            # A special typing of base line for some custom behavior:
+            # - False for the normal behavior.
+            # - early_payment if the base line represent an early payment in mixed mode.
+            # - cash_rounding if the base line is a delta to round the business object for the cash rounding feature.
+            'special_type': kwargs.get('special_type', False),
+
+            # All computation are managing the foreign currency and the local one.
+            # This is the rate to be applied when generating the tax details (see '_add_tax_details_in_base_line').
+            'rate': load('rate', 1.0),
+
+            # For all computation that are inferring a base amount in order to reach a total you know in advance, you have to force some
+            # base/tax amounts for the computation (E.g. down payment, combo products, global discounts etc).
+            'manual_tax_amounts': kwargs.get('manual_tax_amounts', None),
+
+            # ===== Accounting stuff =====
+
+            # The sign of the business object regarding its accounting balance.
+            'sign': load('sign', 1.0),
+
+            # If the document is a refund or not to know which repartition lines must be used.
+            'is_refund': load('is_refund', False),
+
+            # If the tags must be inverted or not.
+            'tax_tag_invert': load('tax_tag_invert', False),
+
+            # Extra fields for tax lines generation:
+            'partner_id': load('partner_id', self.env['res.partner']),
+            'account_id': load('account_id', self.env['account.account']),
+            'analytic_distribution': load('analytic_distribution', None),
+        }
+
 class AccountMove(models.Model):
     _inherit = "account.move"
 
@@ -21,114 +100,11 @@ class AccountMove(models.Model):
 
         return self.env['account.tax']._prepare_base_line_for_taxes_computation(
             product_line,
-            price_unit=product_line.professional_fees if is_invoice else product_line.amount_currency,
+            price_unit=product_line.price_unit if is_invoice else product_line.amount_currency,
+            professional_fees=product_line.professional_fees if is_invoice else product_line.amount_currency,
             quantity=product_line.quantity if is_invoice else 1.0,
             discount=product_line.discount if is_invoice else 0.0,
             rate=rate,
             sign=sign,
             special_mode=False if is_invoice else 'total_excluded',
         )
-    # @api.depends(
-    #     'line_ids.matched_debit_ids.debit_move_id.move_id.origin_payment_id.is_matched',
-    #     'line_ids.matched_debit_ids.debit_move_id.move_id.line_ids.amount_residual',
-    #     'line_ids.matched_debit_ids.debit_move_id.move_id.line_ids.amount_residual_currency',
-    #     'line_ids.matched_credit_ids.credit_move_id.move_id.origin_payment_id.is_matched',
-    #     'line_ids.matched_credit_ids.credit_move_id.move_id.line_ids.amount_residual',
-    #     'line_ids.matched_credit_ids.credit_move_id.move_id.line_ids.amount_residual_currency',
-    #     'line_ids.balance',
-    #     'line_ids.currency_id',
-    #     'line_ids.amount_currency',
-    #     'line_ids.amount_residual',
-    #     'line_ids.amount_residual_currency',
-    #     'line_ids.payment_id.state',
-    #     'line_ids.full_reconcile_id',
-    #     'line_ids.professional_fees',
-    #     'state')
-    # def _compute_amount(self):
-    #     for move in self:
-    #         total_untaxed, total_untaxed_currency = 0.0, 0.0
-    #         total_tax, total_tax_currency = 0.0, 0.0
-    #         total_residual, total_residual_currency = 0.0, 0.0
-    #         total, total_currency = 0.0, 0.0
-
-    #         for line in move.line_ids:
-    #             if move.is_invoice(True):
-    #                 # === Invoices ===
-    #                 if line.display_type == 'tax' or (line.display_type == 'rounding' and line.tax_repartition_line_id):
-    #                     # Tax amount.
-    #                     total_tax += line.professional_fees
-    #                     total_tax_currency += line.amount_currency
-    #                     total += line.balance
-    #                     total_currency += line.amount_currency
-    #                     # raise UserError('1')
-    #                 elif line.display_type in ('product', 'rounding'):
-    #                     # Untaxed amount.
-    #                     total_untaxed += line.professional_fees
-    #                     total_untaxed_currency += line.amount_currency
-    #                     total += line.balance
-    #                     total_currency += line.amount_currency
-    #                     # raise UserError(f"{line.name} - Total: {total}, Total Currency: {total_currency}, Tax: {total_untaxed}, Tax Currency: {total_untaxed_currency}")
-    #                     # raise UserError('2')
-    #                 elif line.display_type == 'payment_term':
-    #                     # Residual amount.
-    #                     total_residual += line.amount_residual
-    #                     total_residual_currency += line.amount_residual_currency
-    #                     # raise UserError('3')
-    #             else:
-    #                 # === Miscellaneous journal entry ===
-    #                 if line.debit:
-    #                     total += line.balance
-    #                     total_currency += line.amount_currency
-    #                     # raise UserError('4')
-
-    #             # raise UserError(_("Line: %s, Balance: %s, Amount Currency: %s") % (line.name, line.balance, line.amount_currency))
-
-    #         sign = move.direction_sign
-    #         # raise UserError(sign)
-    #         move.amount_untaxed = sign * total_untaxed_currency
-    #         move.amount_tax = sign * total_tax_currency
-    #         move.amount_total = sign * total_currency
-    #         move.amount_residual = -sign * total_residual_currency
-    #         move.amount_untaxed_signed = -total_untaxed
-    #         move.amount_untaxed_in_currency_signed = -total_untaxed_currency
-    #         move.amount_tax_signed = -total_tax
-    #         move.amount_total_signed = abs(total) if move.move_type == 'entry' else -total
-    #         move.amount_residual_signed = total_residual
-    #         move.amount_total_in_currency_signed = abs(move.amount_total) if move.move_type == 'entry' else -(sign * move.amount_total)
-
-    #         # raise UserError(_("Total Untaxed: %s, Total Tax: %s, Total: %s, Total Residual: %s") % (total_untaxed, move.amount_tax_signed, total, total_residual))
-    
-    # @api.depends_context('lang')
-    # @api.depends(
-    #     'invoice_line_ids.currency_rate',
-    #     'invoice_line_ids.tax_base_amount',
-    #     'invoice_line_ids.tax_line_id',
-    #     'invoice_line_ids.price_total',
-    #     'invoice_line_ids.price_subtotal',
-    #     'invoice_payment_term_id',
-    #     'partner_id',
-    #     'currency_id',
-    # )
-    # def _compute_tax_totals(self):
-    #     """ Computed field used for custom widget's rendering.
-    #         Only set on invoices.
-    #     """
-    #     for move in self:
-    #         if move.is_invoice(include_receipts=True):
-    #             base_lines, _tax_lines = move._get_rounded_base_and_tax_lines()
-    #             raise UserError(f"Tax Totals: {base_lines}, {_tax_lines}")
-    #             move.tax_totals = self.env['account.tax']._get_tax_totals_summary(
-    #                 base_lines=base_lines,
-    #                 currency=move.currency_id,
-    #                 company=move.company_id,
-    #                 cash_rounding=move.invoice_cash_rounding_id,
-    #             )
-    #             move.tax_totals['display_in_company_currency'] = (
-    #                 move.company_id.display_invoice_tax_company_currency
-    #                 and move.company_currency_id != move.currency_id
-    #                 and move.tax_totals['has_tax_groups']
-    #                 and move.is_sale_document(include_receipts=True)
-    #             )
-    #         else:
-    #             # Non-invoice moves don't support that field (because of multicurrency: all lines of the invoice share the same currency)
-    #             move.tax_totals = None
