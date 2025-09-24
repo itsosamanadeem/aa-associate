@@ -19,6 +19,7 @@ class AccountMove(models.Model):
         'line_ids.amount_residual_currency',
         'line_ids.payment_id.state',
         'line_ids.full_reconcile_id',
+        'line_ids.professional_fees'
         'state')
     def _compute_amount(self):
         for move in self:
@@ -32,7 +33,7 @@ class AccountMove(models.Model):
                     # === Invoices ===
                     if line.display_type == 'tax' or (line.display_type == 'rounding' and line.tax_repartition_line_id):
                         # Tax amount.
-                        total_tax += line.balance
+                        total_tax += line.professional_fees
                         total_tax_currency += line.amount_currency
                         total += line.balance
                         total_currency += line.amount_currency
