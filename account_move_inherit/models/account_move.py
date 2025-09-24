@@ -61,6 +61,7 @@ class AccountMove(models.Model):
                 # raise UserError(_("Line: %s, Balance: %s, Amount Currency: %s") % (line.name, line.balance, line.amount_currency))
 
             sign = move.direction_sign
+            raise UserError(sign)
             move.amount_untaxed = sign * total_untaxed_currency
             move.amount_tax = sign * total_tax_currency
             move.amount_total = sign * total_currency
