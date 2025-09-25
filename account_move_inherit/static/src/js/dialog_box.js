@@ -115,6 +115,8 @@ export class ProductVariantDialog extends Component {
 
     getProductTotalPrice() {
         const total = this.getRawTotalPrice();
+        console.log("Total price calculated:", total);
+        
         return formatCurrency(total, this.props.currency_id);
     }
 
