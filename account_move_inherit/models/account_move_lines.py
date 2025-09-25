@@ -80,8 +80,8 @@ class AccountMove(models.Model):
 
     professional_fees = fields.Float(string="Professional Fees")
     service_fee = fields.Float(string="Service Fee", related="product_id.lst_price", readonly=False, store=True)
-    fees_calculation = fields.Text(string="Fees Calculation", readonly=False, store=True)
-    price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees",store=True, readonly=True)
+    fees_calculation = fields.Text(string="Fees Calculation", compute="_compute_professional_fees_expression", readonly=False, store=True)
+    price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees", compute="_compute_professional_fees_expression", store=True, readonly=True)
     per_class_fee = fields.Float(string="official fees", readonly=True)
     lenght_of_classes = fields.Integer(string="Number of Classes")
     
@@ -92,7 +92,7 @@ class AccountMove(models.Model):
         ondelete="set null"
     )
 
-    @api.onchange('professional_fees', 'lenght_of_classes', 'service_fee')
+    @api.depends('professional_fees', 'lenght_of_classes', 'service_fee')
     def _compute_professional_fees_expression(self):
         for rec in self:
             per_class_fee = 0.0
