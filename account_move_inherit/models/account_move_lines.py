@@ -110,10 +110,7 @@ class AccountMove(models.Model):
             final_total = total + per_class_total
 
             # If nothing entered except product → just service fee
-            if not rec.professional_fees and not rec.lenght_of_classes:
-                rec.fees_calculation = f"Service Fee Only = {rec.service_fee:,.2f}"
-                rec.price_unit = rec.service_fee or 0.0
-            else:
+            if rec.professional_fees and rec.lenght_of_classes > 1 and rec.service_fee != 0.0:
                 # Full formula
                 rec.fees_calculation = (
                     f"({rec.professional_fees:,.2f} * {rec.lenght_of_classes}) + "
@@ -121,6 +118,9 @@ class AccountMove(models.Model):
                     f"+ {rec.service_fee:,.2f} = {final_total + (rec.service_fee or 0.0):,.2f}"
                 )
                 rec.price_unit = final_total + (rec.service_fee or 0.0)
+            else:
+                rec.fees_calculation = f"Service Fee Only = {rec.service_fee:,.2f}"
+                rec.price_unit = rec.service_fee or 0.0
 
 
     @api.onchange('professional_fees', 'lenght_of_classes', 'service_fee', 'product_id')
@@ -155,7 +155,7 @@ class AccountMove(models.Model):
         self.per_class_fee = price
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
-        self.lenght_of_classes = len(variants_names) if variants_names else 0
+        self.lenght_of_classes = len(variants_names) if variants_names else 1
         # self.application_id = application_number  
         # raise UserError(_("Application Number: %s") % str(vals.get('variant_price')))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
