@@ -89,7 +89,7 @@
             </t>
         </xpath>
         <xpath expr="//div[@id='total']" position="replace">
-            <div id="total" class="clearfix row mt-3">
+            <div id="total" class="clearfix row mt-0">
                 <div class="ms-auto">
                     <table class="o_total_table table table-borderless avoid-page-break-inside">
 
@@ -103,16 +103,16 @@
                         <t t-if="print_with_payments">
                             <t t-if="o.payment_state != 'invoicing_legacy'">
                                 <t t-set="payments_vals" t-value="o.sudo().invoice_payments_widget and o.sudo().invoice_payments_widget['content'] or []"/>
-                                <t t-foreach="payments_vals" t-as="payment_vals">
-                                    <tr t-if="payment_vals['is_exchange'] == 0">
-                                        <td>
-                                            <i class="oe_form_field text-end oe_payment_label">Paid on <t t-out="payment_vals['date']" t-options="{&quot;widget&quot;: &quot;date&quot;}">2021-09-19</t></i>
-                                        </td>
-                                        <td class="text-end">
-                                            <span t-out="payment_vals['amount']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}">20.00</span>
-                                        </td>
-                                    </tr>
-                                </t>
+                                <!--<t t-foreach="payments_vals" t-as="payment_vals">-->
+                                <!--    <tr t-if="payment_vals['is_exchange'] == 0">-->
+                                <!--        <td>-->
+                                <!--            <i class="oe_form_field text-end oe_payment_label">Paid on <t t-out="payment_vals['date']" t-options="{&quot;widget&quot;: &quot;date&quot;}">2021-09-19</t></i>-->
+                                <!--        </td>-->
+                                <!--        <td class="text-end">-->
+                                <!--            <span t-out="payment_vals['amount']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}">20.00</span>-->
+                                <!--        </td>-->
+                                <!--    </tr>-->
+                                <!--</t>-->
                                 <t t-if="len(payments_vals) &gt; 0">
                                     <tr class="fw-bold">
                                         <td>Amount Due</td>
@@ -127,48 +127,14 @@
                 </div>
             </div>
         </xpath>
-        <div class="mb-3" t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference" position='replace'>
-            <div class="mb-3" t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference">
-                <p name="payment_communication">
-                    Payment Communication: <span class="fw-bold" t-field="o.payment_reference">INV/2023/00001</span>
-                </p>
-            </div>
+        <div class="mb-3" t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference" position="replace">
+            
         </div>
-        <xpath expr="//div[@id='payment_term']" position="replace">
+        <xpath expr="//div[@id='payment_term']" position="after">
             <t t-if="o.invoice_line_ids.filtered(lambda x: x.product_id.product_tmpl_id.categ_id.name in ['Trademark Services','Design Services','Copyright Services'])">
                 <span class="fw-bold">NOTE:  Please don’t deduct Tax from the official fees.</span>
             </t>
-            <div class="clearfix overflow-auto">
-                <h4 class="fw-bold text-secondary mb-1">Bank Account Information</h4>
-                <table class="table table-sm w-100" style="font-size: 0.875rem; line-height: 1.2;">
-                    <tbody>
-                        <tr>
-                            <td class="fw-bold">Bank Name:</td>
-                            <td>Habib Bank Limited</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Account Title:</td>
-                            <td>A.A &amp; Associates</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Account No:</td>
-                            <td>14030024934003</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">IBAN:</td>
-                            <td>PK86 HABB 0014030024934003</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Swift Code:</td>
-                            <td>HABBPKKA007</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p class="fw-bold mt-1" style="font-size: 1rem; color: #6c757d;">
-                    <em>Please Note: All bank charges are borne by the client.</em>
-                </p>
-            </div>
-            <div class="mt-5 clearfix overflow-auto" style="border: 1px solid #dee2e6; border-radius: 6px; padding: 10px; width: 100% !important;">
+            <div class="mt-1 clearfix overflow-auto" style="border: 1px solid #dee2e6; border-radius: 6px; padding: 10px; width: 100% !important;">
                 <table class="o_has_total_table table o_main_table table-borderless">
                     <thead>
                         <tr>
@@ -194,7 +160,34 @@
                     </tbody>
                 </table>
             </div>
-            <div class="mt-5 overflow-auto">
+            <div class="clearfix overflow-auto mt-5">
+                <h4 class="fw-bold text-secondary mb-1">Bank Account Information</h4>
+                <table class="table table-sm w-100 o_has_total_table table o_main_table table-borderless" style="font-size: 0.875rem; line-height: 1.2;">
+                    <thead>
+                        
+                    </thead>
+                        <tr>
+                            <td class="fw-bold">Bank Name:</td>
+                            <td class="fw-bold">Account Title:</td>
+                            <td class="fw-bold">Account No:</td>
+                            <td class="fw-bold">IBAN:</td>
+                            <td class="fw-bold">Swift Code:</td>
+                        </tr>
+                    <tbody >
+                        <tr>
+                            <td>Habib Bank Limited</td>
+                            <td>A.A &amp; Associates</td>
+                            <td>14030024934003</td>
+                            <td>PK86 HABB 0014030024934003</td>
+                            <td>HABBPKKA007</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="fw-bold mt-1" style="font-size: 1rem; color: #6c757d;">
+                    <em>Please Note: All bank charges are borne by the client.</em>
+                </p>
+            </div>
+            <div class="mt-1 overflow-auto">
                 <span class="fw-bold">This is a system-generated invoice. No signature or stamp is required.</span><br/>
             </div>
         </xpath>
