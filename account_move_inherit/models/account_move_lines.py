@@ -92,7 +92,7 @@ class AccountMove(models.Model):
         ondelete="set null"
     )
 
-    @api.depends('professional_fees', 'lenght_of_classes', 'service_fee', 'product_id','per_class_fee')
+    @api.depends('professional_fees', 'lenght_of_classes','product_id','per_class_fee')
     def _compute_professional_fees_expression(self):
         for rec in self:
             per_class_fee = 0.0
@@ -114,7 +114,7 @@ class AccountMove(models.Model):
             )
             rec.price_unit = final_total + (rec.service_fee or 0.0)
 
-    @api.onchange('professional_fees', 'lenght_of_classes', 'service_fee', 'product_id','per_class_fee')
+    @api.onchange('lenght_of_classes', 'service_fee', 'product_id','per_class_fee')
     def _onchange_professional_fees_expression(self):
         self._compute_professional_fees_expression()
 
