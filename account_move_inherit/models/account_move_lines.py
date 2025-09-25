@@ -95,13 +95,13 @@ class AccountMove(models.Model):
     @api.depends('professional_fees', 'lenght_of_classes','product_id', 'service_fee')
     def _compute_professional_fees_expression(self):
         for rec in self:
-            per_class_fee = 0.0
+            per_class_fee = 0.00
             if rec.product_id:
                 product_classes = rec.product_id.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
                 variants = rec.env['product.template.attribute.value'].sudo().search([
                     ('attribute_id', 'in', product_classes)
                 ])
-                if variants:
+                if variants and not rec.per_class_fee:
                     per_class_fee = variants[0].price_extra
 
             total = rec.professional_fees * rec.lenght_of_classes
