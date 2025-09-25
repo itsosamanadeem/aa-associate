@@ -101,7 +101,7 @@ class AccountMove(models.Model):
                 variants = rec.env['product.template.attribute.value'].sudo().search([
                     ('attribute_id', 'in', product_classes)
                 ])
-                if variants and rec.per_class_fee:
+                if variants and rec.per_class_fee != 0.00:
                     per_class_fee = variants[0].price_extra
 
             total = rec.professional_fees * rec.lenght_of_classes
