@@ -80,8 +80,8 @@ class AccountMove(models.Model):
 
     professional_fees = fields.Float(string="Professional Fees")
     service_fee = fields.Float(string="Service Fee", related="product_id.lst_price", readonly=False, store=True)
-    fees_calculation = fields.Text(string="Fees Calculation")
-    price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees")
+    fees_calculation = fields.Text(string="Fees Calculation", compute="_compute_professional_fees_expression", store=True, readonly=False)
+    price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees", compute="_compute_professional_fees_expression", store=True)
     per_class_fee = fields.Float(string="official fees", readonly=True)
     
     label_id = fields.Many2one(
@@ -91,7 +91,7 @@ class AccountMove(models.Model):
         ondelete="set null"
     )
 
-    @api.onchange('professional_fees', 'selected_variant_names', 'per_class_fee', 'service_fee')
+    @api.depends('professional_fees', 'selected_variant_names', 'per_class_fee', 'service_fee')
     def _compute_professional_fees_expression(self):
         for rec in self:
             variants = rec.selected_variant_names
