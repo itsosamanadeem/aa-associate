@@ -116,12 +116,12 @@ class AccountMove(models.Model):
             count = len(variants) if variants else 1
 
             total = rec.professional_fees * count
-            per_class_total = rec.per_class_fee * count
+            per_class_total = rec.per_class_fee
             final_total = total + per_class_total
 
             rec.fees_calculation = (
                 f"({"{:,.2f}".format(rec.professional_fees)} * {count}) + "
-                f"({"{:,.2f}".format(rec.per_class_fee)} * {count}) = {"{:,.2f}".format(final_total)}"
+                f"({"{:,.2f}".format(rec.per_class_fee)}) = {"{:,.2f}".format(final_total)}"
             )
 
             rec.price_unit = final_total + (rec.service_fee or 0.0)
