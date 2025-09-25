@@ -82,7 +82,7 @@ class AccountMove(models.Model):
     service_fee = fields.Float(string="Service Fee", related="product_id.lst_price", readonly=False, store=True)
     fees_calculation = fields.Text(string="Fees Calculation")
     price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees")
-    per_class_fee = fields.Float(string="official fees", compute="_compute_per_class_fee", store=True, readonly=True)
+    per_class_fee = fields.Float(string="official fees", readonly=True)
     
     label_id = fields.Many2one(
         comodel_name="res.partner.label",
@@ -90,15 +90,6 @@ class AccountMove(models.Model):
         domain="[('partner_id', '=', parent.partner_id)]",
         ondelete="set null"
     )
-
-
-    @api.depends('product_id')
-    def _compute_per_class_fee(self):
-        for rec in self:
-            product_classes = rec.product_id.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
-            variants = rec.env['product.template.attribute.value'].sudo().search([('attribute_id','in', product_classes)])
-            if variants:
-                rec.per_class_fee = variants[0].price_extra
 
     @api.onchange('professional_fees', 'selected_variant_names', 'per_class_fee', 'service_fee')
     def _compute_professional_fees_expression(self):
