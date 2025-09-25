@@ -92,7 +92,7 @@ class AccountMove(models.Model):
         ondelete="set null"
     )
 
-    @api.depends('professional_fees', 'lenght_of_classes','product_id','per_class_fee')
+    @api.depends('professional_fees', 'lenght_of_classes','product_id', 'service_fee')
     def _compute_professional_fees_expression(self):
         for rec in self:
             per_class_fee = 0.0
@@ -114,9 +114,9 @@ class AccountMove(models.Model):
             )
             rec.price_unit = final_total + (rec.service_fee or 0.0)
 
-    @api.onchange('lenght_of_classes', 'service_fee', 'product_id','per_class_fee')
-    def _onchange_professional_fees_expression(self):
-        self._compute_professional_fees_expression()
+    # @api.onchange('lenght_of_classes', 'service_fee', 'product_id')
+    # def _onchange_professional_fees_expression(self):
+    #     self._compute_professional_fees_expression()
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
@@ -145,7 +145,7 @@ class AccountMove(models.Model):
         self.per_class_fee = price
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
-        self.lenght_of_classes = len(variants_names) if variants_names else 0
+        self.lenght_of_classes = len(variants_names) if variants_names else 1
         # self.application_id = application_number  
         # raise UserError(_("Application Number: %s") % str(vals.get('variant_price')))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
