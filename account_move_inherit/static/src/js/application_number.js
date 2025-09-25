@@ -12,7 +12,7 @@ export class ApplicationNumberField extends Component {
     setup() {
 
         let initialValue = this.props.record.data[this.props.name];
-        console.log('this', this.props.record.data);
+        // console.log('this', this.props.record.data);
 
         if (typeof initialValue === "string") {
             try {
@@ -31,7 +31,7 @@ export class ApplicationNumberField extends Component {
             ),
         });
 
-        console.log(this.state.variant_names, this.state.values);
+        // console.log(this.state.variant_names, this.state.values);
 
     }
     onValueChange(variant_name, newValue) {

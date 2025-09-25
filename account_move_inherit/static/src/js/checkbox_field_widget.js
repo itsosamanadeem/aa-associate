@@ -15,7 +15,7 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
     onFieldCheckboxToggle(record, fieldName, ev) {
         const checked = ev.target.checked;
         const recId = record.resId || record.id;
-        console.log('Toggle for', recId, fieldName, checked);
+        // console.log('Toggle for', recId, fieldName, checked);
 
         const newFlags = Object.assign({}, record.data.extra_flags || {});
 
