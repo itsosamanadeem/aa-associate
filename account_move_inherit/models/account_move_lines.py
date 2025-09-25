@@ -104,15 +104,24 @@ class AccountMove(models.Model):
                 if variants:
                     per_class_fee = variants[0].price_extra
 
+            # Base calculation
             total = rec.professional_fees * rec.lenght_of_classes
             per_class_total = per_class_fee * rec.lenght_of_classes
             final_total = total + per_class_total
 
-            rec.fees_calculation = (
-                f"({rec.professional_fees:,.2f} * {rec.lenght_of_classes}) + "
-                f"({per_class_fee:,.2f} * {rec.lenght_of_classes}) = {final_total:,.2f}"
-            )
-            rec.price_unit = final_total + (rec.service_fee or 0.0)
+            # If nothing entered except product → just service fee
+            if not rec.professional_fees and not rec.lenght_of_classes:
+                rec.fees_calculation = f"Service Fee Only = {rec.service_fee:,.2f}"
+                rec.price_unit = rec.service_fee or 0.0
+            else:
+                # Full formula
+                rec.fees_calculation = (
+                    f"({rec.professional_fees:,.2f} * {rec.lenght_of_classes}) + "
+                    f"({per_class_fee:,.2f} * {rec.lenght_of_classes}) "
+                    f"+ {rec.service_fee:,.2f} = {final_total + (rec.service_fee or 0.0):,.2f}"
+                )
+                rec.price_unit = final_total + (rec.service_fee or 0.0)
+
 
     @api.onchange('professional_fees', 'lenght_of_classes', 'service_fee', 'product_id')
     def _onchange_professional_fees_expression(self):
