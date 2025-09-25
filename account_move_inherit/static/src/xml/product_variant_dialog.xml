@@ -75,7 +75,7 @@
                     <!-- Right side: total -->
                     <div>
                         <span class="h5 text-nowrap" t-out="getProductTotalPrice()"/>
-                        <div t-if="props.price_info" t-out="props.price_info" class="text-muted"/>
+                        <div t-if="getProductTotalPrice()" t-out="getProductTotalPrice()" class="text-muted"/>
                     </div>
                 </div>
             </t>
