@@ -80,9 +80,10 @@ class AccountMove(models.Model):
 
     professional_fees = fields.Float(string="Professional Fees")
     service_fee = fields.Float(string="Service Fee", related="product_id.lst_price", readonly=False, store=True)
-    fees_calculation = fields.Text(string="Fees Calculation", compute="_compute_professional_fees_expression", store=True, readonly=False)
-    price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees", compute="_compute_professional_fees_expression", store=True)
-    per_class_fee = fields.Float(string="official fees", readonly=True)
+    fees_calculation = fields.Text(string="Fees Calculation")
+    price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees", compute="_compute_professional_fees_expression", store=True, readonly=True)
+    per_class_fee = fields.Float(string="official fees", compute="_compute_per_class_fee", store=True, readonly=True)
+    lenght_of_classes = fields.Integer(string="Number of Classes")
     
     label_id = fields.Many2one(
         comodel_name="res.partner.label",
@@ -91,7 +92,10 @@ class AccountMove(models.Model):
         ondelete="set null"
     )
 
-    @api.depends('professional_fees', 'selected_variant_names', 'per_class_fee', 'service_fee')
+
+
+
+    @api.onchange('professional_fees', 'lenght_of_classes', 'per_class_fee', 'service_fee')
     def _compute_professional_fees_expression(self):
         for rec in self:
             variants = rec.selected_variant_names
@@ -104,15 +108,20 @@ class AccountMove(models.Model):
                 except Exception:
                     variants = []
 
-            count = len(variants) if variants else 1
+            per_class_fee = 0.0
+            if rec.product_id:
+                product_classes = rec.product_id.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
+                variants = rec.env['product.template.attribute.value'].sudo().search([('attribute_id','in', product_classes)])
+                if variants:
+                    per_class_fee = variants[0].price_extra
 
-            total = rec.professional_fees * count
-            per_class_total = rec.per_class_fee
+            total = rec.professional_fees * rec.lenght_of_classes
+            per_class_total = per_class_fee * rec.lenght_of_classes
             final_total = total + per_class_total
-
+            
             rec.fees_calculation = (
-                f"({"{:,.2f}".format(rec.professional_fees)} * {count}) + "
-                f"({"{:,.2f}".format(rec.per_class_fee)}) = {"{:,.2f}".format(final_total)}"
+                f"({"{:,.2f}".format(rec.professional_fees)} * {rec.lenght_of_classes}) + "
+                f"({"{:,.2f}".format(per_class_fee)} * {rec.lenght_of_classes}) = {"{:,.2f}".format(final_total)}"
             )
 
             rec.price_unit = final_total + (rec.service_fee or 0.0)
@@ -144,8 +153,9 @@ class AccountMove(models.Model):
         self.per_class_fee = price
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
+        self.lenght_of_classes = len(variants_names) if variants_names else 0
         # self.application_id = application_number  
-        raise UserError(str(vals))
+        # raise UserError(_("Application Number: %s") % str(vals.get('variant_price')))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
     
     def get_field_label(self, field_name):
