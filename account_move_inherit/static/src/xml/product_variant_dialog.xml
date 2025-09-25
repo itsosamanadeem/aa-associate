@@ -74,8 +74,7 @@
                     
                     <!-- Right side: total -->
                     <div>
-                        <span class="h5 text-nowrap" t-out="getProductTotalPrice()"/>
-                        <div t-if="getProductTotalPrice()" t-out="getProductTotalPrice()" class="text-muted"/>
+                        <span class="h5 text-nowrap" t-out="state.totalPrice.toFixed(2)"/>
                     </div>
                 </div>
             </t>
