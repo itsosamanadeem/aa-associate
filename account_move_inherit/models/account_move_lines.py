@@ -83,7 +83,7 @@ class AccountMove(models.Model):
     fees_calculation = fields.Text(string="Fees Calculation", compute="_compute_professional_fees_expression", readonly=False, store=True)
     price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees", compute="_compute_professional_fees_expression", store=True, readonly=False)
     per_class_fee = fields.Float(string="official fees", readonly=True)
-    lenght_of_classes = fields.Integer(string="Number of Classes", default=1)
+    lenght_of_classes = fields.Integer(string="Number of Classes",)
     
     label_id = fields.Many2one(
         comodel_name="res.partner.label",
@@ -101,7 +101,7 @@ class AccountMove(models.Model):
                 variants = rec.env['product.template.attribute.value'].sudo().search([
                     ('attribute_id', 'in', product_classes)
                 ])
-                if variants and rec.per_class_fee != 0.00:
+                if variants:
                     per_class_fee = variants[0].price_extra
 
             total = rec.professional_fees * rec.lenght_of_classes
@@ -145,7 +145,7 @@ class AccountMove(models.Model):
         self.per_class_fee = price
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
-        self.lenght_of_classes = len(variants_names) if variants_names else 1
+        self.lenght_of_classes = len(variants_names) if variants_names else 0
         # self.application_id = application_number  
         # raise UserError(_("Application Number: %s") % str(vals.get('variant_price')))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
