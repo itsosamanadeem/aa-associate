@@ -104,8 +104,8 @@ export class ProductVariantDialog extends Component {
         const removed = this.state.variantList.filter(
             v => originalIds.includes(v.id) && !currentIds.includes(v.id)
         );
-
-        // let total = parseFloat(this.props.product_subtotal) || 0;
+// parseFloat(this.props.product_subtotal) || 
+        let total = 0;
 
         total += newlyAdded.reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
         total -= removed.reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
