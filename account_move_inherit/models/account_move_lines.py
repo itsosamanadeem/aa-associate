@@ -92,26 +92,32 @@ class AccountMove(models.Model):
         ondelete="set null"
     )
 
-    @api.depends('professional_fees', 'lenght_of_classes', 'service_fee','product_id')
+    @api.depends('professional_fees', 'lenght_of_classes', 'service_fee', 'product_id')
     def _compute_professional_fees_expression(self):
         for rec in self:
             per_class_fee = 0.0
             if rec.product_id:
                 product_classes = rec.product_id.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
-                variants = rec.env['product.template.attribute.value'].sudo().search([('attribute_id','in', product_classes)])
+                variants = rec.env['product.template.attribute.value'].sudo().search([
+                    ('attribute_id', 'in', product_classes)
+                ])
                 if variants:
                     per_class_fee = variants[0].price_extra
 
             total = rec.professional_fees * rec.lenght_of_classes
             per_class_total = per_class_fee * rec.lenght_of_classes
             final_total = total + per_class_total
-            
-            rec.fees_calculation = (
-                f"({"{:,.2f}".format(rec.professional_fees)} * {rec.lenght_of_classes}) + "
-                f"({"{:,.2f}".format(per_class_fee)} * {rec.lenght_of_classes}) = {"{:,.2f}".format(final_total)}"
-            )
 
+            rec.fees_calculation = (
+                f"({rec.professional_fees:,.2f} * {rec.lenght_of_classes}) + "
+                f"({per_class_fee:,.2f} * {rec.lenght_of_classes}) = {final_total:,.2f}"
+            )
             rec.price_unit = final_total + (rec.service_fee or 0.0)
+
+    @api.onchange('professional_fees', 'lenght_of_classes', 'service_fee', 'product_id')
+    def _onchange_professional_fees_expression(self):
+        self._compute_professional_fees_expression()
+
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
