@@ -150,11 +150,11 @@ class AccountMove(models.Model):
         except ValueError:
             raise UserError(_("Invalid price value"))
 
-        self.price_unit = price
+        self.per_class_fee = price
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
         # self.application_id = application_number  
-        raise UserError(_("Application Number: %s") % str(vals.get('price')))
+        # raise UserError(_("Application Number: %s") % str(vals.get('price')))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
     
     def get_field_label(self, field_name):
