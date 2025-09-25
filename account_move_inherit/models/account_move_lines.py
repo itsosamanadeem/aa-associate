@@ -104,29 +104,19 @@ class AccountMove(models.Model):
                 if variants:
                     per_class_fee = variants[0].price_extra
 
-            # Base calculation
             total = rec.professional_fees * rec.lenght_of_classes
             per_class_total = per_class_fee * rec.lenght_of_classes
             final_total = total + per_class_total
 
-            # If nothing entered except product → just service fee
-            if rec.professional_fees and rec.lenght_of_classes > 1 and rec.service_fee != 0.0:
-                # Full formula
-                rec.fees_calculation = (
-                    f"({rec.professional_fees:,.2f} * {rec.lenght_of_classes}) + "
-                    f"({per_class_fee:,.2f} * {rec.lenght_of_classes}) "
-                    f"+ {rec.service_fee:,.2f} = {final_total + (rec.service_fee or 0.0):,.2f}"
-                )
-                rec.price_unit = final_total + (rec.service_fee or 0.0)
-            else:
-                rec.fees_calculation = f"Service Fee Only = {rec.service_fee:,.2f}"
-                rec.price_unit = rec.service_fee or 0.0
-
+            rec.fees_calculation = (
+                f"({rec.professional_fees:,.2f} * {rec.lenght_of_classes}) + "
+                f"({per_class_fee:,.2f} * {rec.lenght_of_classes}) = {final_total:,.2f}"
+            )
+            rec.price_unit = final_total + (rec.service_fee or 0.0)
 
     @api.onchange('professional_fees', 'lenght_of_classes', 'service_fee', 'product_id')
     def _onchange_professional_fees_expression(self):
         self._compute_professional_fees_expression()
-
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
@@ -155,7 +145,7 @@ class AccountMove(models.Model):
         self.per_class_fee = price
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
-        self.lenght_of_classes = len(variants_names) if variants_names else 1
+        self.lenght_of_classes = len(variants_names) if variants_names else 0
         # self.application_id = application_number  
         # raise UserError(_("Application Number: %s") % str(vals.get('variant_price')))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
