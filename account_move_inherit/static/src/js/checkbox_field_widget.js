@@ -33,8 +33,8 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
 
         const priority = {
             product_id: 1,                 // Service
-            trademark_id: 2,               // Classes
-            product_template_id: 3,        // Trademark
+            trademark_id: 2,               // Trademark
+            product_template_id: 3,        // Classes
             application_variant_data: 4,   // Application Number
             opposition_number: 5,
             registration_no: 6,
@@ -49,6 +49,8 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
             service_fee: 9991,
             per_class_fee: 9992,
             fees_calculation: 9993,
+            discount: 9994,
+            tax_ids: 9995,
             price_total: 9998,
             price_unit: 9999,  
         };
