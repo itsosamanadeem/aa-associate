@@ -82,7 +82,7 @@ class AccountMove(models.Model):
     service_fee = fields.Float(string="Service Fee", related="product_id.lst_price", readonly=False, store=True)
     fees_calculation = fields.Text(string="Fees Calculation")
     price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees")
-    per_class_fee = fields.Float(string="Offical Fee", compute="_compute_per_class_fee", store=True, readonly=True)
+    per_class_fee = fields.Float(string="official fees", compute="_compute_per_class_fee", store=True, readonly=True)
     
     label_id = fields.Many2one(
         comodel_name="res.partner.label",

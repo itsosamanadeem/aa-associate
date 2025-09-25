@@ -134,13 +134,13 @@
                 </p>
             </div>
         </div>
-        <xpath expr="//div[@id='payment_term']" position="after">
+        <xpath expr="//div[@id='payment_term']" position="replace">
             <t t-if="o.invoice_line_ids.filtered(lambda x: x.product_id.product_tmpl_id.categ_id.name in ['Trademark Services','Design Services','Copyright Services'])">
                 <span class="fw-bold">NOTE:  Please don’t deduct Tax from the official fees.</span>
             </t>
-            <div class="mt-5 clearfix overflow-auto">
-                <h4 class="fw-bold text-secondary mb-3">Bank Account Information</h4>
-                <table class="table table-sm w-75" style="font-size: 0.875rem; line-height: 1.2;">
+            <div class="clearfix overflow-auto">
+                <h4 class="fw-bold text-secondary mb-1">Bank Account Information</h4>
+                <table class="table table-sm w-100" style="font-size: 0.875rem; line-height: 1.2;">
                     <tbody>
                         <tr>
                             <td class="fw-bold">Bank Name:</td>
@@ -164,7 +164,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <p class="fw-bold mt-3" style="font-size: 1rem; color: #6c757d;">
+                <p class="fw-bold mt-1" style="font-size: 1rem; color: #6c757d;">
                     <em>Please Note: All bank charges are borne by the client.</em>
                 </p>
             </div>
