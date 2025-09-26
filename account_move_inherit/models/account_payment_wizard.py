@@ -11,7 +11,9 @@ class AccountReconcileWizard(models.TransientModel):
     # tax = fields.Float(string='Tax Rate (%)', help="The tax rate to be applied on the payment.", default=0.0)
 
     taxed_amount = fields.Monetary(string='Taxed Amount', currency_field='currency_id', help="The amount of tax to be applied on the payment.", compute='_compute_taxed_amount', store=True)
-    untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id', help="The amount without tax to be applied on the payment.", compute='_compute_amount', store=True)
+    untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id', help="The amount without tax to be applied on the payment.",
+                                    #   compute='_compute_amount', 
+                                      store=True)
 
     @api.depends('amount', 'tax_id')
     def _compute_taxed_amount(self):
