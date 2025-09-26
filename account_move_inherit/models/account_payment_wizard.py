@@ -9,7 +9,7 @@ class AccountReconcileWizard(models.TransientModel):
     account_id = fields.Many2one('account.account', string='Account',check_company=True,help="The account used for this payment.", store=True)
     tax_id = fields.Many2one('account.tax', string='Tax',default=False,check_company=True, help="The tax used for this payment.", store=True)
     # tax = fields.Float(string='Tax Rate (%)', help="The tax rate to be applied on the payment.", default=0.0)
-
+    amount = fields.Monetary(currency_field='currency_id', store=True, readonly=False,compute='_compute_amount')
     taxed_amount = fields.Monetary(string='Taxed Amount', currency_field='currency_id', help="The amount of tax to be applied on the payment.", compute='_compute_taxed_amount', store=True, readonly=False)
     untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id', help="The amount without tax to be applied on the payment.",
                                       compute='_compute_amount', 
