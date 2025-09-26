@@ -1,5 +1,7 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
+import logging
+_logger = logging.getLogger(__name__)
 
 class AccountReconcileWizard(models.TransientModel):
     _inherit = "account.payment.register"
@@ -48,17 +50,30 @@ class AccountReconcileWizard(models.TransientModel):
 
     def _create_payment_vals_from_wizard(self, batch_result):
         payment_vals = super()._create_payment_vals_from_wizard(batch_result)
-        
-        payment_vals.update({
-            "check_date": self.check_date,
-            "check_number": self.check_number,
-            "account_id": self.account_id.id,
-            "tax_id": self.tax_id.id,
-            "taxed_amount": self.taxed_amount,
-            "untaxed_amount": self.untaxed_amount,
-        })
+        for rec in self:
+            payment_vals.update({
+                "check_date": rec.check_date,
+                "check_number": rec.check_number,
+                "account_id": rec.account_id.id,
+                "tax_id": rec.tax_id.id,
+                "taxed_amount": rec.taxed_amount,
+                "untaxed_amount": rec.untaxed_amount,
+            })
 
-        return payment_vals
+            return payment_vals
+        
+
+    def _init_payments(self, to_process, edit_mode=False):
+        payments = super()._init_payments(to_process, edit_mode=edit_mode)
+        _logger.info("Payment vals from wizard: %s", payment)
+        for payment in payments:
+            payment.check_date = self.check_date
+            payment.check_number = self.check_number
+            payment.account_id = self.account_id
+            payment.tax_id = self.tax_id
+            payment.taxed_amount = self.taxed_amount
+            payment.untaxed_amount = self.untaxed_amount
+        return payments
 
 
 class AccountPayment(models.Model):
