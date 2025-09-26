@@ -15,21 +15,20 @@ class AccountReconcileWizard(models.TransientModel):
                                       compute='_compute_amount', 
                                       store=True)
 
-    @api.depends('amount', 'tax_id')
+    @api.depends('untaxed_amount', 'tax_id')
     def _compute_taxed_amount(self):
         for record in self:
             if record.tax_id:
-                tax_amount = record.tax_id.compute_all(record.amount, record.currency_id, 1, partner=record.partner_id)['taxes'][0]['amount']
+                tax_amount = record.tax_id.compute_all(record.untaxed_amount, record.currency_id, 1, partner=record.partner_id)['taxes'][0]['amount']
                 record.taxed_amount = tax_amount
             else:
                 record.taxed_amount = 0.0
     
-    @api.depends('can_edit_wizard', 'source_amount', 'source_amount_currency', 'source_currency_id', 'company_id', 'currency_id', 'payment_date', 'installments_mode','tax_id','taxed_amount')
+    @api.depends('can_edit_wizard', 'source_amount', 'source_amount_currency', 'source_currency_id', 'company_id', 'currency_id', 'payment_date', 'installments_mode','tax_id')
     def _compute_amount(self):
         for wizard in self:
             if not wizard.journal_id or not wizard.currency_id or not wizard.payment_date or wizard.custom_user_amount:
                 wizard.amount = wizard.amount - wizard.taxed_amount
-                wizard.untaxed_amount = wizard.amount
             else:
                 total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches)
                 if wizard.tax_id:
