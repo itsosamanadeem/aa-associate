@@ -18,24 +18,38 @@ class AccountReconcileWizard(models.TransientModel):
     @api.depends('untaxed_amount', 'tax_id')
     def _compute_taxed_amount(self):
         for record in self:
-            if record.tax_id:
-                tax_amount = record.tax_id.compute_all(record.untaxed_amount, record.currency_id, 1, partner=record.partner_id)['taxes'][0]['amount']
-                record.taxed_amount = tax_amount
+            if record.tax_id and record.untaxed_amount:
+                tax_data = record.tax_id.compute_all(record.untaxed_amount, record.currency_id, 1, partner=record.partner_id)
+                record.taxed_amount = sum(t['amount'] for t in tax_data['taxes'])
             else:
                 record.taxed_amount = 0.0
+
     
-    @api.depends('can_edit_wizard', 'source_amount', 'source_amount_currency', 'source_currency_id', 'company_id', 'currency_id', 'payment_date', 'installments_mode','tax_id')
+    @api.depends(
+        'can_edit_wizard', 'source_amount', 'source_amount_currency',
+        'source_currency_id', 'company_id', 'currency_id',
+        'payment_date', 'installments_mode', 'tax_id'
+    )
     def _compute_amount(self):
         for wizard in self:
             if not wizard.journal_id or not wizard.currency_id or not wizard.payment_date or wizard.custom_user_amount:
-                wizard.amount = wizard.amount - wizard.taxed_amount
+                wizard.amount = wizard.amount or 0.0
+                wizard.untaxed_amount = wizard.untaxed_amount or 0.0
             else:
-                total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches)
+                total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches) or {}
+                base_amount = total_amount_values.get('amount_by_default', 0.0)
+
+                # Untaxed amount = full amount from Odoo
+                wizard.untaxed_amount = total_amount_values.get('full_amount', base_amount)
+
+                # Apply tax if selected
                 if wizard.tax_id:
-                    wizard.amount = total_amount_values['amount_by_default'] - wizard.taxed_amount
-                    wizard.untaxed_amount = total_amount_values['untaxed_amount']
+                    tax_data = wizard.tax_id.compute_all(base_amount, wizard.currency_id, 1, partner=wizard.partner_id)
+                    tax_amount = sum(t['amount'] for t in tax_data['taxes'])
+                    wizard.amount = base_amount - tax_amount
                 else:
-                    wizard.amount = total_amount_values['amount_by_default']
+                    wizard.amount = base_amount
+
 
     def _create_payment_vals_from_wizard(self, batch_result):
         """Extend to add check fields into created payments"""
