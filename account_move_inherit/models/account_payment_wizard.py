@@ -49,19 +49,6 @@ class AccountReconcileWizard(models.TransientModel):
                     wizard.amount = base_amount
 
 
-    def _create_payment_vals_from_wizard(self, batch_result):
-        """Extend to add check fields into created payments"""
-        vals_list = super()._create_payment_vals_from_wizard(batch_result)
-        vals_list.update({
-            "check_date": self.check_date,
-            "check_number": self.check_number,
-            "account_id": self.account_id.id,
-            "tax_id": self.tax_id.id,
-            "taxed_amount": self.taxed_amount,
-            "untaxed_amount": self.untaxed_amount,
-        })
-        return vals_list
-
     def _get_total_amounts_to_pay(self, batch_results):
         rec = super()._get_total_amounts_to_pay(batch_results)
         if not rec:
@@ -72,7 +59,19 @@ class AccountReconcileWizard(models.TransientModel):
         })
         return rec
 
-        # raise UserError(str(rec))
+    def _create_payment_vals_from_wizard(self, batch_result):
+        """Extend to add check fields into created payments"""
+        vals_list = super()._create_payment_vals_from_wizard(batch_result)
+        vals_list.update({
+            "check_date": self.check_date,
+            "check_number": self.check_number,
+            "account_id": self.account_id.id,
+            "tax_id": self.tax_id.id,
+            "taxed_amount": self.taxed_amount,
+            "untaxed_amount": self.untaxed_amount,
+            'amount': self.amount,
+        })
+        return vals_list
 
 class AccountPayment(models.Model):
     _inherit = "account.payment"
