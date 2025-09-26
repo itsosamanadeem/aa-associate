@@ -21,14 +21,14 @@ class AccountReconcileWizard(models.TransientModel):
             if record.tax_id:
                 tax_amount = record.tax_id.compute_all(record.amount, record.currency_id, 1, partner=record.partner_id)['taxes'][0]['amount']
                 record.taxed_amount = tax_amount
-                # raise UserError(tax_amount)
+                raise UserError(tax_amount)
             else:
                 record.taxed_amount = 0.0
     
     @api.depends('can_edit_wizard', 'source_amount', 'source_amount_currency', 'source_currency_id', 'company_id', 'currency_id', 'payment_date', 'installments_mode')
     def _compute_amount(self):
         amount = super()._compute_amount()
-        self.untaxed_amount = self.amount
+        self.untaxed_amount = amount.get('untaxed_amount', 0.0)
 
     def _create_payment_vals_from_wizard(self, batch_result):
         """Extend to add check fields into created payments"""
@@ -43,7 +43,11 @@ class AccountReconcileWizard(models.TransientModel):
 
     def _get_total_amounts_to_pay(self, batch_results):
         rec = super()._get_total_amounts_to_pay(batch_results)
-        raise UserError(str(rec))
+        rec.update({
+            "untaxed_amount": rec.get('full_amount', 0.0),
+            "taxed_amount": self.taxed_amount,
+        })
+        # raise UserError(str(rec))
 
 class AccountPayment(models.Model):
     _inherit = "account.payment"
