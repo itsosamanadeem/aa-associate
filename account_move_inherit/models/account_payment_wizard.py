@@ -23,10 +23,10 @@ class AccountReconcileWizard(models.TransientModel):
             else:
                 record.taxed_amount = 0.0
     
-    @api.depends('can_edit_wizard', 'source_amount', 'source_amount_currency', 'source_currency_id', 'company_id', 'currency_id', 'payment_date', 'installments_mode')
-    def _compute_amount(self):
-        amount = super()._compute_amount()
-        self.untaxed_amount = self.amount
+    # @api.depends('can_edit_wizard', 'source_amount', 'source_amount_currency', 'source_currency_id', 'company_id', 'currency_id', 'payment_date', 'installments_mode')
+    # def _compute_amount(self):
+    #     amount = super()._compute_amount()
+    #     self.untaxed_amount = self.amount
 
     def _create_payment_vals_from_wizard(self, batch_result):
         """Extend to add check fields into created payments"""
