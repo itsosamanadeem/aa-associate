@@ -6,32 +6,56 @@ class AccountReconcileWizard(models.TransientModel):
 
     check_date = fields.Date(string="Cheque Date")
     check_number = fields.Char(string="Cheque Number")
-    account_id = fields.Many2one('account.account', string='Account', check_company=True)
-    tax_id = fields.Many2one('account.tax', string='Tax', check_company=True)
-    taxed_amount = fields.Monetary(string='Taxed Amount', currency_field='currency_id')
-    untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id')
+    account_id = fields.Many2one('account.account', string='Account',check_company=True,help="The account used for this payment.", store=True)
+    tax_id = fields.Many2one('account.tax', string='Tax',default=False,check_company=True, help="The tax used for this payment.", store=True)
+    amount = fields.Monetary(currency_field='currency_id', store=True, readonly=True,compute='_compute_amount')
+    taxed_amount = fields.Monetary(string='Taxed Amount', currency_field='currency_id', help="The amount of tax to be applied on the payment.", compute='_compute_taxed_amount', store=True, readonly=True)
+    untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id', help="The amount without tax to be applied on the payment.",compute='_compute_amount', store=True, readonly=True)
+
+    @api.depends('tax_id')
+    def _compute_taxed_amount(self):
+        for record in self:
+            if record.tax_id and record.untaxed_amount:
+                tax_data = record.tax_id.compute_all(record.untaxed_amount, record.currency_id, 1, partner=record.partner_id)
+                record.taxed_amount = sum(t['amount'] for t in tax_data['taxes'])
+            else:
+                record.taxed_amount = 0.0
+
+    
+    @api.depends(
+        'can_edit_wizard', 'source_amount', 'source_amount_currency',
+        'source_currency_id', 'company_id', 'currency_id',
+        'payment_date', 'installments_mode', 'taxed_amount',
+    )
+    def _compute_amount(self):
+            for wizard in self:
+                if not wizard.journal_id or not wizard.currency_id or not wizard.payment_date or wizard.custom_user_amount:
+                    wizard.amount = wizard.amount
+                else:
+                    try:
+                        total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches) or {}
+                    except UserError:
+                        wizard.amount = 0.0
+                        wizard.untaxed_amount = 0.0
+                        continue
+
+                    wizard.untaxed_amount = total_amount_values['amount_by_default']
+                    if wizard.tax_id and total_amount_values['amount_by_default']:
+                        wizard.amount = total_amount_values['amount_by_default'] - wizard.taxed_amount
+                    else:
+                        wizard.amount = total_amount_values['amount_by_default']
+
 
     def _create_payment_vals_from_wizard(self, batch_result):
-        """Force custom values into account.payment vals."""
         payment_vals = super()._create_payment_vals_from_wizard(batch_result)
-
-        # --- compute untaxed + tax safely ---
-        base = batch_result.get("amount", 0.0) if isinstance(batch_result, dict) else 0.0
-        untaxed = base
-        taxed = 0.0
-        if self.tax_id and untaxed:
-            tax_data = self.tax_id.compute_all(untaxed, self.currency_id, 1, partner=self.partner_id)
-            taxed = sum(t["amount"] for t in tax_data.get("taxes", []))
-
-        # --- inject custom vals ---
+        
         payment_vals.update({
             "check_date": self.check_date,
             "check_number": self.check_number,
             "account_id": self.account_id.id,
             "tax_id": self.tax_id.id,
-            "untaxed_amount": untaxed,
-            "taxed_amount": taxed,
-            "amount": untaxed - taxed,   # force gross
+            "taxed_amount": self.taxed_amount,
+            "untaxed_amount": self.untaxed_amount,
         })
 
         return payment_vals
@@ -40,9 +64,10 @@ class AccountReconcileWizard(models.TransientModel):
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 
-    check_date = fields.Date(string="Cheque Date", readonly=True)
-    check_number = fields.Char(string="Cheque Number", readonly=True)
-    account_id = fields.Many2one('account.account', string='Account', check_company=True, store=True)
-    tax_id = fields.Many2one('account.tax', string='Tax', check_company=True, store=True)
-    taxed_amount = fields.Monetary(string="Taxed Amount", currency_field="currency_id", store=True)
-    untaxed_amount = fields.Monetary(string="Untaxed Amount", currency_field="currency_id", store=True)
+    check_date = fields.Date(string="Cheque Date", readonly=True,)
+    check_number = fields.Char(string="Cheque Number",readonly=True,)
+    account_id = fields.Many2one('account.account', string='Account',check_company=True,required=True, help="The account used for this payment.", store=True)
+    tax_id = fields.Many2one('account.tax', string='Tax',default=False,check_company=True, help="The tax used for this payment.", store=True)
+    taxed_amount = fields.Monetary(string='Taxed Amount', currency_field='currency_id', help="The amount of tax to be applied on the payment.",check_company=True,store=True,)
+    untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id', help="The amount without tax to be applied on the payment.",check_company=True,store=True,)
+    
