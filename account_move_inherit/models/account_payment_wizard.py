@@ -8,7 +8,7 @@ class AccountReconcileWizard(models.TransientModel):
 
     check_date = fields.Date(string="Cheque Date")
     check_number = fields.Char(string="Cheque Number")
-    account_id = fields.Many2one('account.account', string='Account',check_company=True,help="The account used for this payment.", store=True)
+    account_id = fields.Many2one('account.account', string='Account',required=True,check_company=True,help="The account used for this payment.", store=True)
     tax_id = fields.Many2one('account.tax', string='Tax',default=False,check_company=True, help="The tax used for this payment.", store=True)
     amount = fields.Monetary(currency_field='currency_id', store=True, readonly=True,compute='_compute_amount')
     taxed_amount = fields.Monetary(string='Taxed Amount', currency_field='currency_id', help="The amount of tax to be applied on the payment.", compute='_compute_taxed_amount', store=True, readonly=False)
@@ -79,14 +79,7 @@ class AccountReconcileWizard(models.TransientModel):
     def _init_payments(self, to_process, edit_mode=False):
         payments = super()._init_payments(to_process, edit_mode=edit_mode)
         _logger.info("Payment vals from wizard: %s", payments)
-        for payment in payments:
-            payment.check_date = self.check_date
-            payment.check_number = self.check_number
-            payment.account_id = self.account_id
-            payment.tax_id = self.tax_id
-            payment.taxed_amount = self.taxed_amount
-            payment.untaxed_amount = self.untaxed_amount
-        return payments
+        
 
 
 class AccountPayment(models.Model):
