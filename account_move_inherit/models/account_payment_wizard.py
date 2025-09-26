@@ -78,8 +78,35 @@ class AccountReconcileWizard(models.TransientModel):
 
     def _init_payments(self, to_process, edit_mode=False):
         payments = super()._init_payments(to_process, edit_mode=edit_mode)
-        _logger.info("Payment vals from wizard: %s", payments)
-        
+
+        for payment, vals in zip(payments, to_process):
+            tax_id = vals['create_vals'].get('tax_id')
+            taxed_amount = vals['create_vals'].get('taxed_amount')
+            account_id = vals['create_vals'].get('account_id')
+            partner_id = vals['create_vals'].get('partner_id')
+            communication = vals['create_vals'].get('communication', '')
+
+            if tax_id and taxed_amount:
+                payment.move_id.line_ids.create({
+                    'move_id': payment.move_id.id,
+                    'account_id': account_id,
+                    'partner_id': partner_id,
+                    'name': communication,
+                    'debit': taxed_amount,
+                    'credit': 0.0,
+                })
+                payment.move_id.line_ids.create({
+                    'move_id': payment.move_id.id,
+                    'account_id': self.env.ref('account.data_account_type_receivable').id,
+                    'partner_id': partner_id,
+                    'name': communication,
+                    'debit': 0.0,
+                    'credit': taxed_amount,
+                })
+
+        _logger.info("Payment vals to process: %s", to_process)
+        return payments
+
 
 
 class AccountPayment(models.Model):
