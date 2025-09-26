@@ -59,6 +59,7 @@ class AccountReconcileWizard(models.TransientModel):
                 "taxed_amount": rec.taxed_amount,
                 "untaxed_amount": rec.untaxed_amount,
             })
+            _logger.info("Payment vals from wizard: %s", payment_vals)
 
             return payment_vals
         
