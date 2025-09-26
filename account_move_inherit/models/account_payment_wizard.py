@@ -14,38 +14,48 @@ class AccountReconcileWizard(models.TransientModel):
     taxed_amount = fields.Monetary(string='Taxed Amount', currency_field='currency_id', help="The amount of tax to be applied on the payment.", compute='_compute_taxed_amount', store=True, readonly=True)
     untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id', help="The amount without tax to be applied on the payment.",compute='_compute_amount', store=True, readonly=True)
 
-    @api.depends('tax_id')
+    @api.depends('tax_id', 'untaxed_amount', 'currency_id', 'partner_id')
     def _compute_taxed_amount(self):
         for record in self:
             if record.tax_id and record.untaxed_amount:
-                tax_data = record.tax_id.compute_all(record.untaxed_amount, record.currency_id, 1, partner=record.partner_id)
+                tax_data = record.tax_id.compute_all(
+                    record.untaxed_amount,
+                    record.currency_id,
+                    1,
+                    partner=record.partner_id
+                )
                 record.taxed_amount = sum(t['amount'] for t in tax_data['taxes'])
             else:
                 record.taxed_amount = 0.0
+            _logger.info("Compute Taxed Amount -> tax: %s, untaxed: %s, taxed: %s", record.tax_id, record.untaxed_amount, record.taxed_amount)
 
-    
+
+            
     @api.depends(
         'can_edit_wizard', 'source_amount', 'source_amount_currency',
         'source_currency_id', 'company_id', 'currency_id',
-        'payment_date', 'installments_mode', 'taxed_amount',
+        'payment_date', 'installments_mode', 'tax_id'
     )
     def _compute_amount(self):
-            for wizard in self:
-                if not wizard.journal_id or not wizard.currency_id or not wizard.payment_date or wizard.custom_user_amount:
-                    wizard.amount = wizard.amount
-                else:
-                    try:
-                        total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches) or {}
-                    except UserError:
-                        wizard.amount = 0.0
-                        wizard.untaxed_amount = 0.0
-                        continue
+        for wizard in self:
+            if not wizard.journal_id or not wizard.currency_id or not wizard.payment_date or wizard.custom_user_amount:
+                wizard.amount = wizard.amount
+            else:
+                try:
+                    total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches) or {}
+                except UserError:
+                    wizard.amount = 0.0
+                    wizard.untaxed_amount = 0.0
+                    continue
 
-                    wizard.untaxed_amount = total_amount_values['amount_by_default']
-                    if wizard.tax_id and total_amount_values['amount_by_default']:
-                        wizard.amount = total_amount_values['amount_by_default'] - wizard.taxed_amount
-                    else:
-                        wizard.amount = total_amount_values['amount_by_default']
+                wizard.untaxed_amount = total_amount_values['amount_by_default'] or 0.0
+
+                if wizard.tax_id and wizard.untaxed_amount:
+                    wizard.amount = wizard.untaxed_amount - wizard.taxed_amount
+                else:
+                    wizard.amount = wizard.untaxed_amount
+            _logger.info("Compute Amount -> untaxed: %s, amount: %s", wizard.untaxed_amount, wizard.amount)
+
 
 
     def _create_payment_vals_from_wizard(self, batch_result):
