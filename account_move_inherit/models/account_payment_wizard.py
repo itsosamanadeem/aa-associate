@@ -65,7 +65,7 @@ class AccountReconcileWizard(models.TransientModel):
 
     def _init_payments(self, to_process, edit_mode=False):
         payments = super()._init_payments(to_process, edit_mode=edit_mode)
-        _logger.info("Payment vals from wizard: %s", payment)
+        _logger.info("Payment vals from wizard: %s", payments)
         for payment in payments:
             payment.check_date = self.check_date
             payment.check_number = self.check_number
