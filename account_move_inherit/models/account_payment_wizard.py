@@ -28,7 +28,8 @@ class AccountReconcileWizard(models.TransientModel):
     def _compute_amount(self):
         for wizard in self:
             if not wizard.journal_id or not wizard.currency_id or not wizard.payment_date or wizard.custom_user_amount:
-                wizard.amount = wizard.amount
+                wizard.amount = wizard.amount - wizard.taxed_amount
+                wizard.untaxed_amount = wizard.amount
             else:
                 total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches)
                 if wizard.tax_id:
