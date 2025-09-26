@@ -69,7 +69,6 @@ class AccountReconcileWizard(models.TransientModel):
             "tax_id": self.tax_id.id,
             "taxed_amount": self.taxed_amount,
             "untaxed_amount": self.untaxed_amount,
-            'amount': self.amount,
         })
         return vals_list
 
@@ -80,8 +79,8 @@ class AccountPayment(models.Model):
     check_number = fields.Char(string="Cheque Number",readonly=True,)
     account_id = fields.Many2one('account.account', string='Account',check_company=True,required=True, help="The account used for this payment.", store=True)
     tax_id = fields.Many2one('account.tax', string='Tax',default=False,check_company=True, help="The tax used for this payment.", store=True)
-    taxed_amount = fields.Monetary(string='Taxed Amount', currency_field='currency_id', help="The amount of tax to be applied on the payment.",  store=True,check_company=True,)
-    untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id', help="The amount without tax to be applied on the payment.", store=True,check_company=True,)
+    taxed_amount = fields.Monetary(string='Taxed Amount', currency_field='currency_id', help="The amount of tax to be applied on the payment.",check_company=True,)
+    untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id', help="The amount without tax to be applied on the payment.",check_company=True,)
     
 
     # tax = fields.Float(string='Tax Rate (%)', help="The tax rate to be applied on the payment.", default=0.0)
