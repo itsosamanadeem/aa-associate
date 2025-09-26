@@ -32,7 +32,13 @@ class AccountReconcileWizard(models.TransientModel):
                 if not wizard.journal_id or not wizard.currency_id or not wizard.payment_date or wizard.custom_user_amount:
                     wizard.amount = wizard.amount
                 else:
-                    total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches)
+                    try:
+                        total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches) or {}
+                    except UserError:
+                        wizard.amount = 0.0
+                        wizard.untaxed_amount = 0.0
+                        continue
+
                     wizard.untaxed_amount = total_amount_values['amount_by_default']
                     if wizard.tax_id and total_amount_values['amount_by_default']:
                         wizard.amount = total_amount_values['amount_by_default'] - wizard.taxed_amount
@@ -41,9 +47,12 @@ class AccountReconcileWizard(models.TransientModel):
 
 
     def _create_payment_vals_from_wizard(self, batch_result):
-        """Extend to add check fields into created payments"""
-        vals_list = super()._create_payment_vals_from_wizard(batch_result)
-        vals_list.update({
+        payment_vals = super()._create_payment_vals_from_wizard(batch_result)
+
+        self._compute_amount()
+        self._compute_taxed_amount()
+
+        payment_vals.update({
             "check_date": self.check_date,
             "check_number": self.check_number,
             "account_id": self.account_id.id,
@@ -51,7 +60,24 @@ class AccountReconcileWizard(models.TransientModel):
             "taxed_amount": self.taxed_amount,
             "untaxed_amount": self.untaxed_amount,
         })
-        return vals_list
+
+        return payment_vals
+    def _create_payment_vals_from_batch(self, batch):
+        payment_vals = super()._create_payment_vals_from_batch(batch)
+
+        self._compute_amount()
+        self._compute_taxed_amount()
+
+        payment_vals.update({
+            "check_date": self.check_date,
+            "check_number": self.check_number,
+            "account_id": self.account_id.id,
+            "tax_id": self.tax_id.id,
+            "taxed_amount": self.taxed_amount,
+            "untaxed_amount": self.untaxed_amount,
+        })
+
+        return payment_vals
 
 class AccountPayment(models.Model):
     _inherit = "account.payment"
@@ -60,6 +86,6 @@ class AccountPayment(models.Model):
     check_number = fields.Char(string="Cheque Number",readonly=True,)
     account_id = fields.Many2one('account.account', string='Account',check_company=True,required=True, help="The account used for this payment.", store=True)
     tax_id = fields.Many2one('account.tax', string='Tax',default=False,check_company=True, help="The tax used for this payment.", store=True)
-    taxed_amount = fields.Monetary(string='Taxed Amount', currency_field='currency_id', help="The amount of tax to be applied on the payment.",check_company=True,)
-    untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id', help="The amount without tax to be applied on the payment.",check_company=True,)
+    taxed_amount = fields.Monetary(string='Taxed Amount', currency_field='currency_id', help="The amount of tax to be applied on the payment.",check_company=True,store=True,)
+    untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id', help="The amount without tax to be applied on the payment.",check_company=True,store=True,)
     
