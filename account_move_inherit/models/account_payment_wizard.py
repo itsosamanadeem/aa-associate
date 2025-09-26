@@ -47,10 +47,14 @@ class AccountReconcileWizard(models.TransientModel):
 
     def _get_total_amounts_to_pay(self, batch_results):
         rec = super()._get_total_amounts_to_pay(batch_results)
+        if not rec:
+            rec = {"amount_by_default": 0.0, "full_amount": 0.0}
         rec.update({
             "untaxed_amount": rec.get('full_amount', 0.0),
             "taxed_amount": self.taxed_amount,
         })
+        return rec
+
         # raise UserError(str(rec))
 
 class AccountPayment(models.Model):
