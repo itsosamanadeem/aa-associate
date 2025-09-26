@@ -33,6 +33,7 @@ class AccountReconcileWizard(models.TransientModel):
                 total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches)
                 if wizard.tax_id:
                     wizard.amount = total_amount_values['amount_by_default'] - wizard.taxed_amount
+                    wizard.untaxed_amount = total_amount_values['untaxed_amount']
                 else:
                     wizard.amount = total_amount_values['amount_by_default']
 
