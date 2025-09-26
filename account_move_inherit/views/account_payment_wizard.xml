@@ -8,6 +8,8 @@
             <xpath expr="//field[@name='partner_bank_id']" position="after">
                 <field name="account_id"/>
                 <field name="tax_id"/>
+                <field name="taxed_amount"/>
+                <field name="untaxed_amount"/>
             </xpath>
             <xpath expr="//field[@name='communication']" position="after">
                 <field name="check_date"/>
