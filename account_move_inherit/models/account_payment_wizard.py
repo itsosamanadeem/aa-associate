@@ -41,7 +41,7 @@ class AccountReconcileWizard(models.TransientModel):
 
     def _get_total_amounts_to_pay(self):
         rec = super()._get_total_amounts_to_pay()
-        raise UserError(rec)
+        # raise UserError(rec)
 
 class AccountPayment(models.Model):
     _inherit = "account.payment"
