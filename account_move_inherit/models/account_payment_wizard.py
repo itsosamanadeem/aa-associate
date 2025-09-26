@@ -41,8 +41,8 @@ class AccountReconcileWizard(models.TransientModel):
         })
         return vals_list
 
-    def _get_total_amounts_to_pay(self):
-        rec = super()._get_total_amounts_to_pay()
+    def _get_total_amounts_to_pay(self, batch_results):
+        rec = super()._get_total_amounts_to_pay(batch_results)
         raise UserError(rec)
 
 class AccountPayment(models.Model):
