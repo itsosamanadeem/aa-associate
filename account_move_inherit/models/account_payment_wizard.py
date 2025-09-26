@@ -24,7 +24,7 @@ class AccountReconcileWizard(models.TransientModel):
             else:
                 record.taxed_amount = 0.0
     
-    @api.depends('can_edit_wizard', 'source_amount', 'source_amount_currency', 'source_currency_id', 'company_id', 'currency_id', 'payment_date', 'installments_mode','tax_id')
+    @api.depends('can_edit_wizard', 'source_amount', 'source_amount_currency', 'source_currency_id', 'company_id', 'currency_id', 'payment_date', 'installments_mode','tax_id','taxed_amount')
     def _compute_amount(self):
         for wizard in self:
             if not wizard.journal_id or not wizard.currency_id or not wizard.payment_date or wizard.custom_user_amount:
