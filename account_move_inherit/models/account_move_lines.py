@@ -98,13 +98,13 @@ class AccountMove(models.Model):
     def _compute_professional_fees_expression(self):
         for rec in self:
             per_class_fee = 0.00
-            if rec.product_id:
-                product_classes = rec.product_id.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
-                variants = rec.env['product.template.attribute.value'].sudo().search([
-                    ('attribute_id', 'in', product_classes)
-                ])
-                if variants:
-                    per_class_fee = variants[0].price_extra
+            # if rec.product_id:
+            #     product_classes = rec.product_id.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
+            #     variants = rec.env['product.template.attribute.value'].sudo().search([
+            #         ('attribute_id', 'in', product_classes)
+            #     ])
+            #     if variants:
+            #         per_class_fee = variants[0].price_extra
 
             total = rec.professional_fees * rec.lenght_of_classes
             per_class_total = per_class_fee * rec.lenght_of_classes
@@ -141,10 +141,11 @@ class AccountMove(models.Model):
 
         try:
             price = float(price)
+            varaint_price = float(vals.get('variant_price', 0.0))
         except ValueError:
             raise UserError(_("Invalid price value"))
 
-        self.per_class_fee = price
+        self.per_class_fee = varaint_price
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
         self.lenght_of_classes = len(variants_names) if variants_names else 0
