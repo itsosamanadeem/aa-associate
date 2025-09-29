@@ -22,13 +22,19 @@ class AccountReconcileWizard(models.TransientModel):
         store=True,
         readonly=False,
     )
-    @api.depends('early_payment_discount_mode')
-    def _compute_payment_difference_handling(self):
+    @api.depends('can_edit_wizard', 'amount', 'installments_mode')
+    def _compute_payment_difference(self):
         for wizard in self:
-            if wizard.can_edit_wizard:
-                wizard.payment_difference_handling = 'reconcile' if wizard.early_payment_discount_mode else 'open'
+            if wizard.payment_date:
+                total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches)
+                if wizard.installments_mode in ('overdue', 'next', 'before_date'):
+                    wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount - wizard.taxed_amount if wizard.taxed_amount else 0
+                elif wizard.installments_mode == 'full':
+                    wizard.payment_difference = total_amount_values['full_amount_for_difference'] - wizard.amount
+                else:
+                    wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount
             else:
-                wizard.payment_difference_handling = False
+                wizard.payment_difference = 0.0
 
     account_id = fields.Many2one('account.account', string='Tax Account', required=False, check_company=True)
 
@@ -42,7 +48,7 @@ class AccountReconcileWizard(models.TransientModel):
             if self.payment_difference_handling != 'reconcile_with_tax':
                 return super(AccountReconcileWizard, self)._compute_amount()
             else:
-                
+
                 try:
                     total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches) or {}
                 except UserError:
