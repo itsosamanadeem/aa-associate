@@ -11,9 +11,14 @@
                 <field name="taxed_amount"/>
                 <!-- <field name="untaxed_amount"/> -->
             </xpath>
+            <xpath expr="//label[@for='payment_difference']" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </xpath>
+            <xpath expr="//div[@invisible='not show_payment_difference']" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </xpath>
             <xpath expr="//div[@class='o_inner_group grid col-lg-12 p-0']" position="attributes">
                 <attribute name="invisible">hide_writeoff_section</attribute>
-                
             </xpath>
             <xpath expr="//div[@class='o_inner_group grid col-lg-12 p-0']" position="inside">
                 <div class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
