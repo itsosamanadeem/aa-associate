@@ -18,30 +18,16 @@ class AccountReconcileWizard(models.TransientModel):
             ('reconcile', 'Mark as fully paid'),
             ('reconcile_with_tax', 'Mark as fully paid with tax')
         ],
-        # compute='_compute_payment_difference_handling',
-        # store=True,
+        compute='_compute_payment_difference_handling',
+        store=True,
         readonly=False,
     )
     account_id = fields.Many2one('account.account', string='Tax Account', required=False, check_company=True)
 
-    @api.depends('can_edit_wizard', 'amount', 'installments_mode')
-    def _compute_payment_difference(self):
-        for wizard in self:
-            if wizard.payment_date:
-                total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches)
-                if wizard.installments_mode in ('overdue', 'next', 'before_date'):
-                    raise UserError(1)
-                    wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount
-                elif wizard.installments_mode == 'full':
-                    wizard.payment_difference = total_amount_values['full_amount_for_difference'] - wizard.amount
-                else:
-                    wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount
-            else:
-                wizard.payment_difference = 0.0
     @api.depends(
         'can_edit_wizard', 'source_amount', 'source_amount_currency',
         'source_currency_id', 'company_id', 'currency_id',
-        'payment_date', 'installments_mode', 'taxed_amount', 'payment_difference_handling',
+        'payment_date', 'installments_mode', 'taxed_amount'
     )
     def _compute_amount(self):
         for wizard in self:
@@ -58,18 +44,14 @@ class AccountReconcileWizard(models.TransientModel):
 
     def _create_payment_vals_from_wizard(self, batch_result):
         payment_vals = super()._create_payment_vals_from_wizard(batch_result)
-        if (self.payment_difference_handling == 'reconcile_with_tax'):
-            if self.taxed_amount and self.account_id:
-                payment_vals.update({
-                    "check_date": self.check_date,
-                    "check_number": self.check_number,
-                    "account_id": self.account_id.id,
-                    "taxed_amount": self.taxed_amount,
-                    # "untaxed_amount": self.untaxed_amount,
-                    "payment_difference_handling": self.payment_difference_handling,
-                })
-            else:
-                return payment_vals
+        payment_vals.update({
+            "check_date": self.check_date,
+            "check_number": self.check_number,
+            "account_id": self.account_id.id,
+            "taxed_amount": self.taxed_amount,
+            # "untaxed_amount": self.untaxed_amount,
+            "payment_difference_handling": self.payment_difference_handling,
+        })
         return payment_vals
 
 
@@ -88,8 +70,6 @@ class AccountPayment(models.Model):
             ('reconcile_with_tax', 'Mark as fully paid with tax')
         ],
         string="Payment Difference Handling",
-        compute='_compute_payment_difference_handling',
-        store=True,
         readonly=True
     )
 
@@ -106,7 +86,11 @@ class AccountPayment(models.Model):
         moves = super()._synchronize_to_moves(changed_fields)
 
         for payment in self:
-            if ((payment.payment_difference_handling == 'reconcile_with_tax' and payment.taxed_amount and payment.account_id)):
+            if (
+                payment.payment_difference_handling == 'reconcile_with_tax'
+                and payment.taxed_amount
+                and payment.account_id
+            ):
                 move = payment.move_id
 
                 # Find the receivable line
