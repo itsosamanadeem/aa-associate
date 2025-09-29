@@ -14,7 +14,7 @@
             <xpath expr="//label[@for='payment_difference']" position="attributes">
                 <attribute name="invisible">0</attribute>
             </xpath>
-            <xpath expr="//div[@invisible='not show_payment_difference']" position="attributes">
+            <xpath expr="//field[@name='payment_difference']/.." position="attributes">
                 <attribute name="invisible">0</attribute>
             </xpath>
             <xpath expr="//div[@class='o_inner_group grid col-lg-12 p-0']" position="attributes">
