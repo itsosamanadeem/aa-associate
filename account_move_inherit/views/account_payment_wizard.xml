@@ -11,6 +11,10 @@
                 <field name="taxed_amount"/>
                 <!-- <field name="untaxed_amount"/> -->
             </xpath>
+            <xpath expr="//div[@class='o_inner_group grid col-lg-12 p-0']" position="attributes">
+                <attribute name="invisible">hide_writeoff_section</attribute>
+                
+            </xpath>
             <xpath expr="//div[@class='o_inner_group grid col-lg-12 p-0']" position="inside">
                 <div class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
                     <div class="o_cell o_wrap_label text-break text-900" invisible="payment_difference_handling not in ['reconcile_with_tax','open']">
