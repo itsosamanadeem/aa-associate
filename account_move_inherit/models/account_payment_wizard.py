@@ -22,30 +22,28 @@ class AccountReconcileWizard(models.TransientModel):
         store=True,
         readonly=False,
     )
-    @api.depends('can_edit_wizard', 'amount', 'installments_mode')
-    def _compute_payment_difference(self):
-        for wizard in self:
-            if wizard.payment_date:
-                total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches)
-                if wizard.installments_mode in ('overdue', 'next', 'before_date'):
-                    wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount - wizard.taxed_amount if wizard.taxed_amount else 0
-                elif wizard.installments_mode == 'full':
-                    wizard.payment_difference = total_amount_values['full_amount_for_difference'] - wizard.amount
-                else:
-                    wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount
-            else:
-                wizard.payment_difference = 0.0
-
     account_id = fields.Many2one('account.account', string='Tax Account', required=False, check_company=True)
 
-    @api.depends('can_edit_wizard', 'source_amount', 'source_amount_currency', 'source_currency_id', 'company_id', 'currency_id', 'payment_date', 'installments_mode')
+    @api.depends(
+        'can_edit_wizard', 'source_amount', 'source_amount_currency',
+        'source_currency_id', 'company_id', 'currency_id',
+        'payment_date', 'installments_mode', 'taxed_amount'
+    )
     def _compute_amount(self):
         for wizard in self:
             if not wizard.journal_id or not wizard.currency_id or not wizard.payment_date or wizard.custom_user_amount:
                 wizard.amount = wizard.amount
             else:
-                total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches)
-                wizard.amount = total_amount_values['amount_by_default'] - wizard.taxed_amount if wizard.taxed_amount else 0
+                try:
+                    total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches) or {}
+                except UserError:
+                    wizard.amount = 0.0
+                    # wizard.untaxed_amount = 0.0
+                    continue
+
+                # wizard.untaxed_amount = total_amount_values['amount_by_default'] or 0.0
+                wizard.amount = total_amount_values['amount_by_default'] or 0.0
+                wizard.amount = wizard.amount - (wizard.taxed_amount or 0.0)
 
     def _create_payment_vals_from_wizard(self, batch_result):
         payment_vals = super()._create_payment_vals_from_wizard(batch_result)
