@@ -71,7 +71,6 @@ class AccountReconcileWizard(models.TransientModel):
             "check_number": self.check_number,
             "account_id": self.account_id.id,
             "taxed_amount": self.taxed_amount,
-            # "untaxed_amount": self.untaxed_amount,
             "payment_difference_handling": self.payment_difference_handling,
         })
         return payment_vals
@@ -110,6 +109,10 @@ class AccountPayment(models.Model):
         for payment in self:
             if (
                 payment.payment_difference_handling == 'reconcile_with_tax'
+                and payment.taxed_amount
+                and payment.account_id
+            ) or (
+                payment.payment_difference_handling == 'open'
                 and payment.taxed_amount
                 and payment.account_id
             ):
