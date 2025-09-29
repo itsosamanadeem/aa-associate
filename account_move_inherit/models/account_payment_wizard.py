@@ -58,7 +58,7 @@ class AccountReconcileWizard(models.TransientModel):
 
     def _create_payment_vals_from_wizard(self, batch_result):
         payment_vals = super()._create_payment_vals_from_wizard(batch_result)
-        if (self.payment_difference_handling == 'open') or (self.payment_difference_handling == 'reconcile_with_tax'):
+        if (self.payment_difference_handling == 'reconcile_with_tax'):
             if self.taxed_amount and self.account_id:
                 payment_vals.update({
                     "check_date": self.check_date,
