@@ -37,10 +37,11 @@ class AccountReconcileWizard(models.TransientModel):
                     wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount - wizard.taxed_amount
             else:
                 wizard.payment_difference = 0.0
+
     @api.depends(
         'can_edit_wizard', 'source_amount', 'source_amount_currency',
         'source_currency_id', 'company_id', 'currency_id',
-        'payment_date', 'installments_mode', 'taxed_amount', 'payment_difference_handling',
+        'payment_date', 'installments_mode', 'taxed_amount',
     )
     def _compute_amount(self):
         for wizard in self:
