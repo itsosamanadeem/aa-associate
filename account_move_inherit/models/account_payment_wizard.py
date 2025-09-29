@@ -70,6 +70,8 @@ class AccountPayment(models.Model):
             ('reconcile_with_tax', 'Mark as fully paid with tax')
         ],
         string="Payment Difference Handling",
+        compute='_compute_payment_difference_handling',
+        store=True,
         readonly=True
     )
 

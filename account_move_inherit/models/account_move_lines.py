@@ -149,7 +149,7 @@ class AccountMove(models.Model):
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
         self.lenght_of_classes = len(variants_names) if variants_names else 0
-        _logger.info(f'values from js file: {vals}')
+        # _logger.info(f'values from js file: {vals}')
         # raise UserError(_("Application Number: %s") % str(vals.get('variant_price')))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
     
