@@ -32,7 +32,7 @@ class AccountReconcileWizard(models.TransientModel):
                 if wizard.installments_mode in ('overdue', 'next', 'before_date'):
                     wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount - wizard.taxed_amount
                 elif wizard.installments_mode == 'full':
-                    wizard.payment_difference = total_amount_values['full_amount_for_difference'] - wizard.amount 
+                    wizard.payment_difference = total_amount_values['full_amount_for_difference'] - wizard.amount - wizard.taxed_amount
                 else:
                     wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount - wizard.taxed_amount
             else:
