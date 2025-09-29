@@ -38,27 +38,14 @@ class AccountReconcileWizard(models.TransientModel):
 
     account_id = fields.Many2one('account.account', string='Tax Account', required=False, check_company=True)
 
-    @api.depends(
-        'can_edit_wizard', 'source_amount', 'source_amount_currency',
-        'source_currency_id', 'company_id', 'currency_id',
-        'payment_date', 'installments_mode', 'taxed_amount', 'payment_difference_handling'
-    )
+    @api.depends('can_edit_wizard', 'source_amount', 'source_amount_currency', 'source_currency_id', 'company_id', 'currency_id', 'payment_date', 'installments_mode')
     def _compute_amount(self):
         for wizard in self:
-            if self.payment_difference_handling != 'reconcile_with_tax':
-                return super(AccountReconcileWizard, self)._compute_amount()
+            if not wizard.journal_id or not wizard.currency_id or not wizard.payment_date or wizard.custom_user_amount:
+                wizard.amount = wizard.amount
             else:
-
-                try:
-                    total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches) or {}
-                except UserError:
-                    wizard.amount = 0.0
-                    # wizard.untaxed_amount = 0.0
-                    continue
-
-                # wizard.untaxed_amount = total_amount_values['amount_by_default'] or 0.0
-                wizard.amount = total_amount_values['amount_by_default'] or 0.0
-                wizard.amount = wizard.amount - (wizard.taxed_amount or 0.0)
+                total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches)
+                wizard.amount = total_amount_values['amount_by_default'] - wizard.taxed_amount if wizard.taxed_amount else 0
 
     def _create_payment_vals_from_wizard(self, batch_result):
         payment_vals = super()._create_payment_vals_from_wizard(batch_result)
