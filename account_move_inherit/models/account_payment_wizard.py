@@ -33,7 +33,7 @@ class AccountReconcileWizard(models.TransientModel):
                     raise UserError(1)
                     wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount - wizard.taxed_amount
                 elif wizard.installments_mode == 'full':
-                    raise UserError(2)
+                    # raise UserError(2)
                     wizard.payment_difference = total_amount_values['full_amount_for_difference'] - wizard.amount 
                 else:
                     raise UserError(3)
