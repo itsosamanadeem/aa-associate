@@ -31,20 +31,17 @@ class AccountReconcileWizard(models.TransientModel):
                 total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches)
                 if wizard.installments_mode in ('overdue', 'next', 'before_date'):
                     raise UserError(1)
-                    wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount - wizard.taxed_amount
+                    wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount
                 elif wizard.installments_mode == 'full':
-                    # raise UserError(2)
-                    wizard.payment_difference = total_amount_values['full_amount_for_difference'] - wizard.amount 
+                    wizard.payment_difference = total_amount_values['full_amount_for_difference'] - wizard.amount
                 else:
-                    raise UserError(3)
-                    wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount 
+                    wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount
             else:
                 wizard.payment_difference = 0.0
-
     @api.depends(
         'can_edit_wizard', 'source_amount', 'source_amount_currency',
         'source_currency_id', 'company_id', 'currency_id',
-        'payment_date', 'installments_mode', 'taxed_amount',
+        'payment_date', 'installments_mode', 'taxed_amount', 'payment_difference_handling',
     )
     def _compute_amount(self):
         for wizard in self:
