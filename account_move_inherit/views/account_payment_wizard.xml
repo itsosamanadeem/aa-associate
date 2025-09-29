@@ -8,13 +8,13 @@
             <xpath expr="//field[@name='partner_bank_id']" position="after">
                 <!-- <field name="account_id"/> -->
                 <!-- <field name="tax_id"/> -->
-                <field name="taxed_amount"/>
+                <field name="taxed_amount" required="payment_difference_handling in ['reconcile_with_tax','open']"/>
                 <!-- <field name="untaxed_amount"/> -->
             </xpath>
             <xpath expr="//label[@for='payment_difference']" position="attributes">
                 <attribute name="invisible">0</attribute>
             </xpath>
-            <xpath expr="//field[@name='payment_difference']/.." position="attributes">
+            <xpath expr="//div[@invisible='not show_payment_difference']" position="attributes">
                 <attribute name="invisible">0</attribute>
             </xpath>
             <xpath expr="//div[@class='o_inner_group grid col-lg-12 p-0']" position="attributes">
@@ -23,7 +23,7 @@
             <xpath expr="//div[@class='o_inner_group grid col-lg-12 p-0']" position="inside">
                 <div class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
                     <div class="o_cell o_wrap_label text-break text-900" invisible="payment_difference_handling not in ['reconcile_with_tax','open']">
-                        <label for="account_id" class="oe_edit_only" string="Tax Difference Account"/>
+                        <label for="account_id" class="oe_edit_only" string="Tax Difference Account" required="payment_difference_handling in ['reconcile_with_tax','open']"/>
                     </div>
                     <div class="o_cell o_wrap_input text-break">
                         <field name="account_id"
