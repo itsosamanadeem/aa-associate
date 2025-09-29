@@ -22,6 +22,29 @@ class AccountReconcileWizard(models.TransientModel):
         store=True,
         readonly=False,
     )
+    @api.depends('early_payment_discount_mode','taxed_amount','amount',)
+    def _compute_payment_difference_handling(self):
+        for wizard in self:
+            if not wizard.can_edit_wizard:
+                wizard.payment_difference_handling = False
+                continue
+
+            total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches) or {}
+            residual = total_amount_values.get("amount_by_default", 0.0)
+
+            if wizard.taxed_amount:
+                # Your custom case → Withholding Tax
+                wizard.payment_difference_handling = 'reconcile_with_tax'
+            elif wizard.early_payment_discount_mode:
+                # Standard Odoo case
+                wizard.payment_difference_handling = 'reconcile'
+            elif wizard.amount < residual:
+                # Partial payment → keep open
+                wizard.payment_difference_handling = 'open'
+            else:
+                # Full payment → reconcile
+                wizard.payment_difference_handling = 'reconcile'
+
     account_id = fields.Many2one('account.account', string='Tax Account', required=False, check_company=True)
 
     @api.depends(
