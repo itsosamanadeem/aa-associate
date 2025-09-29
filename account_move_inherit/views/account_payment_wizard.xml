@@ -13,29 +13,29 @@
             </xpath>
             <xpath expr="//div[@class='o_inner_group grid col-lg-12 p-0']" position="inside">
                 <div class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
-                    <div class="o_cell o_wrap_label text-break text-900" invisible="payment_difference_handling != 'reconcile_with_tax'">
+                    <div class="o_cell o_wrap_label text-break text-900" invisible="payment_difference_handling not in ['reconcile_with_tax','open']">
                         <label for="account_id" class="oe_edit_only" string="Tax Difference Account"/>
                     </div>
                     <div class="o_cell o_wrap_input text-break">
                         <field name="account_id"
                             class="o_col_6"
-                            invisible="payment_difference_handling != 'reconcile_with_tax'"/>
+                            invisible="payment_difference_handling not in ['reconcile_with_tax','open']"/>
                     </div>
                 </div>
             </xpath>
 
             <xpath expr="//field[@name='writeoff_account_id']" position="attributes">
-                <attribute name="invisible">payment_difference_handling == 'reconcile_with_tax'</attribute>
+                <attribute name="invisible">payment_difference_handling in ['reconcile_with_tax','open']</attribute>
             </xpath>
             <xpath expr="//label[@for='writeoff_account_id']" position="attributes">
-                <attribute name="invisible">payment_difference_handling == 'reconcile_with_tax'</attribute>
+                <attribute name="invisible">payment_difference_handling in ['reconcile_with_tax','open']</attribute>
             </xpath>
 
             <xpath expr="//field[@name='writeoff_label']" position="attributes">
-                <attribute name="invisible">payment_difference_handling == 'reconcile_with_tax'</attribute>
+                <attribute name="invisible">payment_difference_handling in ['reconcile_with_tax','open']</attribute>
             </xpath>
             <xpath expr="//label[@for='writeoff_label']" position="attributes">
-                <attribute name="invisible">payment_difference_handling == 'reconcile_with_tax'</attribute>
+                <attribute name="invisible">payment_difference_handling in ['reconcile_with_tax','open']</attribute>
             </xpath>
 
             <xpath expr="//field[@name='communication']" position="after">

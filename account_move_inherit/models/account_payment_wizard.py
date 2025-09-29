@@ -44,14 +44,18 @@ class AccountReconcileWizard(models.TransientModel):
 
     def _create_payment_vals_from_wizard(self, batch_result):
         payment_vals = super()._create_payment_vals_from_wizard(batch_result)
-        payment_vals.update({
-            "check_date": self.check_date,
-            "check_number": self.check_number,
-            "account_id": self.account_id.id,
-            "taxed_amount": self.taxed_amount,
-            # "untaxed_amount": self.untaxed_amount,
-            "payment_difference_handling": self.payment_difference_handling,
-        })
+        if self.payment_difference_handling == 'open' or self.payment_difference_handling == 'reconcile_with_tax':
+            if self.taxed_amount and self.account_id:
+                payment_vals.update({
+                    "check_date": self.check_date,
+                    "check_number": self.check_number,
+                    "account_id": self.account_id.id,
+                    "taxed_amount": self.taxed_amount,
+                    # "untaxed_amount": self.untaxed_amount,
+                    "payment_difference_handling": self.payment_difference_handling,
+                })
+            else:
+                return payment_vals
         return payment_vals
 
 
