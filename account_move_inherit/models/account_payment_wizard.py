@@ -18,8 +18,8 @@ class AccountReconcileWizard(models.TransientModel):
             ('reconcile', 'Mark as fully paid'),
             ('reconcile_with_tax', 'Mark as fully paid with tax')
         ],
-        compute='_compute_payment_difference_handling',
-        store=True,
+        # compute='_compute_payment_difference_handling',
+        # store=True,
         readonly=False,
     )
     account_id = fields.Many2one('account.account', string='Tax Account', required=False, check_company=True)
