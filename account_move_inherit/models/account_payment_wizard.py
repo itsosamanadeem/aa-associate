@@ -1,19 +1,29 @@
-from odoo import fields, models, api, _
+from odoo import fields, models, api, _, Command
 from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
+
 
 class AccountReconcileWizard(models.TransientModel):
     _inherit = "account.payment.register"
 
     check_date = fields.Date(string="Cheque Date")
     check_number = fields.Char(string="Cheque Number")
-    account_id = fields.Many2one('account.account', string='Account',required=True,check_company=True,help="The account used for this payment.", store=True)
-    # tax_id = fields.Many2one('account.tax', string='Tax',default=False,check_company=True, help="The tax used for this payment.", store=True)
-    amount = fields.Monetary(currency_field='currency_id', store=True, readonly=True,compute='_compute_amount')
-    taxed_amount = fields.Monetary(string='Taxed Amount', currency_field='currency_id', help="The amount of tax to be applied on the payment.", store=True, readonly=False)
-    untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id', help="The amount without tax to be applied on the payment.",compute='_compute_amount', store=True, readonly=False)
-            
+    amount = fields.Monetary(currency_field='currency_id', store=True, readonly=True, compute='_compute_amount')
+    taxed_amount = fields.Monetary(string='Tax Amount', currency_field='currency_id', store=True, readonly=False)
+    # untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id', store=True, readonly=False)
+    payment_difference_handling = fields.Selection(
+        [
+            ('open', 'Keep open'),
+            ('reconcile', 'Mark as fully paid'),
+            ('reconcile_with_tax', 'Mark as fully paid with tax')
+        ],
+        compute='_compute_payment_difference_handling',
+        store=True,
+        readonly=False,
+    )
+    account_id = fields.Many2one('account.account', string='Tax Account', required=False, check_company=True)
+
     @api.depends(
         'can_edit_wizard', 'source_amount', 'source_amount_currency',
         'source_currency_id', 'company_id', 'currency_id',
@@ -21,78 +31,98 @@ class AccountReconcileWizard(models.TransientModel):
     )
     def _compute_amount(self):
         for wizard in self:
-            if not wizard.journal_id or not wizard.currency_id or not wizard.payment_date or wizard.custom_user_amount:
-                wizard.amount = wizard.amount
-            else:
-                try:
-                    total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches) or {}
-                except UserError:
-                    wizard.amount = 0.0
-                    wizard.untaxed_amount = 0.0
-                    continue
+            try:
+                total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches) or {}
+            except UserError:
+                wizard.amount = 0.0
+                # wizard.untaxed_amount = 0.0
+                continue
 
-                wizard.untaxed_amount = total_amount_values['amount_by_default'] or 0.0
-
-                if wizard.taxed_amount:
-                    wizard.amount = wizard.untaxed_amount - wizard.taxed_amount
-                else:
-                    wizard.amount = wizard.untaxed_amount
+            # wizard.untaxed_amount = total_amount_values['amount_by_default'] or 0.0
+            wizard.amount = total_amount_values['amount_by_default'] or 0.0
+            wizard.amount = wizard.amount - (wizard.taxed_amount or 0.0)
 
     def _create_payment_vals_from_wizard(self, batch_result):
-        for rec in self:
-            rec._compute_amount()
-            payment_vals = super()._create_payment_vals_from_wizard(batch_result)
-            payment_vals.update({
-                "check_date": rec.check_date,
-                "check_number": rec.check_number,
-                "account_id": rec.account_id.id,
-                "taxed_amount": rec.taxed_amount,
-                "untaxed_amount": rec.untaxed_amount,
-            })
-
-            return payment_vals
-        
-
-    def _init_payments(self, to_process, edit_mode=False):
-        payments = super()._init_payments(to_process, edit_mode=edit_mode)
-
-        for payment, vals in zip(payments, to_process):
-            tax_id = vals['create_vals'].get('tax_id')
-            taxed_amount = vals['create_vals'].get('taxed_amount')
-            account_id = vals['create_vals'].get('account_id')
-            partner_id = vals['create_vals'].get('partner_id')
-            communication = vals['create_vals'].get('communication', '')
-
-            if tax_id and taxed_amount:
-                payment.move_id.line_ids.create({
-                    'move_id': payment.move_id.id,
-                    'account_id': account_id,
-                    'partner_id': partner_id,
-                    'name': communication,
-                    'debit': taxed_amount,
-                    'credit': 0.0,
-                })
-                payment.move_id.line_ids.create({
-                    'move_id': payment.move_id.id,
-                    'account_id': self.env.ref('account.data_account_type_receivable').id,
-                    'partner_id': partner_id,
-                    'name': communication,
-                    'debit': 0.0,
-                    'credit': taxed_amount,
-                })
-
-        _logger.info("Payment vals to process: %s", to_process)
-        return payments
-
+        payment_vals = super()._create_payment_vals_from_wizard(batch_result)
+        payment_vals.update({
+            "check_date": self.check_date,
+            "check_number": self.check_number,
+            "account_id": self.account_id.id,
+            "taxed_amount": self.taxed_amount,
+            # "untaxed_amount": self.untaxed_amount,
+            "payment_difference_handling": self.payment_difference_handling,
+        })
+        return payment_vals
 
 
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 
-    check_date = fields.Date(string="Cheque Date", readonly=True,)
-    check_number = fields.Char(string="Cheque Number",readonly=True,)
-    account_id = fields.Many2one('account.account', string='Account',check_company=True,required=True, help="The account used for this payment.", store=True)
-    # tax_id = fields.Many2one('account.tax', string='Tax',default=False,check_company=True, help="The tax used for this payment.", store=True)
-    taxed_amount = fields.Monetary(string='Taxed Amount', currency_field='currency_id', help="The amount of tax to be applied on the payment.",check_company=True,store=True,)
-    untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id', help="The amount without tax to be applied on the payment.",check_company=True,store=True,)
-    
+    check_date = fields.Date(string="Cheque Date", readonly=True)
+    check_number = fields.Char(string="Cheque Number", readonly=True)
+    account_id = fields.Many2one('account.account', string='Tax Account', check_company=True)
+    taxed_amount = fields.Monetary(string='Tax Amount', currency_field='currency_id', store=True)
+    # untaxed_amount = fields.Monetary(string='Untaxed Amount', currency_field='currency_id', store=True)
+    payment_difference_handling = fields.Selection(
+        [
+            ('open', 'Keep open'),
+            ('reconcile', 'Mark as fully paid'),
+            ('reconcile_with_tax', 'Mark as fully paid with tax')
+        ],
+        string="Payment Difference Handling",
+        readonly=True
+    )
+
+    @api.model
+    def _get_trigger_fields_to_synchronize(self):
+        return (
+            'date', 'amount', 'payment_type', 'partner_type', 'payment_reference',
+            'currency_id', 'partner_id', 'destination_account_id', 'partner_bank_id', 'journal_id','taxed_amount', 'account_id',
+            'payment_difference_handling'
+        )
+
+    def _synchronize_to_moves(self, changed_fields):
+        """Extend default move creation to add withholding tax lines."""
+        moves = super()._synchronize_to_moves(changed_fields)
+
+        for payment in self:
+            if (
+                payment.payment_difference_handling == 'reconcile_with_tax'
+                and payment.taxed_amount
+                and payment.account_id
+            ):
+                move = payment.move_id
+
+                # Find the receivable line
+                receivable_line = move.line_ids.filtered(
+                    lambda l: l.account_id.account_type == 'asset_receivable'
+                )[:1]
+                if not receivable_line:
+                    continue
+
+                # Add tax lines if not already present
+                existing_tax_lines = move.line_ids.filtered(lambda l: l.name == "Withholding Tax")
+                if not existing_tax_lines:
+                    move.write({
+                        "line_ids": [
+                            Command.create({
+                                "name": "Withholding Tax",
+                                "account_id": payment.account_id.id,
+                                "partner_id": payment.partner_id.id,
+                                "debit": payment.taxed_amount,
+                                "credit": 0.0,
+                                "currency_id": payment.currency_id.id,
+                                "date_maturity": payment.date,
+                            }),
+                            Command.create({
+                                "name": "Withholding Tax",
+                                "account_id": receivable_line.account_id.id,
+                                "partner_id": payment.partner_id.id,
+                                "debit": 0.0,
+                                "credit": payment.taxed_amount,
+                                "currency_id": payment.currency_id.id,
+                                "date_maturity": payment.date,
+                            }),
+                        ]
+                    })
+        return moves

@@ -4,6 +4,8 @@ from odoo.exceptions import UserError
 import json
 from odoo.tools import format_date
 from odoo.tools.misc import formatLang
+import logging
+_logger = logging.getLogger(__name__)
 
 class AccountMove(models.Model):
     _inherit = 'account.move.line'
@@ -82,7 +84,7 @@ class AccountMove(models.Model):
     service_fee = fields.Float(string="Service Fee", related="product_id.lst_price", readonly=False, store=True)
     fees_calculation = fields.Text(string="Fees Calculation", compute="_compute_professional_fees_expression", readonly=False, store=True)
     price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees", compute="_compute_professional_fees_expression", store=True, readonly=False)
-    per_class_fee = fields.Float(string="Official fees", readonly=True)
+    per_class_fee = fields.Float(string="Official Fees", readonly=True)
     lenght_of_classes = fields.Integer(string="Number of Classes", default=1)
     
     label_id = fields.Many2one(
@@ -146,7 +148,7 @@ class AccountMove(models.Model):
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
         self.lenght_of_classes = len(variants_names) if variants_names else 0
-        # self.application_id = application_number  
+        _logger.info(f'values from js file: {vals}')
         # raise UserError(_("Application Number: %s") % str(vals.get('variant_price')))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
     
