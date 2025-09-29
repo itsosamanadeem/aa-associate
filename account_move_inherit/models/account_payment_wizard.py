@@ -27,7 +27,7 @@ class AccountReconcileWizard(models.TransientModel):
     @api.depends(
         'can_edit_wizard', 'source_amount', 'source_amount_currency',
         'source_currency_id', 'company_id', 'currency_id',
-        'payment_date', 'installments_mode', 'taxed_amount'
+        'payment_date', 'installments_mode', 'taxed_amount', 'payment_difference_handling',
     )
     def _compute_amount(self):
         for wizard in self:
@@ -44,7 +44,7 @@ class AccountReconcileWizard(models.TransientModel):
 
     def _create_payment_vals_from_wizard(self, batch_result):
         payment_vals = super()._create_payment_vals_from_wizard(batch_result)
-        if self.payment_difference_handling == 'open' or self.payment_difference_handling == 'reconcile_with_tax':
+        if (self.payment_difference_handling == 'open') or (self.payment_difference_handling == 'reconcile_with_tax'):
             if self.taxed_amount and self.account_id:
                 payment_vals.update({
                     "check_date": self.check_date,
