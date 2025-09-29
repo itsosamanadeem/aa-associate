@@ -35,20 +35,24 @@ class AccountReconcileWizard(models.TransientModel):
     @api.depends(
         'can_edit_wizard', 'source_amount', 'source_amount_currency',
         'source_currency_id', 'company_id', 'currency_id',
-        'payment_date', 'installments_mode', 'taxed_amount'
+        'payment_date', 'installments_mode', 'taxed_amount', 'payment_difference_handling'
     )
     def _compute_amount(self):
         for wizard in self:
-            try:
-                total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches) or {}
-            except UserError:
-                wizard.amount = 0.0
-                # wizard.untaxed_amount = 0.0
-                continue
+            if self.payment_difference_handling != 'reconcile_with_tax':
+                return super(AccountReconcileWizard, self)._compute_amount()
+            else:
+                
+                try:
+                    total_amount_values = wizard._get_total_amounts_to_pay(wizard.batches) or {}
+                except UserError:
+                    wizard.amount = 0.0
+                    # wizard.untaxed_amount = 0.0
+                    continue
 
-            # wizard.untaxed_amount = total_amount_values['amount_by_default'] or 0.0
-            wizard.amount = total_amount_values['amount_by_default'] or 0.0
-            wizard.amount = wizard.amount - (wizard.taxed_amount or 0.0)
+                # wizard.untaxed_amount = total_amount_values['amount_by_default'] or 0.0
+                wizard.amount = total_amount_values['amount_by_default'] or 0.0
+                wizard.amount = wizard.amount - (wizard.taxed_amount or 0.0)
 
     def _create_payment_vals_from_wizard(self, batch_result):
         payment_vals = super()._create_payment_vals_from_wizard(batch_result)
