@@ -106,7 +106,7 @@ class AccountPayment(models.Model):
         moves = super()._synchronize_to_moves(changed_fields)
 
         for payment in self:
-            if ((payment.payment_difference_handling == 'reconcile_with_tax' and payment.taxed_amount and payment.account_id)) or ((payment.payment_difference_handling == 'open' and payment.taxed_amount and payment.account_id)):
+            if ((payment.payment_difference_handling == 'reconcile_with_tax' and payment.taxed_amount and payment.account_id)):
                 move = payment.move_id
 
                 # Find the receivable line
