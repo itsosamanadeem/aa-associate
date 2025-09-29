@@ -24,7 +24,7 @@ class AccountReconcileWizard(models.TransientModel):
     )
     account_id = fields.Many2one('account.account', string='Tax Account', required=False, check_company=True)
 
-    @api.depends('can_edit_wizard', 'amount', 'installments_mode')
+    @api.depends('can_edit_wizard', 'amount', 'installments_mode', 'taxed_amount')
     def _compute_payment_difference(self):
         for wizard in self:
             if wizard.payment_date:
@@ -33,7 +33,10 @@ class AccountReconcileWizard(models.TransientModel):
                     wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount - wizard.taxed_amount
                     # _logger.info("Full Amount for difference: %s", wizard.payment_difference)
                 elif wizard.installments_mode == 'full':
-                    wizard.payment_difference = total_amount_values['full_amount_for_difference'] - wizard.amount 
+                    if wizard.taxed_amount:
+                        wizard.payment_difference = total_amount_values['full_amount_for_difference'] - wizard.amount - wizard.taxed_amount
+                    else:
+                        wizard.payment_difference = total_amount_values['full_amount_for_difference'] - wizard.amount 
                 else:
                     wizard.payment_difference = total_amount_values['amount_for_difference'] - wizard.amount - wizard.taxed_amount
                     _logger.info(f"Partial Amount for difference: {wizard.payment_difference},Total Amount: {total_amount_values['amount_for_difference']},")
