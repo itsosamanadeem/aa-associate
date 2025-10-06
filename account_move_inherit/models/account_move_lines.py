@@ -85,15 +85,16 @@ class AccountMove(models.Model):
     fees_calculation = fields.Text(string="Fees Calculation", compute="_compute_professional_fees_expression", readonly=False, store=True)
     price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees", compute="_compute_professional_fees_expression", store=True, readonly=False)
     offical_fees = fields.Float(string="Official Fees", compute="_compute_offical_fees",readonly=False, store=True)
-    per_class_fee = fields.Float(string="Official Fees",store=True)
+    per_class_fee = fields.Float(string="Official Fees")
     lenght_of_classes = fields.Integer(string="Number of Classes", default=1)
     
     @api.depends('product_id','lenght_of_classes')
     def _compute_offical_fees(self):
         for rec in self:
-            rec.offical_fees = rec.product_id.lst_price
             if rec.lenght_of_classes > 0:
                 rec.offical_fees = rec.per_class_fee * rec.lenght_of_classes
+            else:
+                rec.offical_fees = rec.product_id.lst_price
 
     label_id = fields.Many2one(
         comodel_name="res.partner.label",
