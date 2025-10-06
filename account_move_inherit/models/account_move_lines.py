@@ -93,7 +93,7 @@ class AccountMove(models.Model):
         for rec in self:
             rec.offical_fees = rec.product_id.lst_price
             if rec.lenght_of_classes > 0:
-                rec.offical_fees = rec.product_id.lst_price * rec.lenght_of_classes
+                rec.offical_fees = rec.per_class_fee * rec.lenght_of_classes
 
     label_id = fields.Many2one(
         comodel_name="res.partner.label",
