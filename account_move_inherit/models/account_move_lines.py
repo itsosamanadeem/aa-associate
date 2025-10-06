@@ -92,7 +92,7 @@ class AccountMove(models.Model):
     def _compute_offical_fees(self):
         for rec in self:
             rec.offical_fees = rec.product_id.lst_price
-            if len(rec.lenght_of_classes)>0:
+            if rec.lenght_of_classes > 0:
                 rec.offical_fees = rec.product_id.lst_price * rec.lenght_of_classes
 
     label_id = fields.Many2one(
