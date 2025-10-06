@@ -88,9 +88,14 @@
                 </table>
             </t>
         </xpath>
+        <xpath expr="//div[@id='right-elements']" position="attributes">
+            <attribute name="t-attf-class">
+                #{'col-5 mt-0' if report_type == 'pdf' else 'col-12 col-md-5'} ms-5 d-inline-block float-end
+            </attribute>
+        </xpath>
         <xpath expr="//div[@id='total']" position="replace">
             <div id="total" class="clearfix row mt-0">
-                <div class="ms-auto">
+                <div class="mt-0">
                     <table class="o_total_table table table-borderless avoid-page-break-inside">
 
                         <!-- Tax totals summary (invoice currency) -->
@@ -128,13 +133,12 @@
             </div>
         </xpath>
         <div class="mb-3" t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference" position="replace">
-            
         </div>
         <xpath expr="//div[@id='payment_term']" position="after">
             <t t-if="o.invoice_line_ids.filtered(lambda x: x.product_id.product_tmpl_id.categ_id.name in ['Trademark Services','Design Services','Copyright Services'])">
                 <span class="fw-bold">NOTE:  Please don’t deduct Tax from the official fees.</span>
             </t>
-            <div class="mt-1 clearfix overflow-auto" style="border: 1px solid #dee2e6; border-radius: 6px; padding: 10px; width: 100% !important;">
+            <div class="mt-0 clearfix overflow-auto" style="border: 1px solid #dee2e6; border-radius: 6px; padding:8px; width: 100% !important;">
                 <table class="o_has_total_table table o_main_table table-borderless">
                     <thead>
                         <tr>
@@ -144,13 +148,14 @@
                     </thead>
                     <tbody class="invoice_tbody">
                         <t t-set="multiplication_total" t-value="0"/>
+                        <t t-set="lines" t-value="set(o.invoice_line_ids.mapped('product_id'))"/>
                         <t t-foreach="lines" t-as="line">
                             <tr>
                                 <td>
                                     <div style="margin-bottom:6px; padding:6px 10px; border-bottom:1px solid #e9ecef;">
                                         <small><span class="" t-out="line.name"/> :</small>
                                         <small class="">
-                                            <em t-out="line.product_id.product_tmpl_id.x_studio_service_description"/>
+                                            <em t-out="line.product_tmpl_id.x_studio_service_description"/>
                                         </small>
                                         <br/>
                                     </div>
@@ -160,12 +165,10 @@
                     </tbody>
                 </table>
             </div>
-            <div class="clearfix overflow-auto mt-5">
+            <div class="clearfix overflow-auto mt-2">
                 <h4 class="fw-bold text-secondary mb-1">Bank Account Information</h4>
                 <table class="table table-sm w-100 o_has_total_table table o_main_table table-borderless" style="font-size: 0.875rem; line-height: 1.2;">
                     <thead>
-                        
-                    </thead>
                         <tr>
                             <td class="fw-bold">Bank Name:</td>
                             <td class="fw-bold">Account Title:</td>
@@ -173,7 +176,8 @@
                             <td class="fw-bold">IBAN:</td>
                             <td class="fw-bold">Swift Code:</td>
                         </tr>
-                    <tbody >
+                    </thead>
+                    <tbody>
                         <tr>
                             <td>Habib Bank Limited</td>
                             <td>A.A &amp; Associates</td>

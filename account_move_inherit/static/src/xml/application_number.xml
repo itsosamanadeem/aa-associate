@@ -10,7 +10,7 @@
                     </em>
                 </div>
                 <div>
-                    <input type="number"
+                    <input type="text"
                            class="form-control"
                            style="width:100px !important;"
                            t-att-value="state.values[variant_name] || ''"
