@@ -107,18 +107,21 @@ class AccountMove(models.Model):
     def _compute_professional_fees_expression(self):
         for rec in self:
             total = rec.professional_fees * rec.lenght_of_classes
-            per_class_total = rec.per_class_fee * rec.lenght_of_classes
-            final_total = total + per_class_total
+
             if rec.lenght_of_classes:
+                per_class_total = rec.per_class_fee * rec.lenght_of_classes
+                final_total = total + per_class_total
                 rec.fees_calculation = (
                     f"({rec.professional_fees:,.2f} * {rec.lenght_of_classes}) + "
                     f"({rec.per_class_fee:,.2f} * {rec.lenght_of_classes}) = {final_total:,.2f}"
                 )
                 rec.price_unit = final_total + (rec.service_fee or 0.0)
             else:
+                per_class_total = rec.offical_fees
+                final_total = total + per_class_total
                 rec.fees_calculation = (
-                    f"({rec.professional_fees:,.2f} * {rec.lenght_of_classes}) + "
-                    f"({rec.offical_fees:,.2f} * {rec.lenght_of_classes}) = {final_total:,.2f}"
+                    f"({rec.professional_fees:,.2f} + "
+                    f"({rec.offical_fees:,.2f} = {final_total:,.2f}"
                 )
                 rec.price_unit = final_total + (rec.service_fee or 0.0)
 
