@@ -86,12 +86,12 @@ class AccountMove(models.Model):
     price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees", compute="_compute_professional_fees_expression", store=True, readonly=False)
     offical_fees = fields.Float(string="Official Fees", compute="_compute_offical_fees",readonly=False, store=True)
     per_class_fee = fields.Float(string="Official Fees")
-    lenght_of_classes = fields.Integer(string="Number of Classes", default=1)
+    lenght_of_classes = fields.Integer(string="Number of Classes", default=0)
     
     @api.depends('product_id','lenght_of_classes')
     def _compute_offical_fees(self):
         for rec in self:
-            if rec.lenght_of_classes > 1:
+            if rec.lenght_of_classes:
                 rec.offical_fees = rec.per_class_fee * rec.lenght_of_classes
             else:
                 rec.offical_fees = rec.product_id.lst_price
@@ -109,12 +109,18 @@ class AccountMove(models.Model):
             total = rec.professional_fees * rec.lenght_of_classes
             per_class_total = rec.per_class_fee * rec.lenght_of_classes
             final_total = total + per_class_total
-
-            rec.fees_calculation = (
-                f"({rec.professional_fees:,.2f} * {rec.lenght_of_classes}) + "
-                f"({rec.per_class_fee:,.2f} * {rec.lenght_of_classes}) = {final_total:,.2f}"
-            )
-            rec.price_unit = final_total + (rec.service_fee or 0.0)
+            if rec.lenght_of_classes:
+                rec.fees_calculation = (
+                    f"({rec.professional_fees:,.2f} * {rec.lenght_of_classes}) + "
+                    f"({rec.per_class_fee:,.2f} * {rec.lenght_of_classes}) = {final_total:,.2f}"
+                )
+                rec.price_unit = final_total + (rec.service_fee or 0.0)
+            else:
+                rec.fees_calculation = (
+                    f"({rec.professional_fees:,.2f} * {rec.lenght_of_classes}) + "
+                    f"({rec.offical_fees:,.2f} * {rec.lenght_of_classes}) = {final_total:,.2f}"
+                )
+                rec.price_unit = final_total + (rec.service_fee or 0.0)
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
