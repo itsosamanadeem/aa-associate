@@ -35,12 +35,12 @@ export class ApplicationNumberField extends Component {
 
     }
     onValueChange(variant_name, newValue) {
-        if (parseInt(newValue) < 0) {
-            return;
-        }
+        // if (parseInt(newValue) < 0) {
+        //     return;
+        // }
 
-        // Update the value for this variant
-        this.state.values[variant_name] = parseInt(newValue) || 0;
+        // // Update the value for this variant
+        this.state.values[variant_name] = newValue || 0;
 
         // Keep only currently selected variants
         const filteredValues = Object.fromEntries(
