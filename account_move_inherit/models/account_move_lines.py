@@ -106,9 +106,9 @@ class AccountMove(models.Model):
     @api.depends('professional_fees', 'lenght_of_classes','product_id', 'service_fee','offical_fees')
     def _compute_professional_fees_expression(self):
         for rec in self:
-            total = rec.professional_fees * rec.lenght_of_classes
 
             if rec.lenght_of_classes:
+                total = rec.professional_fees * rec.lenght_of_classes
                 per_class_total = rec.per_class_fee * rec.lenght_of_classes
                 final_total = total + per_class_total
                 rec.fees_calculation = (
@@ -117,11 +117,9 @@ class AccountMove(models.Model):
                 )
                 rec.price_unit = final_total + (rec.service_fee or 0.0)
             else:
-                per_class_total = rec.offical_fees
-                final_total = total + per_class_total
+                final_total = rec.professional_fees + rec.offical_fees
                 rec.fees_calculation = (
-                    f"({rec.professional_fees:,.2f} + "
-                    f"({rec.offical_fees:,.2f} = {final_total:,.2f}"
+                    f"{rec.professional_fees:,.2f} + {rec.offical_fees} = {final_total}"
                 )
                 rec.price_unit = final_total + (rec.service_fee or 0.0)
 
