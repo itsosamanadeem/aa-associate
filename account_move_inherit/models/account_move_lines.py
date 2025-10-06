@@ -87,10 +87,11 @@ class AccountMove(models.Model):
     per_class_fee = fields.Float(string="Official Fees", compute="_compute_offical_fees",readonly=False, store=True)
     lenght_of_classes = fields.Integer(string="Number of Classes", default=1)
     
+    @api.depends('product_id')
     def _compute_offical_fees(self):
         for rec in self:
             rec.per_class_fee = rec.product_id.lst_price
-            
+
     label_id = fields.Many2one(
         comodel_name="res.partner.label",
         string="Label",
