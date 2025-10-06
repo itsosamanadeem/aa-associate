@@ -84,13 +84,16 @@ class AccountMove(models.Model):
     service_fee = fields.Float(string="Service Fee",)
     fees_calculation = fields.Text(string="Fees Calculation", compute="_compute_professional_fees_expression", readonly=False, store=True)
     price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees", compute="_compute_professional_fees_expression", store=True, readonly=False)
-    per_class_fee = fields.Float(string="Official Fees", compute="_compute_offical_fees",readonly=False, store=True)
+    offical_fees = fields.Float(string="Official Fees", compute="_compute_offical_fees",readonly=False, store=True)
+    per_class_fee = fields.Float(string="Official Fees",store=True)
     lenght_of_classes = fields.Integer(string="Number of Classes", default=1)
     
-    @api.depends('product_id')
+    @api.depends('product_id','lenght_of_classes')
     def _compute_offical_fees(self):
         for rec in self:
-            rec.per_class_fee = rec.product_id.lst_price
+            rec.offical_fees = rec.product_id.lst_price
+            if len(rec.lenght_of_classes)>0:
+                rec.offical_fees = rec.product_id.lst_price * rec.lenght_of_classes
 
     label_id = fields.Many2one(
         comodel_name="res.partner.label",
@@ -136,6 +139,7 @@ class AccountMove(models.Model):
         except ValueError:
             raise UserError(_("Invalid price value"))
 
+        self.offical_fees = price
         self.per_class_fee = varaint_price
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
