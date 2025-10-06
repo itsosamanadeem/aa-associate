@@ -119,7 +119,7 @@ class AccountMove(models.Model):
             else:
                 final_total = rec.professional_fees + rec.offical_fees
                 rec.fees_calculation = (
-                    f"{rec.professional_fees:,.2f} + {rec.offical_fees} = {final_total}"
+                    f"{rec.professional_fees:,.2f} + {rec.offical_fees:,.2f} = {final_total:,.2f}"
                 )
                 rec.price_unit = final_total + (rec.service_fee or 0.0)
 
