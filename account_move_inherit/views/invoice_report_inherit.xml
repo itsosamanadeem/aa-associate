@@ -52,36 +52,43 @@
                 <table class="o_has_total_table table o_main_table table-borderless" name="invoice_line_ids">
                     <thead>
                         <tr>
-                            <t t-set="headers" t-value="line.extra_flags.get(str(line.id))"/>
-                            <t t-foreach="headers" t-as="header">
-                                <th>
-                                     <span class="fw-bold"><t t-esc="line.get_field_label(header)"/></span>
-                                </th>
+                            <t t-set="headers" t-value="line.extra_flags.get(str(line.id)) if isinstance(line.extra_flags, dict) else False"/>
+                            <t t-if="headers">
+                                <t t-foreach="headers" t-as="header">
+                                    <th>
+                                         <span class="fw-bold"><t t-esc="line.get_field_label(header)"/></span>
+                                    </th>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <p>Select Headers to show the report!!!</p>
                             </t>
                         </tr>
                     </thead>
                     <tbody class="invoice_tbody">
                         <tr>
-                            <t t-foreach="headers" t-as="header">
-                                <td>
-                                    <t t-if="line._fields.get(header) and line._fields.get(header).type == 'binary'">
-                                        <img t-att-src="line.get_field_value(header)" style="height:80px; width:80px;"/>
-                                    </t>
-                                    <t t-else="">
-                                        <t t-set="values" t-value="line.get_field_value(header) or '-'"/>
-                                        <t t-if="values and isinstance(values, dict)">
-                                            <t t-foreach="values.items()" t-as="item">
-                                                <span>
-                                                    <t t-esc="item[0]"/>:
-                                                    <span class="fw-bold"><t t-esc="item[1]"/></span>
-                                                </span>
-                                            </t>
+                            <t t-if="headers">
+                                <t t-foreach="headers" t-as="header">
+                                    <td>
+                                        <t t-if="line._fields.get(header) and line._fields.get(header).type == 'binary'">
+                                            <img t-att-src="line.get_field_value(header)" style="height:80px; width:80px;"/>
                                         </t>
                                         <t t-else="">
-                                            <t t-esc="values"/>
+                                            <t t-set="values" t-value="line.get_field_value(header) or '-'"/>
+                                            <t t-if="values and isinstance(values, dict)">
+                                                <t t-foreach="values.items()" t-as="item">
+                                                    <span>
+                                                        <t t-esc="item[0]"/>:
+                                                        <span class="fw-bold"><t t-esc="item[1]"/></span>
+                                                    </span>
+                                                </t>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-esc="values"/>
+                                            </t>
                                         </t>
-                                    </t>
-                                </td>
+                                    </td>
+                                </t>
                             </t>
                         </tr>
                     </tbody>

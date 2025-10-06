@@ -39,33 +39,33 @@ class AccountMove(models.Model):
         string="City",
     )
     opposition_number = fields.Json(
-        string="Opposition Number",
+        string="Opposition Number (class)",
         help="Stores mapping of classes → input value",
         store=True
     )
     appeal_number = fields.Json(
-        string="Appeal Number",
+        string="Appeal Number (class)",
         help="Stores mapping of classes → input value",
         store=True
     )
     suit_number = fields.Json(
-        string="Suit Number",
+        string="Suit Number (class)",
         help="Stores mapping of classes → input value",
         store=True
     )
     filing_date= fields.Date(String="Filing Date")
     rectification_no = fields.Json(
-        string="Rectification Number",
+        string="Rectification Number (class)",
         help="Stores mapping of classes → input value",
         store=True
     )
     registration_no =fields.Json(
-        string="Registration Number",
+        string="Registration Number (class)",
         help="Stores mapping of classes → input value",
         store=True
     )
     application_variant_data = fields.Json(
-        string="Application Number",
+        string="Application Number (class)",
         help="Stores mapping of classes → input value",
         store=True
     )
@@ -80,11 +80,11 @@ class AccountMove(models.Model):
         domain="[('partner_id', '=', parent.partner_id)]",
     )
 
-    professional_fees = fields.Float(string="Professional Fees", store=True, readonly=False)
-    service_fee = fields.Float(string="Service Fee", related="product_id.lst_price", readonly=False, store=True)
+    professional_fees = fields.Float(string="Professional Fees")
+    service_fee = fields.Float(string="Service Fee",)
     fees_calculation = fields.Text(string="Fees Calculation", compute="_compute_professional_fees_expression", readonly=False, store=True)
     price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees", compute="_compute_professional_fees_expression", store=True, readonly=False)
-    per_class_fee = fields.Float(string="Official Fees", readonly=True)
+    per_class_fee = fields.Float(string="Official Fees", related="product_id.lst_price", readonly=True)
     lenght_of_classes = fields.Integer(string="Number of Classes", default=1)
     
     label_id = fields.Many2one(
@@ -97,15 +97,6 @@ class AccountMove(models.Model):
     @api.depends('professional_fees', 'lenght_of_classes','product_id', 'service_fee')
     def _compute_professional_fees_expression(self):
         for rec in self:
-            # per_class_fee = 0.00
-            # if rec.product_id:
-            #     product_classes = rec.product_id.product_tmpl_id.attribute_line_ids.mapped('attribute_id').ids
-            #     variants = rec.env['product.template.attribute.value'].sudo().search([
-            #         ('attribute_id', 'in', product_classes)
-            #     ])
-            #     if variants:
-            #         per_class_fee = variants[0].price_extra
-
             total = rec.professional_fees * rec.lenght_of_classes
             per_class_total = rec.per_class_fee * rec.lenght_of_classes
             final_total = total + per_class_total
@@ -115,10 +106,6 @@ class AccountMove(models.Model):
                 f"({rec.per_class_fee:,.2f} * {rec.lenght_of_classes}) = {final_total:,.2f}"
             )
             rec.price_unit = final_total + (rec.service_fee or 0.0)
-
-    # @api.onchange('lenght_of_classes', 'service_fee', 'product_id')
-    # def _onchange_professional_fees_expression(self):
-    #     self._compute_professional_fees_expression()
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
@@ -134,7 +121,6 @@ class AccountMove(models.Model):
         price = vals.get("price")
         variants = vals.get("selected_variant_ids",[])
         variants_names = vals.get("selected_variant_names",[])
-        # application_number = vals.get("application_numbers", {})
 
         if price is None:
             raise UserError(_("No price provided"))
@@ -149,8 +135,6 @@ class AccountMove(models.Model):
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
         self.lenght_of_classes = len(variants_names) if variants_names else 0
-        # _logger.info(f'values from js file: {vals}')
-        # raise UserError(_("Application Number: %s") % str(vals.get('variant_price')))
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
     
     def get_field_label(self, field_name):
