@@ -91,7 +91,7 @@ class AccountMove(models.Model):
     @api.depends('product_id','lenght_of_classes')
     def _compute_offical_fees(self):
         for rec in self:
-            if rec.lenght_of_classes > 0:
+            if rec.lenght_of_classes > 1:
                 rec.offical_fees = rec.per_class_fee * rec.lenght_of_classes
             else:
                 rec.offical_fees = rec.product_id.lst_price
