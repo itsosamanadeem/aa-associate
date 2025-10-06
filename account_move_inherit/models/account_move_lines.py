@@ -39,33 +39,33 @@ class AccountMove(models.Model):
         string="City",
     )
     opposition_number = fields.Json(
-        string="Opposition Number (class)",
+        string="Opposition Number (Class)",
         help="Stores mapping of classes → input value",
         store=True
     )
     appeal_number = fields.Json(
-        string="Appeal Number (class)",
+        string="Appeal Number (Class)",
         help="Stores mapping of classes → input value",
         store=True
     )
     suit_number = fields.Json(
-        string="Suit Number (class)",
+        string="Suit Number (Class)",
         help="Stores mapping of classes → input value",
         store=True
     )
     filing_date= fields.Date(String="Filing Date")
     rectification_no = fields.Json(
-        string="Rectification Number (class)",
+        string="Rectification Number (Class)",
         help="Stores mapping of classes → input value",
         store=True
     )
     registration_no =fields.Json(
-        string="Registration Number (class)",
+        string="Registration Number (Class)",
         help="Stores mapping of classes → input value",
         store=True
     )
     application_variant_data = fields.Json(
-        string="Application Number (class)",
+        string="Application Number (Class)",
         help="Stores mapping of classes → input value",
         store=True
     )
