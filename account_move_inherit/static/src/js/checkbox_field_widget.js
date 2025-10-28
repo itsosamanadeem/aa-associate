@@ -10,17 +10,15 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
     static recordRowTemplate = "account_move_inherit.ListRenderer.RecordRowWithCheckbox";
     setup() {
         super.setup()
-
-        console.log('checking out the seqeunce of the fields', this.props.archInfo.columns);
+        // console.log('checking out the seqeunce of the fields', this.props.archInfo.columns);
+        let columnSequence = this.props.archInfo.columns
+        let visible_columns = columnSequence.filter(col => !col.column_invisible);
+        console.log("Visible columns:", visible_columns);
     }
     onFieldCheckboxToggle(record, fieldName, ev) {
         const checked = ev.target.checked;
         const recId = record.resId || record.id;
         // console.log('Toggle for', recId, fieldName, checked);
-
-        let columnSequence = this.props.archInfo.columns
-        let visible_columns = columnSequence.filter(col => !col.column_invisible);
-        console.log("Visible columns:", visible_columns);
 
         const newFlags = Object.assign({}, record.data.extra_flags || {});
 
