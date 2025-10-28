@@ -14,7 +14,7 @@ export class AccountMoveLineProductField extends Many2OneField {
     setup() {
         super.setup();
 
-        console.log('checking out the seqeunce of the fields', this.props);
+        console.log('checking out the seqeunce of the fields', this.props.record.fieldNames);
         
         this.state = useState({
             selected_variant_ids: this.props.record.data.selected_variant_ids || [],
