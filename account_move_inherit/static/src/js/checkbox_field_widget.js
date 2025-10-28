@@ -11,7 +11,7 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
     setup() {
         super.setup()
 
-        console.log('checking out the seqeunce of the fields', this.props);
+        console.log('checking out the seqeunce of the fields', this.props.archInfo.columns);
     }
     onFieldCheckboxToggle(record, fieldName, ev) {
         const checked = ev.target.checked;
