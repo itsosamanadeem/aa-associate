@@ -92,7 +92,7 @@ class AccountMove(models.Model):
     def _compute_offical_fees(self):
         for rec in self:
             if rec.lenght_of_classes:
-                rec.offical_fees = rec.per_class_fee * rec.lenght_of_classes
+                rec.offical_fees = rec.per_class_fee
             else:
                 rec.offical_fees = rec.product_id.lst_price
 
@@ -103,7 +103,9 @@ class AccountMove(models.Model):
         ondelete="set null"
     )
 
-    @api.depends('professional_fees', 'lenght_of_classes','product_id', 'service_fee','offical_fees')
+    tax_amount = fields.Monetary(currency_field="currency_id",string="Tax Amount")
+
+    @api.depends('professional_fees', 'lenght_of_classes','product_id', 'service_fee','offical_fees','tax_amount')
     def _compute_professional_fees_expression(self):
         for rec in self:
 
@@ -115,13 +117,13 @@ class AccountMove(models.Model):
                     f"({rec.professional_fees:,.2f} * {rec.lenght_of_classes}) + "
                     f"({rec.per_class_fee:,.2f} * {rec.lenght_of_classes}) = {final_total:,.2f}"
                 )
-                rec.price_unit = final_total + (rec.service_fee or 0.0)
+                rec.price_unit = final_total + (rec.service_fee or 0.0) + (rec.tax_amount or 0.0)
             else:
                 final_total = rec.professional_fees + rec.offical_fees
                 rec.fees_calculation = (
                     f"{rec.professional_fees:,.2f} + {rec.offical_fees:,.2f} = {final_total:,.2f}"
                 )
-                rec.price_unit = final_total + (rec.service_fee or 0.0)
+                rec.price_unit = final_total + (rec.service_fee or 0.0) + (rec.tax_amount or 0.0)
 
     @api.depends('product_id')
     def _compute_product_template_id(self):

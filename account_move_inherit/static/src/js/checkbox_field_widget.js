@@ -33,24 +33,27 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
 
         const priority = {
             product_id: 1,                 // Service
-            trademark_id: 2,               // Trademark
-            product_template_id: 3,        // Classes
-            application_variant_data: 4,   // Application Number
-            opposition_number: 5,
-            registration_no: 6,
-            suit_number: 7,
-            appeal_number: 8,
-            rectification_no: 9,
-            filing_date: 10,
-            country_id: 11,
-            city_selection: 12,
-            logo_attachment_id: 13,
+            trademark_id: 2,
+            logo_attachment_id: 3,
+            label_id: 4,
+            x_studio_title_of_invention: 5,
+            product_template_id: 6,        // Classes
+            application_variant_data: 7,   // Application Number
+            opposition_number: 8,
+            registration_no: 9,
+            suit_number: 10,
+            appeal_number: 11,
+            rectification_no: 12,
+            filing_date: 13,
+            country_id: 14,
+            city_selection: 15,
+            tax_amount: 9989,
             professional_fees: 9990,
             service_fee: 9991,
-            per_class_fee: 9992,
-            fees_calculation: 9993,
-            discount: 9994,
-            tax_ids: 9995,
+            offical_fees: 9992,
+            fees_calculation: 9994,
+            discount: 9995,
+            tax_ids: 9996,
             price_total: 9998,
             price_unit: 9999,  
         };
