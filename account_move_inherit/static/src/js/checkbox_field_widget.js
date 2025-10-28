@@ -11,14 +11,19 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
     setup() {
         super.setup()
         // console.log('checking out the seqeunce of the fields', this.props.archInfo.columns);
-        let columnSequence = this.props.archInfo.columns
-        let visible_columns = columnSequence.filter(col => !col.column_invisible);
-        console.log("Visible columns:", visible_columns);
+        const columnSequence = this.props.archInfo.columns
+        this.visible_columns = columnSequence.filter(col => !col.column_invisible);
+
+        this.columnPriorityMap = {};
+        this.visible_columns.forEach((col, index) => {
+            this.columnPriorityMap[col.name] = index + 1;
+        });
+
+        console.log("Visible column priority map:", this.columnPriorityMap);
     }
     onFieldCheckboxToggle(record, fieldName, ev) {
         const checked = ev.target.checked;
         const recId = record.resId || record.id;
-        // console.log('Toggle for', recId, fieldName, checked);
 
         const newFlags = Object.assign({}, record.data.extra_flags || {});
 
@@ -34,41 +39,15 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
             newFlags[recId] = newFlags[recId].filter(f => f !== fieldName);
         }
 
-        const priority = {
-            product_id: 1,                 // Service
-            trademark_id: 2,
-            logo_attachment_id: 3,
-            label_id: 4,
-            x_studio_title_of_invention: 5,
-            product_template_id: 6,        // Classes
-            application_variant_data: 7,   // Application Number
-            opposition_number: 8,
-            registration_no: 9,
-            suit_number: 10,
-            appeal_number: 11,
-            rectification_no: 12,
-            filing_date: 13,
-            country_id: 14,
-            city_selection: 15,
-            tax_amount: 9989,
-            professional_fees: 9990,
-            service_fee: 9991,
-            offical_fees: 9992,
-            fees_calculation: 9994,
-            discount: 9995,
-            tax_ids: 9996,
-            price_total: 9998,
-            price_unit: 9999,  
-        };
-
+        const priority = this.columnPriorityMap;
 
         newFlags[recId] = newFlags[recId].sort((a, b) => {
-            const pa = priority[a] || 100;  
+            const pa = priority[a] || 100;
             const pb = priority[b] || 100;
             if (pa !== pb) {
-                return pa - pb;  
+                return pa - pb;
             }
-            return a.localeCompare(b); 
+            return a.localeCompare(b);
         });
 
         record.update({ extra_flags: newFlags });
