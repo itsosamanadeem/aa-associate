@@ -19,12 +19,8 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
         // console.log('Toggle for', recId, fieldName, checked);
 
         let columnSequence = this.props.archInfo.columns
-
-        let filtered_column = columnSequence.filter((x)=>{
-            x.column_invisible === null
-        })
-        console.log('this is the filtered column: ', filtered_column);
-        
+        let visible_columns = columnSequence.filter(col => !col.column_invisible);
+        console.log("Visible columns:", visible_columns);
 
         const newFlags = Object.assign({}, record.data.extra_flags || {});
 
