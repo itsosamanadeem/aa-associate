@@ -20,7 +20,7 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
 
         let columnSequence = this.props.archInfo.columns
 
-        filtered_column = columnSequence.filter((x)=>{
+        let filtered_column = columnSequence.filter((x)=>{
             x.attrs.column_invisible != '1'
         })
         console.log('this is the filtered column: ', filtered_column);
