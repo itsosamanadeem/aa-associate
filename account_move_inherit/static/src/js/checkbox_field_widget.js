@@ -18,6 +18,14 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
         const recId = record.resId || record.id;
         // console.log('Toggle for', recId, fieldName, checked);
 
+        let columnSequence = this.props.archInfo.columns
+
+        filtered_column = columnSequence.filter((x)=>{
+            x.attrs.column_invisible != '1'
+        })
+        console.log('this is the filtered column: ', filtered_column);
+        
+
         const newFlags = Object.assign({}, record.data.extra_flags || {});
 
         if (!newFlags[recId]) {
