@@ -16,3 +16,7 @@ class ResPartner(models.Model):
     label_ids = fields.One2many(
         "res.partner.label", "partner_id", string="Labels"
     )
+    
+    copyright_ids = fields.One2many(
+        "res.partner.copyright", "partner_id", string="Copy-right"
+    )
