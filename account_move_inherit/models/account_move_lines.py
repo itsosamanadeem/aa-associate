@@ -103,6 +103,13 @@ class AccountMove(models.Model):
         ondelete="set null"
     )
 
+    copyright_id = fields.Many2one(
+        comodel_name="res.partner.copyright",
+        string="Copy-right",
+        domain="[('partner_id', '=', parent.partner_id)]",
+        ondelete="set null"
+    )
+
     tax_amount = fields.Monetary(currency_field="currency_id",string="Tax Amount")
 
     @api.depends('professional_fees', 'lenght_of_classes','product_id', 'service_fee','offical_fees','tax_amount')
