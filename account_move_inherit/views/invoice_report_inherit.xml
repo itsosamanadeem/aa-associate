@@ -49,8 +49,8 @@
         <xpath expr="//table[@name='invoice_line_table']" position="replace">
             <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
             <t t-foreach="lines" t-as="line">
-                <table class="o_has_total_table table o_main_table table-borderless" name="invoice_line_ids">
-                    <thead>
+                <table class="o_has_total_table table o_main_table table-borderless avoid-page-break-inside" name="invoice_line_ids">
+                    <thead style="display: table-row-group;">
                         <tr>
                             <t t-set="headers" t-value="line.extra_flags.get(str(line.id)) if isinstance(line.extra_flags, dict) else False"/>
                             <t t-if="headers">
