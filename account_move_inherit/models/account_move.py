@@ -13,7 +13,9 @@ class AccountMove(models.Model):
     @api.depends('invoice_line_ids.professional_fees','invoice_line_ids.offical_fees','invoice_line_ids.lenght_of_classes')
     def compute_professional_fees_total(self):
         for rec in self:
-            raise UserError(rec.invoice_line_ids.professional_fees)
+            for fees in rec.invoice_line_ids:
+                rec.total_profession_fees = sum(fees.professional_fees * fees.lenght_of_classes)
+            # raise UserError(sum(rec.invoice_line_ids.professional_fees * ))
         
 
 # class AccountTax(models.Model):
