@@ -12,7 +12,8 @@ class AccountMove(models.Model):
     )
     total_offical_fees = fields.Monetary(
         currency_field="currency_id",
-        string="Total Official Fees"
+        string="Total Official Fees",
+        compute="_compute_offical_fees_total"
     )
 
     @api.depends('invoice_line_ids.offical_fees',
