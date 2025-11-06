@@ -104,6 +104,19 @@
             <div id="total" class="clearfix row mt-0">
                 <div class="mt-0">
                     <table class="o_total_table table table-borderless avoid-page-break-inside">
+                        
+                        <tr class="fw-bold">
+                            <td>Total Professional Fees</td>
+                            <td class="text-end">
+                                <span t-field="o.total_professional_fees">11.05</span>
+                            </td>
+                        </tr>
+                        <tr class="fw-bold">
+                            <td>Total Offical Fees</td>
+                            <td class="text-end">
+                                <span t-field="o.total_offical_fees">11.05</span>
+                            </td>
+                        </tr>
 
                         <!-- Tax totals summary (invoice currency) -->
                         <t t-if="o.tax_totals" t-call="account_move_inherit.tax_totals_template">
