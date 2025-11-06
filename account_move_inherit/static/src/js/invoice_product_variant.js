@@ -28,7 +28,7 @@ export class AccountMoveLineProductField extends Many2OneField {
 
     async _onVariantsSelected({ ids, names }) {
         this.state.selected_variant_ids = ids;
-        this.state.selected_variant_names = names;
+        this.state.selected_variant_names = [...new Set(names)];
     }
 
     async onEditConfiguration() {
