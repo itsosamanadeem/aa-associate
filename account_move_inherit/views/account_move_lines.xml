@@ -4,6 +4,9 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='tax_totals']" position="before">
+                <field name="total_professional_fees"/>
+            </xpath>
             <xpath expr="//field[@name='invoice_line_ids']" position="attributes">
                 <attribute name="widget">invoiceLine_list_renderer_with_checkbox</attribute>
             </xpath>
