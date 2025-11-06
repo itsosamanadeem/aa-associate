@@ -8,6 +8,10 @@ import { ProductVariantDialog } from "./dialog_box";
 import { Component, useState, onWillStart } from "@odoo/owl";
 import { NoVariantDialog } from "./no_variant_dialog_box";
 
+function generateRandomInt() {
+    return Math.floor(Math.random() * 1000000);
+}
+
 export class AccountMoveLineProductField extends Many2OneField {
     static template = "account_move_inherit.InvoiceProductField";
 
@@ -23,6 +27,7 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.dialog = useService("dialog");
         this.orm = useService("orm");
         this.checkState = this.props.record._parentRecord.data.state
+        this.random = generateRandomInt()
 
     }
 
