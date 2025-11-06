@@ -86,6 +86,16 @@ class AccountTax(models.Model):
 class AccountMove(models.Model):
     _inherit = "account.move"
 
+
+    total_professional_fees = fields.Monetary(currency_field="currency_id",string="Total Professional Fees", compute="compute_professional_fees_total")
+    total_offical_fees = fields.Monetary(currency_field="currency_id",string="Total Offical Fees")
+
+    @api.depends('invoice_line_ids.professional_fees','invoice_line_ids.offical_fees','invoice_line_ids.lenght_of_classes')
+    def compute_professional_fees_total(self):
+        for rec in self:
+            raise UserError(rec.invoice_line_ids.professional_fees)
+        
+        
     def _prepare_product_base_line_for_taxes_computation(self, product_line):
         """ Convert an account.move.line having display_type='product' into a base line for the taxes computation.
 

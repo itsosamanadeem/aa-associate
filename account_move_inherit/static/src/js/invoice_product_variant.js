@@ -8,10 +8,6 @@ import { ProductVariantDialog } from "./dialog_box";
 import { Component, useState, onWillStart } from "@odoo/owl";
 import { NoVariantDialog } from "./no_variant_dialog_box";
 
-function generateRandomInt() {
-    return Math.floor(Math.random() * 1000000);
-}
-
 export class AccountMoveLineProductField extends Many2OneField {
     static template = "account_move_inherit.InvoiceProductField";
 
@@ -20,20 +16,19 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.state = useState({
             selected_variant_ids: this.props.record.data.selected_variant_ids || [],
             selected_variant_names: this.props.record.data.selected_variant_names
-                ? this.props.record.data.selected_variant_names
+                ? this.props.record.data.selected_variant_names   // convert CSV to array
                 : [],
         });
         this.actionService = useService("action");
         this.dialog = useService("dialog");
         this.orm = useService("orm");
         this.checkState = this.props.record._parentRecord.data.state
-        this.random = generateRandomInt()
 
     }
 
     async _onVariantsSelected({ ids, names }) {
         this.state.selected_variant_ids = ids;
-        this.state.selected_variant_names = [...new Set(names)];
+        this.state.selected_variant_names = names;
     }
 
     async onEditConfiguration() {
