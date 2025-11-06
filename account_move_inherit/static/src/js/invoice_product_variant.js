@@ -16,7 +16,7 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.state = useState({
             selected_variant_ids: this.props.record.data.selected_variant_ids || [],
             selected_variant_names: this.props.record.data.selected_variant_names
-                ? this.props.record.data.selected_variant_names   // convert CSV to array
+                ? this.props.record.data.selected_variant_names
                 : [],
         });
         this.actionService = useService("action");

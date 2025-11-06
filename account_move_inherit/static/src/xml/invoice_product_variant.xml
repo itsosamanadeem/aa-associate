@@ -16,7 +16,7 @@
                         <small>
                             <em>
                                 <div class="container-fluid p-0">
-                                    <t t-foreach="state.selected_variant_names" t-as="v" t-key="v" t-foreach-index="i">
+                                    <t t-foreach="state.selected_variant_names" t-as="v" t-key="i" t-foreach-index="i">
                                         <div class="">
                                             <t t-esc="v"/>
                                             <br/>
