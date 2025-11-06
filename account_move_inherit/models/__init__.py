@@ -8,3 +8,4 @@ from . import crm_label
 from . import account_move_send_wizard
 from . import account_payment_wizard
 from . import crm_copyright
+from . import account_move
