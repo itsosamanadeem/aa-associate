@@ -86,6 +86,8 @@ class AccountMove(models.Model):
     price_unit = fields.Float(string="Fees", help="Total Fees including Professional and Service Fees", compute="_compute_professional_fees_expression", store=True, readonly=False)
     offical_fees = fields.Float(string="Official Fees", compute="_compute_offical_fees",readonly=False, store=True)
     per_class_fee = fields.Float(string="Official Fees")
+    miscellaneous_fees = fields.Float(string="Miscellaneous Fees", default=0.0)
+
     lenght_of_classes = fields.Integer(string="Number of Classes", default=0)
     
     @api.depends('product_id','lenght_of_classes')
@@ -112,7 +114,7 @@ class AccountMove(models.Model):
 
     tax_amount = fields.Monetary(currency_field="currency_id",string="Tax Amount")
 
-    @api.depends('professional_fees', 'lenght_of_classes','product_id', 'service_fee','offical_fees','tax_amount')
+    @api.depends('professional_fees', 'lenght_of_classes','product_id', 'service_fee','offical_fees','tax_amount', 'miscellaneous_fees')
     def _compute_professional_fees_expression(self):
         for rec in self:
 
@@ -124,13 +126,13 @@ class AccountMove(models.Model):
                     f"({rec.professional_fees:,.2f} * {rec.lenght_of_classes}) + "
                     f"({rec.per_class_fee:,.2f} * {rec.lenght_of_classes}) = {final_total:,.2f}"
                 )
-                rec.price_unit = final_total + (rec.service_fee or 0.0) + (rec.tax_amount or 0.0)
+                rec.price_unit = final_total + (rec.service_fee or 0.0) + (rec.tax_amount or 0.0) + (rec.miscellaneous_fees or 0.0)
             else:
                 final_total = rec.professional_fees + rec.offical_fees
                 rec.fees_calculation = (
                     f"{rec.professional_fees:,.2f} + {rec.offical_fees:,.2f} = {final_total:,.2f}"
                 )
-                rec.price_unit = final_total + (rec.service_fee or 0.0) + (rec.tax_amount or 0.0)
+                rec.price_unit = final_total + (rec.service_fee or 0.0) + (rec.tax_amount or 0.0) + (rec.miscellaneous_fees or 0.0)
 
     @api.depends('product_id')
     def _compute_product_template_id(self):
