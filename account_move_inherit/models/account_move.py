@@ -16,25 +16,25 @@ class AccountMove(models.Model):
     )
 
     @api.depends('invoice_line_ids.professional_fees',
-                 'invoice_line_ids.length_of_classes')
+                 'invoice_line_ids.lenght_of_classes')
     def _compute_professional_fees_total(self):
         for rec in self:
             total = 0
             for line in rec.invoice_line_ids:
-                if line.length_of_classes:
-                    total += line.professional_fees * line.length_of_classes
+                if line.lenght_of_classes:
+                    total += line.professional_fees * line.lenght_of_classes
                 else:
                     total += line.professional_fees
             rec.total_professional_fees = total
 
     @api.depends('invoice_line_ids.official_fees',
-                 'invoice_line_ids.length_of_classes')
+                 'invoice_line_ids.lenght_of_classes')
     def _compute_official_fees_total(self):
         for rec in self:
             total = 0
             for line in rec.invoice_line_ids:
-                if line.length_of_classes:
-                    total += line.official_fees * line.length_of_classes
+                if line.lenght_of_classes:
+                    total += line.official_fees * line.lenght_of_classes
                 else:
                     total += line.official_fees
             rec.total_official_fees = total
