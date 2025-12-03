@@ -21,6 +21,7 @@ class AccountMove(models.Model):
         for rec in self:
             total = 0
             for line in rec.invoice_line_ids:
+                # total += line.professional_fees * line.lenght_of_classes
                 if line.lenght_of_classes:
                     total += line.professional_fees * line.lenght_of_classes
                 else:
@@ -33,6 +34,7 @@ class AccountMove(models.Model):
         for rec in self:
             total = 0
             for line in rec.invoice_line_ids:
+                # total += line.offical_fees * line.lenght_of_classes
                 if line.lenght_of_classes:
                     total += line.offical_fees * line.lenght_of_classes
                 else:

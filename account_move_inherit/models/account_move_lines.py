@@ -105,6 +105,7 @@ class AccountMove(models.Model):
         ondelete="set null"
     )
 
+    # copyright field
     title_of_invention_id = fields.Many2one(
         comodel_name="res.partner.copyright",
         string="Title Of Invention",
