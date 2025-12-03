@@ -90,7 +90,7 @@ class AccountMove(models.Model):
 
     lenght_of_classes = fields.Integer(string="Number of Classes", default=0)
     
-    discount = fields.Float(string="Discount")
+    discount = fields.Float(string="Discount", compute=False)
 
     @api.depends('product_id','lenght_of_classes')
     def _compute_offical_fees(self):
