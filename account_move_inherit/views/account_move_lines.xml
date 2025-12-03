@@ -83,9 +83,9 @@
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='price_unit']" position="before">
                 <field name="fees_calculation" optional="show"/>
             </xpath>
-            <!-- <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='price_unit']" position="before">
-                <field name="discount" optional="show"/>
-            </xpath> -->
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='price_unit']" position="before">
+                <field name="discount_in_line" optional="show"/>
+            </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='sequence']" position="after">
                 <field name="selected_variant_ids" column_invisible="1"/>
             </xpath>
@@ -121,7 +121,6 @@
                 <attribute name="column_invisible">1</attribute>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='price_unit']" position="before">
-                <field name="discount" optional="hide"/>
                 <field name="tax_ids" widget="many2many_tax_tags" domain="[('type_tax_use', '=?', parent.invoice_filter_type_domain), ('company_id', 'parent_of', parent.company_id), ('country_id', '=', parent.tax_country_id)]" context="{'append_type_to_tax_name': not parent.invoice_filter_type_domain, 'active_test': True}" options="{'no_create': True}" column_invisible="1"/>
             </xpath>
         </field>
