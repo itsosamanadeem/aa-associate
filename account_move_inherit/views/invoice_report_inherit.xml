@@ -79,8 +79,7 @@
                                                 <t t-foreach="values.items()" t-as="item">
                                                     <span>
                                                         <t t-esc="item[0]"/>:
-                                                        <span class="fw-bold"><t t-esc="item[1]"/></span>
-                                                        <!-- <br/> -->
+                                                        <span class="fw-bold"><t t-esc="item[1]"/></span><br/>
                                                     </span>
                                                 </t>
                                             </t>
