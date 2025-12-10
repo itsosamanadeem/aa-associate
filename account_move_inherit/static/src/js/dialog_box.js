@@ -21,6 +21,7 @@ export class ProductVariantDialog extends Component {
         selected_variant_ids: { type: Array, optional: true },
         application_number: { type: Object, optional: true },
         // currency_id: { type: Array, optional: true },
+        currencies: { type: Array, optional: true },
     };
 
     setup() {

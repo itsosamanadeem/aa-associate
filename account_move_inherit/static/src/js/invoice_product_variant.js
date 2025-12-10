@@ -79,6 +79,7 @@ export class AccountMoveLineProductField extends Many2OneField {
             selected_variant_ids: this.state.selected_variant_ids,
             application_number: this.props.record.data.application_id || {},
             // currency_id: currencies,
+            currencies: currencies
         });
     }
 }
