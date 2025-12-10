@@ -23,7 +23,6 @@ export class ProductVariantDialog extends Component {
     };
 
     setup() {
-        console.log("Dialog props:", this.props.currencies);
 
         this.orm = useService("orm");
         this.notification = useService("notification");
@@ -54,6 +53,9 @@ export class ProductVariantDialog extends Component {
         this.updateApplicationNumber = this.updateApplicationNumber.bind(this);
 
         onWillStart(async () => {
+
+            console.log('this is the currency ', await this.props.currencies);
+            
             if (this.props.selected_variant_ids?.length) {
                 this.state.selectedIds = [...this.props.selected_variant_ids];
                 this.state.totalPrice = this.state.variantList
