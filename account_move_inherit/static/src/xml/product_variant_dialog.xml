@@ -24,7 +24,12 @@
                             </t>
                         </div>
                         <div class="w-25">
-                            <Many2OneField record="state.currencies"/>
+                            <select>
+                                <t t-foreach="state.currencies" t-as="currency">
+                                    <option t-att-value="currency.id" t-esc="currency.name"/>
+                                </t>
+                            </select>
+                            <!-- <Many2OneField record="state.currencies"/> -->
                         </div>
                     </div>
                 </div>
