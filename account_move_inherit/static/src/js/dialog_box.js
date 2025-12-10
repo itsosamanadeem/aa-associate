@@ -48,9 +48,14 @@ export class ProductVariantDialog extends Component {
         this.record = {
             id: this.state.active_currency_id,
             fields: {
-                active_currency_id: { value: this.state.active_currency_id },
+                active_currency_id: {
+                    value: this.state.active_currency_id,
+                    relation: "res.currency", // Must match your Odoo model
+                    type: "many2one",
+                },
             },
         };
+        console.log(this.state.active_currency_list);
 
         if (this.props.variants.length) {
             this.imageUrl = `/web/image/product.product/${this.props.variants[0].product_id}/image_256`;
@@ -76,7 +81,6 @@ export class ProductVariantDialog extends Component {
             );
             this.state.active_currency_list = currencies;
 
-            // Preselect first currency if exists
             if (currencies.length) {
                 this.state.active_currency_id = currencies[0].id;
                 this.record.fields.active_currency_id.value = currencies[0].id;
