@@ -24,7 +24,7 @@
                             </t>
                         </div>
                         <div class="w-25">
-                            <SelectionField record="state.currencies"/>
+                            <SelectionField name="'active_currency_id'" record="state.currencies"/>
                             <!-- <Many2OneField record="state.currencies"/> -->
                         </div>
                     </div>
