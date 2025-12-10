@@ -24,15 +24,16 @@
                             </t>
                         </div>
                         <div class="w-25">
-                            <!-- <Many2OneField
+                            <Many2OneField
                                 name="'folder_id'"
                                 record="record"
+                                context="state.m2oContext"
                                 canOpen="false"
                                 canCreate="false"
                                 canQuickCreate="false"
                                 canCreateEdit="false"
                                 placeholder="rootFolderPlaceholder"
-                            /> -->
+                            />
                         </div>
                     </div>
                 </div>

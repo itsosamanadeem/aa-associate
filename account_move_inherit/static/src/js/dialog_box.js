@@ -23,7 +23,7 @@ export class ProductVariantDialog extends Component {
 
     setup() {
 
-        
+
         console.log("Dialog props:", this.props);
         this.state = useState({
             selectedIds: [],
@@ -39,6 +39,8 @@ export class ProductVariantDialog extends Component {
                 };
             }),
             totalPrice: 0,
+            active_currency_id: null,
+            m2oContext: {},
         });
 
         if (this.props.variants.length) {
@@ -60,13 +62,19 @@ export class ProductVariantDialog extends Component {
                     .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
             }
 
-            const currencyData = await this.orm.searchRead(
-                'res.currency',
-                [['active', '=', true]],
-                ['symbol', 'position', 'rounding', 'decimal_places']
+            const currency = await this.orm.searchRead(
+                "res.currency",
+                [["active", "=", true]],
+                ["id"]
             );
-            console.log('this is the currency data', currencyData);
-            
+
+            if (currency.length) {
+                this.state.active_currency_id = currency[0].id;
+                this.state.m2oContext = {
+                    default_currency_id: currency[0].id,
+                    currency_id: currency[0].id,
+                };
+            }
             const selectedNames = this.state.variantList
                 .filter(v => this.state.selectedIds.includes(v.id))
                 .map(v => v.name);
@@ -101,25 +109,25 @@ export class ProductVariantDialog extends Component {
             .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
     }
 
-//     getRawTotalPrice() {
-//         const originalIds = this.props.selected_variant_ids || [];
-//         const currentIds = this.state.selectedIds;
+    //     getRawTotalPrice() {
+    //         const originalIds = this.props.selected_variant_ids || [];
+    //         const currentIds = this.state.selectedIds;
 
-//         const newlyAdded = this.state.variantList.filter(
-//             v => currentIds.includes(v.id) && !originalIds.includes(v.id)
-//         );
+    //         const newlyAdded = this.state.variantList.filter(
+    //             v => currentIds.includes(v.id) && !originalIds.includes(v.id)
+    //         );
 
-//         const removed = this.state.variantList.filter(
-//             v => originalIds.includes(v.id) && !currentIds.includes(v.id)
-//         );
-// // parseFloat(this.props.product_subtotal) || 
-//         let total = 0;
+    //         const removed = this.state.variantList.filter(
+    //             v => originalIds.includes(v.id) && !currentIds.includes(v.id)
+    //         );
+    // // parseFloat(this.props.product_subtotal) || 
+    //         let total = 0;
 
-//         total += newlyAdded.reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
-//         total -= removed.reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
+    //         total += newlyAdded.reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
+    //         total -= removed.reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
 
-//         return total;
-//     }
+    //         return total;
+    //     }
 
     getProductTotalPrice() {
         const total = this.state.totalPrice;
