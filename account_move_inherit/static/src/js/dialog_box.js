@@ -42,6 +42,7 @@ export class ProductVariantDialog extends Component {
             }),
             totalPrice: 0,
             selected_currency_id: null,
+            selected_currency_name: "",
         });
 
         if (this.props.variants.length) {
@@ -78,15 +79,16 @@ export class ProductVariantDialog extends Component {
         return {
             resModel: "res.currency",
             fieldString: _t("Currency"),
-            getDomain: [["active", "=", true]],
+            getDomain: () => [["active", "=", true]],
             update: this.onCurrencySelect.bind(this),
             activeActions: {},
             placeholder: _t("Select a currency..."),
-            value: this.state.selected_currency_id || false,
+            value: this.state.selected_currency_name || "",
         }
     }
     onCurrencySelect(record) {
         this.state.selected_currency_id = record?.id || false;
+        this.state.selected_currency_name = record?.display_name || "";
         console.log("Selected Currency:", this.state.selected_currency_id);
     }
     updateApplicationNumber(variantId, value) {
