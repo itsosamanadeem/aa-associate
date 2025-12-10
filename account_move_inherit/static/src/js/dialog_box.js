@@ -4,10 +4,11 @@ import { Dialog } from "@web/core/dialog/dialog";
 import { useService } from "@web/core/utils/hooks";
 import { formatCurrency } from "@web/core/currency";
 import { Many2OneField } from "@web/views/fields/many2one/many2one_field";
+import { SelectionField } from "@web/views/fields/selection/selection_field";
 
 export class ProductVariantDialog extends Component {
     static template = "account_move_inherit.ProductVariantDialog";
-    static components = { Dialog, Many2OneField };
+    static components = { Dialog, Many2OneField , SelectionField};
     static props = {
         variants: { type: Array },
         close: Function,
