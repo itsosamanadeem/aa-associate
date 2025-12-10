@@ -52,7 +52,7 @@ export class ProductVariantDialog extends Component {
         this.selectVariant = this.selectVariant.bind(this);
         this.updateApplicationNumber = this.updateApplicationNumber.bind(this);
 
-        onWillStart(() => {
+        onWillStart(async () => {
             if (this.props.selected_variant_ids?.length) {
                 this.state.selectedIds = [...this.props.selected_variant_ids];
                 this.state.totalPrice = this.state.variantList
@@ -60,6 +60,13 @@ export class ProductVariantDialog extends Component {
                     .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
             }
 
+            const currencyData = await this.orm.searchRead(
+                'res.currency',
+                [['active', '=', true]],
+                ['symbol', 'position', 'rounding', 'decimal_places']
+            );
+            console.log('this is the currency data', currencyData);
+            
             const selectedNames = this.state.variantList
                 .filter(v => this.state.selectedIds.includes(v.id))
                 .map(v => v.name);
