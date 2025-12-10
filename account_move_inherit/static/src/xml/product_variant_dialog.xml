@@ -13,14 +13,16 @@
 
                 <!-- Product Info -->
                 <div style="flex: 1 1 auto; min-width: 150px;">
-                    <div class="fw-bold d-flex align-items-center gap-1">
-                        <t t-if="this.attribute_name">
-                            <t t-esc="this.attribute_name"/>
-                        </t>
-                        <t t-else="">
-                            <t t-esc="this.product_name"/>
-                            <span class="text-muted">Classes</span>
-                        </t>
+                    <div class="d-flex flex-column">
+                        <div class="fw-bold d-flex align-items-center gap-1">
+                            <t t-if="this.attribute_name">
+                                <t t-esc="this.attribute_name"/>
+                            </t>
+                            <t t-else="">
+                                <t t-esc="this.product_name"/>
+                                <span class="text-muted">Classes</span>
+                            </t>
+                        </div>
                     </div>
                 </div>
 

@@ -117,7 +117,12 @@
                                 <span t-field="o.total_offical_fees">11.05</span>
                             </td>
                         </tr>
-
+                        <tr class="fw-bold">
+                            <td>Professional Fees Tax</td>
+                            <td class="text-end">
+                                <span><t t-esc=" ( o.total_professional_fees * 15 ) / 100 "/></span>
+                            </td>
+                        </tr>
                         <!-- Tax totals summary (invoice currency) -->
                         <t t-if="o.tax_totals" t-call="account_move_inherit.tax_totals_template">
                             <t t-set="tax_totals" t-value="o.tax_totals"/>
@@ -156,7 +161,7 @@
         </div>
         <xpath expr="//div[@id='payment_term']" position="after">
             <t t-if="o.invoice_line_ids.filtered(lambda x: x.product_id.product_tmpl_id.categ_id.name in ['Trademark Services','Design Services','Copyright Services'])">
-                <span class="fw-bold">NOTE:  Please don’t deduct Tax from the official fees. <t t-esc=" ( o.total_offical_fees * 15) / 100 "/> </span>
+                <span class="fw-bold">NOTE:  Please don’t deduct Tax from the official fees.</span>
             </t>
             <div class="mt-0 clearfix overflow-auto" style="border: 1px solid #dee2e6; border-radius: 6px; padding:8px; width: 100% !important;">
                 <table class="o_has_total_table table o_main_table table-borderless">
