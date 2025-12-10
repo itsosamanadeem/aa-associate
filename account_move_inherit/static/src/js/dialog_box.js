@@ -3,14 +3,12 @@ import { Component, useState, onWillStart } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { useService } from "@web/core/utils/hooks";
 import { formatCurrency } from "@web/core/currency";
-import { Many2OneField } from "@web/views/fields/many2one/many2one_field";
-import { SelectionField } from "@web/views/fields/selection/selection_field";
 import { Many2XAutocomplete } from "@web/views/fields/relational_utils";
 import { _t } from "@web/core/l10n/translation";
 
 export class ProductVariantDialog extends Component {
     static template = "account_move_inherit.ProductVariantDialog";
-    static components = { Dialog, Many2OneField, SelectionField, Many2XAutocomplete};
+    static components = { Dialog, Many2XAutocomplete };
     static props = {
         variants: { type: Array },
         close: Function,
@@ -22,8 +20,6 @@ export class ProductVariantDialog extends Component {
         product_id: { type: Number, optional: true },
         selected_variant_ids: { type: Array, optional: true },
         application_number: { type: Object, optional: true },
-        // currency_id: { type: Array, optional: true },
-        currencies: { type: Array, optional: true },
     };
 
     setup() {
@@ -32,10 +28,6 @@ export class ProductVariantDialog extends Component {
         this.notification = useService("notification");
 
         console.log('this is the props', this.props);
-        // const currencyRecords = this.props.record.map(c => ({
-        //     id: c.id,
-        //     display_name: c.name,
-        // }));
 
         this.state = useState({
             selectedIds: [],
@@ -49,8 +41,7 @@ export class ProductVariantDialog extends Component {
                 };
             }),
             totalPrice: 0,
-            // currencies: currencyRecords,
-            // selected_currency_id: null
+            selected_currency_id: null,
         });
 
         if (this.props.variants.length) {
@@ -83,14 +74,20 @@ export class ProductVariantDialog extends Component {
         });
     }
 
-    get Many2XAutocompleteProps(){
-        return{
-            resModel: 'res.currency',
-            domain: [['active', '=', true]],
-            placeholder: _t("Select Currency"),
-            noCreate: true,
-            placeholder: _t("Select Currency"),
+    get Many2XAutocompleteProps() {
+        return {
+            resModel: "res.currency",
+            fieldString: _t("Currency"),
+            getDomain: [["active", "=", true]],
+            update: this.onCurrencySelect.bind(this),
+            activeActions: {},
+            placeholder: _t("Select a currency..."),
+            value: this.state.selected_currency_id || false,
         }
+    }
+    onCurrencySelect(record) {
+        this.state.selected_currency_id = record?.id || false;
+        console.log("Selected Currency:", this.state.selected_currency_id);
     }
     updateApplicationNumber(variantId, value) {
         const variant = this.state.variantList.find(v => v.id === variantId);
