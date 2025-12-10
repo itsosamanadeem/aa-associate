@@ -43,6 +43,9 @@
                                 </div>
                                 <div class="text-muted small border border-dark rounded-pill px-2">
                                     Price: <t t-esc="variant.price"/>
+                                    <t t-if="state.selected_currency_name === 'USD'">
+                                        Price: $<t t-esc="(variant.price * 0.08).toFixed(2)"/>
+                                    </t>
                                 </div>
                             </div>
                         </t>

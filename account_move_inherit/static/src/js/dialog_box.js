@@ -53,6 +53,12 @@ export class ProductVariantDialog extends Component {
         this.updateApplicationNumber = this.updateApplicationNumber.bind(this);
 
         onWillStart(async () => {
+            const currency = await this.orm.searchRead(
+                "res.currency",
+                [["active", "=", true]],
+            );
+            console.log(currency);
+            
             if (this.props.selected_variant_ids?.length) {
                 this.state.selectedIds = [...this.props.selected_variant_ids];
                 this.state.totalPrice = this.state.variantList
@@ -85,24 +91,17 @@ export class ProductVariantDialog extends Component {
         }
     }
     onCurrencySelect(record) {
-        // Many2XAutocomplete may pass an array of records
         const rec = Array.isArray(record) ? record[0] : record;
-
         if (rec && rec.id) {
             this.state.selected_currency_id = rec.id;
             this.state.selected_currency_name = rec.display_name || "";
             console.log("Selected Currency:", this.state.selected_currency_id, "Name:", this.state.selected_currency_name);
-        } else {
-            // Nothing selected
-            this.state.selected_currency_id = null;
-            this.state.selected_currency_name = "";
         }
     }
     updateApplicationNumber(variantId, value) {
         const variant = this.state.variantList.find(v => v.id === variantId);
         if (variant) {
             variant.applicationNumber = value || 0;
-            // console.log("Updating application number for variant", variant.id, variant.applicationNumber);
         }
     }
 
