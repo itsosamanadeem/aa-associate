@@ -27,8 +27,6 @@ export class ProductVariantDialog extends Component {
         this.orm = useService("orm");
         this.notification = useService("notification");
 
-        console.log('this is the props', this.props);
-
         this.state = useState({
             selectedIds: [],
             variantList: this.props.variants.map(v => {
@@ -56,7 +54,7 @@ export class ProductVariantDialog extends Component {
 
         onWillStart(async () => {
             if (!this.state.selected_currency_id && this.props.currency_id) {
-                const currency = await this.orm.call("res.currency", "read", [[this.props.currency_id], ["id", "name"]]);
+                const currency = await this.orm.call("res.currency", "read", [['active','=',true], ["id", "name"]]);
                 if (currency?.length) {
                     this.state.selected_currency_id = currency[0].id;
                     this.state.selected_currency_name = currency[0].name;
