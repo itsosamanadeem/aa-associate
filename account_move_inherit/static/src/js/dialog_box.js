@@ -20,10 +20,10 @@ export class ProductVariantDialog extends Component {
         selected_variant_ids: { type: Array, optional: true },
         application_number: { type: Object, optional: true },
     };
-    
+
     setup() {
         console.log("Dialog props:", this.props);
-        
+
         this.orm = useService("orm");
         this.notification = useService("notification");
 
@@ -45,8 +45,15 @@ export class ProductVariantDialog extends Component {
             }),
             totalPrice: 0,
             active_currency_id: null,
-            m2oContext: {},
+            active_currency_list: [],
         });
+
+        this.record = {
+            id: this.state.active_currency_id,
+            fields: {
+                active_currency_id: { value: this.state.active_currency_id },
+            },
+        };
 
         if (this.props.variants.length) {
             this.imageUrl = `/web/image/product.product/${this.props.variants[0].product_id}/image_256`;
@@ -65,18 +72,17 @@ export class ProductVariantDialog extends Component {
                     .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
             }
 
-            const currency = await this.orm.searchRead(
+            const currencies = await this.orm.searchRead(
                 "res.currency",
                 [["active", "=", true]],
-                ["id"]
+                ["id", "name"]
             );
+            this.state.active_currency_list = currencies;
 
-            if (currency.length) {
-                this.state.active_currency_id = currency[0].id;
-                this.state.m2oContext = {
-                    default_currency_id: currency[0].id,
-                    currency_id: currency[0].id,
-                };
+            // Preselect first currency if exists
+            if (currencies.length) {
+                this.state.active_currency_id = currencies[0].id;
+                this.record.fields.active_currency_id.value = currencies[0].id;
             }
             const selectedNames = this.state.variantList
                 .filter(v => this.state.selectedIds.includes(v.id))
