@@ -25,7 +25,7 @@
                         </div>
                         <div class="w-25">
                             <select>
-                                <t t-foreach="state.currencies" t-as="currency">
+                                <t t-foreach="state.currencies" t-as="currency" t-key="currency.id">
                                     <option t-att-value="currency.id" t-esc="currency.name"/>
                                 </t>
                             </select>
