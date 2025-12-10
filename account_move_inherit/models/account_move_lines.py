@@ -91,7 +91,8 @@ class AccountMove(models.Model):
     lenght_of_classes = fields.Integer(string="Number of Classes", default=0)
     
     discount_in_line = fields.Float(string="Discount")
-
+    active_currency_id = fields.Many2one(comodel_name="res.currency",string="Currency")
+    
     @api.depends('product_id','lenght_of_classes')
     def _compute_offical_fees(self):
         for rec in self:

@@ -25,7 +25,7 @@
                         </div>
                         <div class="w-25">
                             <Many2OneField
-                                name="'folder_id'"
+                                name="'active_currency_id'"
                                 record="record"
                                 context="state.m2oContext"
                                 canOpen="false"
