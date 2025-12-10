@@ -41,6 +41,7 @@ export class ProductVariantDialog extends Component {
             totalPrice: 0,
             selected_currency_id: null,
             selected_currency_name: "",
+            selected_currency_rate: 1,
         });
 
         if (this.props.variants.length) {
@@ -53,11 +54,6 @@ export class ProductVariantDialog extends Component {
         this.updateApplicationNumber = this.updateApplicationNumber.bind(this);
 
         onWillStart(async () => {
-            const currency = await this.orm.searchRead(
-                "res.currency",
-                [["active", "=", true]],
-            );
-            console.log(currency);
             
             if (this.props.selected_variant_ids?.length) {
                 this.state.selectedIds = [...this.props.selected_variant_ids];
@@ -90,12 +86,18 @@ export class ProductVariantDialog extends Component {
             value: this.state.selected_currency_name || "",
         }
     }
-    onCurrencySelect(record) {
+    async onCurrencySelect(record) {
         const rec = Array.isArray(record) ? record[0] : record;
         if (rec && rec.id) {
             this.state.selected_currency_id = rec.id;
             this.state.selected_currency_name = rec.display_name || "";
-            console.log("Selected Currency:", this.state.selected_currency_id, "Name:", this.state.selected_currency_name);
+            const currency = await this.orm.searchRead(
+                "res.currency",
+                [["id","=",rec.id]],
+                ["rate"]
+            );
+            this.state.selected_currency_rate = currency.length ? currency[0].rate : null;
+            console.log("Selected Currency:", this.state.selected_currency_id, "Name:", this.state.selected_currency_name, "Rate:", this.state.selected_currency_rate);
         }
     }
     updateApplicationNumber(variantId, value) {
