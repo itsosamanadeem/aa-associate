@@ -24,15 +24,6 @@
                             </t>
                         </div>
                         <div class="w-25">
-                        <Many2OneField
-                            name="active_currency_id"
-                            record="record"
-                            options="{
-                                'selection': state.active_currency_list.map(c => [c.id, c.name])
-                            }"
-                            canOpen="false"
-                            canCreate="false"
-                        />
                             <!-- <Many2OneField
                                 name="active_currency_id"
                                 record="record"

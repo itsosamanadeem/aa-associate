@@ -12,6 +12,8 @@ export class AccountMoveLineProductField extends Many2OneField {
     static template = "account_move_inherit.InvoiceProductField";
 
     setup() {
+        console.log("this is props", this.props);
+
         super.setup();
         this.state = useState({
             selected_variant_ids: this.props.record.data.selected_variant_ids || [],
@@ -24,6 +26,16 @@ export class AccountMoveLineProductField extends Many2OneField {
         this.orm = useService("orm");
         this.checkState = this.props.record._parentRecord.data.state
 
+
+    }
+    async getActiveCurrency() {
+        const currencies = await this.orm.searchRead(
+            "res.currency",
+            [["active", "=", true]],
+            ["id", "name"]
+        );
+
+        return currencies;
     }
 
     async _onVariantsSelected({ ids, names }) {
@@ -64,7 +76,8 @@ export class AccountMoveLineProductField extends Many2OneField {
             line_id: this.props.record.evalContext.id,
             product_id: this.props.record.data.product_id?.[0],
             selected_variant_ids: this.state.selected_variant_ids,
-            application_number: this.props.record.data.application_id || {}
+            application_number: this.props.record.data.application_id || {},
+            currencies: this.getActiveCurrency(),
         });
     }
 }

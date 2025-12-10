@@ -19,6 +19,7 @@ export class ProductVariantDialog extends Component {
         product_id: { type: Number, optional: true },
         selected_variant_ids: { type: Array, optional: true },
         application_number: { type: Object, optional: true },
+        currencies: Function
     };
 
     setup() {
@@ -41,21 +42,7 @@ export class ProductVariantDialog extends Component {
                 };
             }),
             totalPrice: 0,
-            active_currency_id: null,
-            active_currency_list: [],
         });
-
-        this.record = {
-            id: this.state.active_currency_id,
-            fields: {
-                active_currency_id: {
-                    value: this.state.active_currency_id,
-                    relation: "res.currency", // Must match your Odoo model
-                    type: "many2one",
-                },
-            },
-        };
-        console.log(this.state.active_currency_list);
 
         if (this.props.variants.length) {
             this.imageUrl = `/web/image/product.product/${this.props.variants[0].product_id}/image_256`;
@@ -74,17 +61,6 @@ export class ProductVariantDialog extends Component {
                     .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
             }
 
-            const currencies = await this.orm.searchRead(
-                "res.currency",
-                [["active", "=", true]],
-                ["id", "name"]
-            );
-            this.state.active_currency_list = currencies;
-
-            if (currencies.length) {
-                this.state.active_currency_id = currencies[0].id;
-                this.record.fields.active_currency_id.value = currencies[0].id;
-            }
             const selectedNames = this.state.variantList
                 .filter(v => this.state.selectedIds.includes(v.id))
                 .map(v => v.name);
