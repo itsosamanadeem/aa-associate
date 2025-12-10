@@ -55,6 +55,13 @@ export class ProductVariantDialog extends Component {
         this.updateApplicationNumber = this.updateApplicationNumber.bind(this);
 
         onWillStart(async () => {
+            if (!this.state.selected_currency_id && this.props.currency_id) {
+                const currency = await this.orm.call("res.currency", "read", [[this.props.currency_id], ["id", "name"]]);
+                if (currency?.length) {
+                    this.state.selected_currency_id = currency[0].id;
+                    this.state.selected_currency_name = currency[0].name;
+                }
+            }
             if (this.props.selected_variant_ids?.length) {
                 this.state.selectedIds = [...this.props.selected_variant_ids];
                 this.state.totalPrice = this.state.variantList
@@ -88,7 +95,7 @@ export class ProductVariantDialog extends Component {
     }
     onCurrencySelect(record) {
         console.log('this is the record', record.id);
-        
+
         this.state.selected_currency_id = record?.id || false;
         this.state.selected_currency_name = record?.display_name || "";
         console.log("Selected Currency:", this.state.selected_currency_id);
