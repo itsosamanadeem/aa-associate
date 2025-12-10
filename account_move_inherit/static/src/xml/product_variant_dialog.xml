@@ -23,19 +23,8 @@
                                 <span class="text-muted">Classes</span>
                             </t>
                         </div>
-                        <div class="w-25">
+                        <div class="my-3 d-flex align-items-center gap-2">
                             <Many2XAutocomplete t-props="Many2XAutocompleteProps"/>
-                            <!-- <SelectionField t-props="props.record"/> -->
-                                <!-- t-model="state.selected_currency_id" -->
-                                <!-- t-options="{ records: state.currencies }" -->
-                                <!-- name="'active_currency_id'" -->
-                            <!-- <Many2OneField
-                                record="state.currencies"
-                                canOpen="false"
-                                canCreate="false"
-                                canQuickCreate="false"
-                                canCreateEdit="false"
-                            /> -->
                         </div>
                     </div>
                 </div>
@@ -55,15 +44,6 @@
                                 <div class="text-muted small border border-dark rounded-pill px-2">
                                     Price: <t t-esc="variant.price"/>
                                 </div>
-
-                                <!-- Application Number input (only visible when selected) -->
-                                <!-- <t t-if="state.selectedIds.includes(variant.id)">
-                                    <input type="number" 
-                                        class="form-control ms-2" 
-                                        style="width:100px !important;"
-                                        t-att-value="variant.applicationNumber"
-                                        t-on-change="(ev) => updateApplicationNumber(variant.id, ev.target.value)"/>
-                                </t> -->
                             </div>
                         </t>
                     </div>
@@ -97,12 +77,3 @@
         </Dialog>
     </t>
 </templates>
-
-                                <!-- name="active_currency_id"
-                                record="record"
-                                context="state.m2oContext"
-                                canOpen="false"
-                                canCreate="false"
-                                canQuickCreate="false"
-                                canCreateEdit="false"
-                                placeholder="rootFolderPlaceholder" -->
