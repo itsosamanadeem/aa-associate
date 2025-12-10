@@ -29,6 +29,7 @@
                                 <!-- t-options="{ records: state.currencies }" -->
                             <Many2OneField
                                 name="'active_currency_id'"
+                                record="props.record"
                                 canOpen="false"
                                 canCreate="false"
                                 canQuickCreate="false"
