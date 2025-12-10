@@ -41,6 +41,7 @@ export class ProductVariantDialog extends Component {
                 };
             }),
             totalPrice: 0,
+            currencies: [],
         });
 
         if (this.props.variants.length) {
@@ -54,7 +55,8 @@ export class ProductVariantDialog extends Component {
 
         onWillStart(async () => {
 
-            console.log('this is the currency ', await this.props.currencies);
+            // console.log('this is the currency ', await this.props.currencies);
+            this.state.currencies = await this.props.currencies();
             
             if (this.props.selected_variant_ids?.length) {
                 this.state.selectedIds = [...this.props.selected_variant_ids];

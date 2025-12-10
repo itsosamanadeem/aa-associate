@@ -24,16 +24,7 @@
                             </t>
                         </div>
                         <div class="w-25">
-                            <!-- <Many2OneField
-                                name="active_currency_id"
-                                record="record"
-                                context="state.m2oContext"
-                                canOpen="false"
-                                canCreate="false"
-                                canQuickCreate="false"
-                                canCreateEdit="false"
-                                placeholder="rootFolderPlaceholder"
-                            /> -->
+                            <Many2OneField t-options="{records: state.currencies, string: 'Currency'}"/>
                         </div>
                     </div>
                 </div>
@@ -95,3 +86,12 @@
         </Dialog>
     </t>
 </templates>
+
+                                <!-- name="active_currency_id"
+                                record="record"
+                                context="state.m2oContext"
+                                canOpen="false"
+                                canCreate="false"
+                                canQuickCreate="false"
+                                canCreateEdit="false"
+                                placeholder="rootFolderPlaceholder" -->
