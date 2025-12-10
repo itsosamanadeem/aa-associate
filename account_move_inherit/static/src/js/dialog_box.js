@@ -27,9 +27,6 @@ export class ProductVariantDialog extends Component {
         this.orm = useService("orm");
         this.notification = useService("notification");
 
-        this.model = this.env.models["account.move.line"];
-        this.record = this.model.load({});
-
         this.state = useState({
             selectedIds: [],
             variantList: this.props.variants.map(v => {
