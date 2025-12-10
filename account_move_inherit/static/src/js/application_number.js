@@ -55,7 +55,7 @@ export class ApplicationNumberField extends Component {
             [this.props.name]: filteredValues,
         });
 
-        console.log("Updated values:", filteredValues);
+        // console.log("Updated values:", filteredValues);
     }
 
 

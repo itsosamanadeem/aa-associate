@@ -19,7 +19,7 @@ export class InvoiceLineListRendererWithFieldCheckbox extends ListRenderer {
             this.columnPriorityMap[col.name] = index + 1;
         });
 
-        console.log("Visible column priority map:", this.columnPriorityMap);
+        // console.log("Visible column priority map:", this.columnPriorityMap);
     }
     onFieldCheckboxToggle(record, fieldName, ev) {
         const checked = ev.target.checked;

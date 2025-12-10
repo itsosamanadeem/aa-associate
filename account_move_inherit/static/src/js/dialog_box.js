@@ -30,14 +30,12 @@ export class ProductVariantDialog extends Component {
         this.state = useState({
             selectedIds: [],
             variantList: this.props.variants.map(v => {
-                // const appObj = (this.props.application_number || []).find(a => a.id === v.id);
                 return {
                     id: v.id,
                     name: v.name,
                     price: v.price,
                     imageUrl: `/web/image/product.product/${v.product_id}/image_256`,
                     product_id: v.product_id,
-                    // applicationNumber: appObj ? appObj.applicationNumber : 0,
                 };
             }),
             totalPrice: 0,
@@ -80,7 +78,7 @@ export class ProductVariantDialog extends Component {
         const variant = this.state.variantList.find(v => v.id === variantId);
         if (variant) {
             variant.applicationNumber = value || 0;
-            console.log("Updating application number for variant", variant.id, variant.applicationNumber);
+            // console.log("Updating application number for variant", variant.id, variant.applicationNumber);
         }
     }
 
@@ -96,26 +94,6 @@ export class ProductVariantDialog extends Component {
             .filter(v => this.state.selectedIds.includes(v.id))
             .reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
     }
-
-    //     getRawTotalPrice() {
-    //         const originalIds = this.props.selected_variant_ids || [];
-    //         const currentIds = this.state.selectedIds;
-
-    //         const newlyAdded = this.state.variantList.filter(
-    //             v => currentIds.includes(v.id) && !originalIds.includes(v.id)
-    //         );
-
-    //         const removed = this.state.variantList.filter(
-    //             v => originalIds.includes(v.id) && !currentIds.includes(v.id)
-    //         );
-    // // parseFloat(this.props.product_subtotal) || 
-    //         let total = 0;
-
-    //         total += newlyAdded.reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
-    //         total -= removed.reduce((sum, v) => sum + parseFloat(v.price || 0), 0);
-
-    //         return total;
-    //     }
 
     getProductTotalPrice() {
         const total = this.state.totalPrice;
@@ -135,9 +113,6 @@ export class ProductVariantDialog extends Component {
                 selected_variant_names: this.state.variantList
                     .filter(v => this.state.selectedIds.includes(v.id))
                     .map(v => v.name),
-                // application_number: this.state.variantList
-                //     .filter(v => this.state.selectedIds.includes(v.id))
-                //     .map(v => ({ id: v.id, applicationNumber: v.applicationNumber })),
             }]
         );
 
