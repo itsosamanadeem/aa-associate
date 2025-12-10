@@ -24,7 +24,7 @@
                             </t>
                         </div>
                         <div class="w-25">
-                            <Many2OneField record="state."/>
+                            <Many2OneField record="state.currencies"/>
                         </div>
                     </div>
                 </div>
