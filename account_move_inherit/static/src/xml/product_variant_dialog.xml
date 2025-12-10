@@ -25,9 +25,9 @@
                         </div>
                         <div class="w-25">
                             <!-- <SelectionField t-props="props.record"/> -->
+                                <!-- t-model="state.selected_currency_id" -->
                             <Many2OneField
                                 name="'active_currency_id'"
-                                t-model="state.selected_currency_id"
                                 t-options="{ records: state.currencies }"
                                 canOpen="false"
                                 canCreate="false"
