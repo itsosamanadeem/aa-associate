@@ -37,6 +37,7 @@ This module extends Odoo Accounting and CRM with the following features:
         "crm",
         "contacts",
         "account_payment",
+        "mrp_workorder",
     ],
     "data": [
         "security/security_group.xml",
