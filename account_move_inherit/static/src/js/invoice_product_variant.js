@@ -12,7 +12,7 @@ export class AccountMoveLineProductField extends Many2OneField {
     static template = "account_move_inherit.InvoiceProductField";
 
     setup() {
-        console.log("this is props", this.props);
+        // console.log("this is props", this.props);
 
         super.setup();
         this.state = useState({

@@ -23,7 +23,7 @@ export class ProductVariantDialog extends Component {
     };
 
     setup() {
-        console.log("Dialog props:", this.props);
+        console.log("Dialog props:", this.props.currencies);
 
         this.orm = useService("orm");
         this.notification = useService("notification");
