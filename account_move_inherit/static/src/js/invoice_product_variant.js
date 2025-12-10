@@ -32,7 +32,6 @@ export class AccountMoveLineProductField extends Many2OneField {
         const currencies = await this.orm.searchRead(
             "res.currency",
             [["active", "=", true]],
-            ["id", "name"]
         );
 
         return currencies;
@@ -79,7 +78,7 @@ export class AccountMoveLineProductField extends Many2OneField {
             product_id: this.props.record.data.product_id?.[0],
             selected_variant_ids: this.state.selected_variant_ids,
             application_number: this.props.record.data.application_id || {},
-            record: currencies,
+            currency_id: currencies,
         });
     }
 }

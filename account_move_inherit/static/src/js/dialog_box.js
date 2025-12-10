@@ -20,7 +20,7 @@ export class ProductVariantDialog extends Component {
         product_id: { type: Number, optional: true },
         selected_variant_ids: { type: Array, optional: true },
         application_number: { type: Object, optional: true },
-        record: Array
+        currency_id: { type: Array, optional: true },
     };
 
     setup() {
@@ -29,10 +29,10 @@ export class ProductVariantDialog extends Component {
         this.notification = useService("notification");
 
         console.log('this is the props', this.props);
-        const currencyRecords = this.props.record.map(c => ({
-            id: c.id,
-            display_name: c.name,
-        }));
+        // const currencyRecords = this.props.record.map(c => ({
+        //     id: c.id,
+        //     display_name: c.name,
+        // }));
 
         this.state = useState({
             selectedIds: [],
@@ -46,8 +46,8 @@ export class ProductVariantDialog extends Component {
                 };
             }),
             totalPrice: 0,
-            currencies: currencyRecords,
-            selected_currency_id: null
+            // currencies: currencyRecords,
+            // selected_currency_id: null
         });
 
         if (this.props.variants.length) {
@@ -119,7 +119,7 @@ export class ProductVariantDialog extends Component {
                 selected_variant_names: this.state.variantList
                     .filter(v => this.state.selectedIds.includes(v.id))
                     .map(v => v.name),
-                active_currency_id: this.state.selected_currency_id,
+                // active_currency_id: this.state.selected_currency_id,
             }]
         );
 
