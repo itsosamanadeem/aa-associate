@@ -5,10 +5,12 @@ import { useService } from "@web/core/utils/hooks";
 import { formatCurrency } from "@web/core/currency";
 import { Many2OneField } from "@web/views/fields/many2one/many2one_field";
 import { SelectionField } from "@web/views/fields/selection/selection_field";
+import { Many2XAutocomplete } from "@web/views/fields/relational_utils";
+import { _t } from "@web/core/l10n/translation";
 
 export class ProductVariantDialog extends Component {
     static template = "account_move_inherit.ProductVariantDialog";
-    static components = { Dialog, Many2OneField, SelectionField };
+    static components = { Dialog, Many2OneField, SelectionField, Many2XAutocomplete};
     static props = {
         variants: { type: Array },
         close: Function,
@@ -81,6 +83,15 @@ export class ProductVariantDialog extends Component {
         });
     }
 
+    get Many2XAutocompleteProps(){
+        return{
+            resModel: 'res.currency',
+            domain: [['active', '=', true]],
+            placeholder: _t("Select Currency"),
+            noCreate: true,
+            placeholder: _t("Select Currency"),
+        }
+    }
     updateApplicationNumber(variantId, value) {
         const variant = this.state.variantList.find(v => v.id === variantId);
         if (variant) {
