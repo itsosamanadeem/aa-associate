@@ -28,7 +28,7 @@
                                 <!-- t-model="state.selected_currency_id" -->
                                 <!-- t-options="{ records: state.currencies }" -->
                             <Many2OneField
-                                name="'active_currency_id'"
+                                name="'currency_id'"
                                 record="props.record"
                                 canOpen="false"
                                 canCreate="false"
