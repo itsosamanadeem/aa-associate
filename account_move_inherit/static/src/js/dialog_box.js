@@ -87,6 +87,8 @@ export class ProductVariantDialog extends Component {
         }
     }
     onCurrencySelect(record) {
+        console.log('this is the record', record);
+        
         this.state.selected_currency_id = record?.id || false;
         this.state.selected_currency_name = record?.display_name || "";
         console.log("Selected Currency:", this.state.selected_currency_id);

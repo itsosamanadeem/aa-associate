@@ -28,15 +28,6 @@ export class AccountMoveLineProductField extends Many2OneField {
 
 
     }
-    async getActiveCurrency() {
-        const currencies = await this.orm.searchRead(
-            "res.currency",
-            [["active", "=", true]],
-        );
-
-        return currencies;
-    }
-
     async _onVariantsSelected({ ids, names }) {
         this.state.selected_variant_ids = ids;
         this.state.selected_variant_names = names;
@@ -63,7 +54,6 @@ export class AccountMoveLineProductField extends Many2OneField {
             });
             return;
         }
-        const currencies = await this.getActiveCurrency();
 
         this.dialog.add(ProductVariantDialog, {
             variants,
