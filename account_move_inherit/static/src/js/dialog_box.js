@@ -54,7 +54,7 @@ export class ProductVariantDialog extends Component {
         this.updateApplicationNumber = this.updateApplicationNumber.bind(this);
 
         onWillStart(async () => {
-            this.state.currencies = await this.props.currencies();
+            this.state.currencies = await this.props.record;
             
             if (this.props.selected_variant_ids?.length) {
                 this.state.selectedIds = [...this.props.selected_variant_ids];
