@@ -20,11 +20,16 @@ export class ProductVariantDialog extends Component {
         selected_variant_ids: { type: Array, optional: true },
         application_number: { type: Object, optional: true },
     };
-
+    
     setup() {
-
-
         console.log("Dialog props:", this.props);
+        
+        this.orm = useService("orm");
+        this.notification = useService("notification");
+
+        this.model = this.env.models["account.move.line"];
+        this.record = this.model.load({});
+
         this.state = useState({
             selectedIds: [],
             variantList: this.props.variants.map(v => {
@@ -49,8 +54,6 @@ export class ProductVariantDialog extends Component {
             this.attribute_name = this.props.variants[0].attribute_name;
         }
 
-        this.orm = useService("orm");
-        this.notification = useService("notification");
         this.selectVariant = this.selectVariant.bind(this);
         this.updateApplicationNumber = this.updateApplicationNumber.bind(this);
 
