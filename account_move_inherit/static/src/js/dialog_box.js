@@ -3,10 +3,11 @@ import { Component, useState, onWillStart } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { useService } from "@web/core/utils/hooks";
 import { formatCurrency } from "@web/core/currency";
+import { Many2OneField } from "@web/views/fields/many2one/many2one_field";
 
 export class ProductVariantDialog extends Component {
     static template = "account_move_inherit.ProductVariantDialog";
-    static components = { Dialog };
+    static components = { Dialog, Many2OneField };
     static props = {
         variants: { type: Array },
         close: Function,
@@ -23,7 +24,7 @@ export class ProductVariantDialog extends Component {
     setup() {
 
         
-
+        console.log("Dialog props:", this.props);
         this.state = useState({
             selectedIds: [],
             variantList: this.props.variants.map(v => {
