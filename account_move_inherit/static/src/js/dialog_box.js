@@ -85,11 +85,18 @@ export class ProductVariantDialog extends Component {
         }
     }
     onCurrencySelect(record) {
-        console.log('this is the record', record);
+        // Many2XAutocomplete may pass an array of records
+        const rec = Array.isArray(record) ? record[0] : record;
 
-        this.state.selected_currency_id = record?.id || false;
-        this.state.selected_currency_name = record?.display_name || "";
-        console.log("Selected Currency:", this.state.selected_currency_id, 'Selected Currency Name:', this.state.selected_currency_name);
+        if (rec && rec.id) {
+            this.state.selected_currency_id = rec.id;
+            this.state.selected_currency_name = rec.display_name || "";
+            console.log("Selected Currency:", this.state.selected_currency_id, "Name:", this.state.selected_currency_name);
+        } else {
+            // Nothing selected
+            this.state.selected_currency_id = null;
+            this.state.selected_currency_name = "";
+        }
     }
     updateApplicationNumber(variantId, value) {
         const variant = this.state.variantList.find(v => v.id === variantId);
