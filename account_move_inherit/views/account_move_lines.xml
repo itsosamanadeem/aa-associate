@@ -24,7 +24,7 @@
                 <field name="attachment_name" column_invisible="1"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='attachment_name']" position="after">
-                <field name="active_currency_id" column_invisible="1"/>
+                <field name="active_currency_id" />
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='invoice_tab']/field[@name='invoice_line_ids']/list[1]/field[@name='attachment_name']" position="after">
                 <field name="label_id" optional="show"/>
