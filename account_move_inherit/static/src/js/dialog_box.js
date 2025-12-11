@@ -20,7 +20,6 @@ export class ProductVariantDialog extends Component {
         product_id: { type: Number, optional: true },
         selected_variant_ids: { type: Array, optional: true },
         application_number: { type: Object, optional: true },
-        active_currency_id : {Array,optional: true}
     };
 
     setup() {
@@ -55,12 +54,12 @@ export class ProductVariantDialog extends Component {
         this.updateApplicationNumber = this.updateApplicationNumber.bind(this);
 
         onWillStart(async () => {
-            if (this.props.active_currency_id){
+            if (this.props.currency_id){
                 // console.log("this is the currency", this.props.active_currency_id);
                 
                 const currency = await this.orm.searchRead(
                     "res.currency",
-                    [["id","=",this.props.active_currency_id]],
+                    [["id","=",this.props.currency_id]],
                 );
                 if (currency.length) {
                     this.state.selected_currency_id = currency[0].id || 159;
