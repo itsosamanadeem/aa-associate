@@ -56,7 +56,7 @@ export class ProductVariantDialog extends Component {
 
         onWillStart(async () => {
             if (this.props.active_currency_id){
-                console.log("this is the currency", this.props.active_currency_id[0].id);
+                console.log("this is the currency", this.props.active_currency_id);
                 
                 // const currency = await this.orm.searchRead(
                 //     "res.currency",
