@@ -170,7 +170,7 @@ class AccountMove(models.Model):
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
         self.lenght_of_classes = len(variants_names) if variants_names else 0
-        raise UserError(f"Length of classes: {str(vals)}")
+        # raise UserError(f"Length of classes: {str(vals)}")
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
     
     def get_field_label(self, field_name):
