@@ -165,8 +165,8 @@ class AccountMove(models.Model):
             raise UserError(_("Invalid price value"))
 
         self.active_currency_id = currency_id
-        self.offical_fees = price
-        self.per_class_fee = varaint_price
+        self.offical_fees = varaint_price
+        self.per_class_fee = price
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
         self.lenght_of_classes = len(variants_names) if variants_names else 0
