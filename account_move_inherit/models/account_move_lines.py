@@ -153,6 +153,7 @@ class AccountMove(models.Model):
         price = vals.get("price")
         variants = vals.get("selected_variant_ids",[])
         variants_names = vals.get("selected_variant_names",[])
+        currency_id = vals.get("active_currency_id")
 
         if price is None:
             raise UserError(_("No price provided"))
@@ -168,6 +169,7 @@ class AccountMove(models.Model):
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
         self.lenght_of_classes = len(variants_names) if variants_names else 0
+        self.active_currency_id = currency_id
         # raise UserError(f"Length of classes: {str(vals)}")
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
     

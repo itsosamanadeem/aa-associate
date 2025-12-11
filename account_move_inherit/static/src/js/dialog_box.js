@@ -20,6 +20,7 @@ export class ProductVariantDialog extends Component {
         product_id: { type: Number, optional: true },
         selected_variant_ids: { type: Array, optional: true },
         application_number: { type: Object, optional: true },
+        active_currency_id: { type: Number, optional: true}
     };
 
     setup() {
@@ -54,7 +55,18 @@ export class ProductVariantDialog extends Component {
         this.updateApplicationNumber = this.updateApplicationNumber.bind(this);
 
         onWillStart(async () => {
-            
+            if (this.props.active_currency_id){
+                const currency = await this.orm.searchRead(
+                    "res.currency",
+                    [["id","=",this.props.active_currency_id]],
+                    ["display_name", "rate"]
+                );
+                if (currency.length) {
+                    this.state.selected_currency_id = this.props.active_currency_id;
+                    this.state.selected_currency_name = currency[0].display_name || "";
+                    this.state.selected_currency_rate = currency[0].rate || 1;
+                }
+            }
             if (this.props.selected_variant_ids?.length) {
                 this.state.selectedIds = [...this.props.selected_variant_ids];
                 this.state.totalPrice = this.state.variantList
@@ -139,7 +151,9 @@ export class ProductVariantDialog extends Component {
                     selected_variant_names: this.state.variantList
                         .filter(v => this.state.selectedIds.includes(v.id))
                         .map(v => v.name),
-                    // active_currency_id: this.state.selected_currency_id,
+                    active_currency_id: this.state.selected_currency_id,
+                    active_currency_name: this.state.selected_currency_name,
+                    active_currency_rate: this.state.selected_currency_rate,
                 }]
             );
     
