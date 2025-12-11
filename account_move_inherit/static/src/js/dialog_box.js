@@ -56,17 +56,17 @@ export class ProductVariantDialog extends Component {
 
         onWillStart(async () => {
             if (this.props.active_currency_id){
-                console.log("this is the currency", this.props.active_currency_id);
+                // console.log("this is the currency", this.props.active_currency_id);
                 
-                // const currency = await this.orm.searchRead(
-                //     "res.currency",
-                //     [["id","=",this.props.active_currency_id]],
-                // );
-                // if (currency.length) {
-                //     // this.state.selected_currency_id = currency.id;
-                //     this.state.selected_currency_name = currency[0].display_name || "";
-                //     this.state.selected_currency_rate = currency[0].rate || 1;
-                // }
+                const currency = await this.orm.searchRead(
+                    "res.currency",
+                    [["id","=",this.props.active_currency_id]],
+                );
+                if (currency.length) {
+                    this.state.selected_currency_id = currency.id;
+                    this.state.selected_currency_name = currency[0].display_name || "";
+                    this.state.selected_currency_rate = currency[0].rate || 1;
+                }
             }
             if (this.props.selected_variant_ids?.length) {
                 this.state.selectedIds = [...this.props.selected_variant_ids];
