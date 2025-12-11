@@ -144,7 +144,9 @@ export class ProductVariantDialog extends Component {
         );
 
         this.notification.add("Price and selected variants updated successfully!", { type: "success" });
-        window.location.reload();
+        console.log('this is the total', total);
+        
+        // window.location.reload();
         this.close();
     }
 
