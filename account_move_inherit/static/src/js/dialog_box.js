@@ -27,7 +27,7 @@ export class ProductVariantDialog extends Component {
 
         this.orm = useService("orm");
         this.notification = useService("notification");
-
+        
         this.state = useState({
             selectedIds: [],
             variantList: this.props.variants.map(v => {
@@ -63,7 +63,7 @@ export class ProductVariantDialog extends Component {
                     [["id","=",this.props.active_currency_id]],
                 );
                 if (currency.length) {
-                    this.state.selected_currency_id = currency[0].id || null;
+                    this.state.selected_currency_id = currency[0].id || 159;
                     this.state.selected_currency_name = currency[0].display_name || "PKR";
                     this.state.selected_currency_rate = currency[0].rate || 1;
                 }
