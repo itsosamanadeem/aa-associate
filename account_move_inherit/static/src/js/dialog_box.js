@@ -59,7 +59,6 @@ export class ProductVariantDialog extends Component {
                 const currency = await this.orm.searchRead(
                     "res.currency",
                     [["id","=",this.props.active_currency_id]],
-                    ["display_name", "rate"]
                 );
                 if (currency.length) {
                     this.state.selected_currency_id = this.props.active_currency_id;
