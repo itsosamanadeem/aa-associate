@@ -124,12 +124,12 @@ class AccountMove(models.Model):
 
             if rec.lenght_of_classes:
                 total = rec.professional_fees * rec.lenght_of_classes
-                per_class_total = rec.per_class_fee * rec.lenght_of_classes
-                final_total = total + per_class_total
+                total_offical_fees = rec.offical_fees * rec.lenght_of_classes
+                final_total = total + total_offical_fees
                 rec.fees_calculation = (
                     f"({rec.professional_fees:,.2f} * {rec.lenght_of_classes}) + "
                     f"({rec.service_fee}) +"
-                    f"({rec.per_class_fee:,.2f} * {rec.lenght_of_classes}) = {final_total:,.2f}"
+                    f"({rec.offical_fees:,.2f} * {rec.lenght_of_classes}) = {final_total:,.2f}"
                 )
                 rec.price_unit = final_total + (rec.service_fee or 0.0) + (rec.tax_amount or 0.0) + (rec.miscellaneous_fees or 0.0) - (rec.discount_in_line if rec.discount_in_line else 0.0)
             else:
