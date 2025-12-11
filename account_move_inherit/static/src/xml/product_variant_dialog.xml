@@ -56,8 +56,14 @@
 
                 <!-- Total Price -->
                 <div class="d-flex flex-column justify-content-center text-center border-start ps-3" style="flex: 1 1 150px;">
-                    <span class="fw-bold">Total Price</span>
-                    <span class="fs-5"><t t-esc="state.totalPrice.toFixed(2)"/></span>
+                    <t t-if="state.selected_currency_name === 'USD'">
+                        <span class="fw-bold">Total Price</span>
+                        <span class="fs-5">$<t t-esc="(state.totalPrice * state.selected_currency_rate).toFixed(2)"/></span>
+                    </t>
+                    <t t-else="">
+                        <span class="fw-bold">Total Price</span>
+                        <span class="fs-5"><t t-esc="state.totalPrice.toFixed(2)"/></span>
+                    </t>
                 </div>
 
             </div>
@@ -75,7 +81,12 @@
                     
                     <!-- Right side: total -->
                     <div>
-                        <span class="h5 text-nowrap" t-out="state.totalPrice.toFixed(2)"/>
+                        <t t-if="state.selected_currency_name === 'USD'">
+                            <span class="h5 text-nowrap">$<t t-esc="(state.totalPrice * state.selected_currency_rate).toFixed(2)"/></span>
+                        </t>
+                        <t t-else="">
+                            <span class="h5 text-nowrap"><t t-esc="state.totalPrice.toFixed(2)"/></span>
+                        </t>
                     </div>
                 </div>
             </t>
