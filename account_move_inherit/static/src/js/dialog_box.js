@@ -129,7 +129,7 @@ export class ProductVariantDialog extends Component {
     async confirm() {
         if (this.state.selected_currency_name === "USD"){
             const total = this.state.totalPrice * this.state.selected_currency_rate;
-            await this.orm.call(
+            const returnCall_to_python = await this.orm.call(
                 "account.move.line",
                 "update_price_unit",
                 [[this.props.line_id], {
@@ -144,13 +144,13 @@ export class ProductVariantDialog extends Component {
             );
     
             this.notification.add("Price and selected variants updated successfully!", { type: "success" });
-            console.log('this is the total', total);
+            console.log('this is the return call', returnCall_to_python);
             
             // window.location.reload();
             this.close();
         }else{
             const total = this.state.totalPrice;
-            await this.orm.call(
+            const returnCall_to_python = await this.orm.call(
                 "account.move.line",
                 "update_price_unit",
                 [[this.props.line_id], {
@@ -165,7 +165,7 @@ export class ProductVariantDialog extends Component {
             );
     
             this.notification.add("Price and selected variants updated successfully!", { type: "success" });
-            console.log('this is the total', total);
+            console.log('this is the return call', returnCall_to_python);
             
             // window.location.reload();
             this.close();
