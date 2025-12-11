@@ -20,7 +20,7 @@ export class ProductVariantDialog extends Component {
         product_id: { type: Number, optional: true },
         selected_variant_ids: { type: Array, optional: true },
         application_number: { type: Object, optional: true },
-        active_currency_id: { type: Number, optional: true}
+        active_currency_id : {optional: true}
     };
 
     setup() {
