@@ -65,6 +65,7 @@ export class ProductVariantDialog extends Component {
                 if (currency.length) {
                     this.state.selected_currency_id = currency.id;
                     this.state.selected_currency_name = currency[0].display_name || "";
+                    this.state.selected_currency_rate = currency[0].rate || 1;
                 }
             }
             if (this.props.selected_variant_ids?.length) {
