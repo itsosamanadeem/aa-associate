@@ -164,12 +164,12 @@ class AccountMove(models.Model):
         except ValueError:
             raise UserError(_("Invalid price value"))
 
+        self.active_currency_id = currency_id
         self.offical_fees = price
         self.per_class_fee = varaint_price
         self.selected_variant_ids = variants
         self.selected_variant_names = variants_names
         self.lenght_of_classes = len(variants_names) if variants_names else 0
-        self.active_currency_id = currency_id
         # raise UserError(f"Length of classes: {str(vals)}")
         return {"status": "success", "new_price_subtotal": self.price_subtotal}
     
