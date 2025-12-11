@@ -118,7 +118,7 @@
                             </td>
                         </tr>
                         <tr class="fw-bold">
-                            <td>Professional Fees Tax</td>
+                            <td>Total Tax Amount</td>
                             <td class="text-end">
                                 <span><t t-esc=" ( o.total_professional_fees * 15 ) / 100 "/></span>
                             </td>
