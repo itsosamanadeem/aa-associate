@@ -127,27 +127,50 @@ export class ProductVariantDialog extends Component {
     }
 
     async confirm() {
-        const total = this.state.totalPrice;
+        if (this.state.selected_currency_name === "USD"){
+            const total = this.state.totalPrice * this.state.selected_currency_rate;
+            await this.orm.call(
+                "account.move.line",
+                "update_price_unit",
+                [[this.props.line_id], {
+                    price: total,
+                    variant_price: this.state.variantList[1].price,
+                    selected_variant_ids: this.state.selectedIds,
+                    selected_variant_names: this.state.variantList
+                        .filter(v => this.state.selectedIds.includes(v.id))
+                        .map(v => v.name),
+                    // active_currency_id: this.state.selected_currency_id,
+                }]
+            );
+    
+            this.notification.add("Price and selected variants updated successfully!", { type: "success" });
+            console.log('this is the total', total);
+            
+            // window.location.reload();
+            this.close();
+        }else{
+            const total = this.state.totalPrice;
+            await this.orm.call(
+                "account.move.line",
+                "update_price_unit",
+                [[this.props.line_id], {
+                    price: total,
+                    variant_price: this.state.variantList[1].price,
+                    selected_variant_ids: this.state.selectedIds,
+                    selected_variant_names: this.state.variantList
+                        .filter(v => this.state.selectedIds.includes(v.id))
+                        .map(v => v.name),
+                    // active_currency_id: this.state.selected_currency_id,
+                }]
+            );
+    
+            this.notification.add("Price and selected variants updated successfully!", { type: "success" });
+            console.log('this is the total', total);
+            
+            // window.location.reload();
+            this.close();
+        }
 
-        await this.orm.call(
-            "account.move.line",
-            "update_price_unit",
-            [[this.props.line_id], {
-                price: total,
-                variant_price: this.state.variantList[1].price,
-                selected_variant_ids: this.state.selectedIds,
-                selected_variant_names: this.state.variantList
-                    .filter(v => this.state.selectedIds.includes(v.id))
-                    .map(v => v.name),
-                // active_currency_id: this.state.selected_currency_id,
-            }]
-        );
-
-        this.notification.add("Price and selected variants updated successfully!", { type: "success" });
-        console.log('this is the total', total);
-        
-        // window.location.reload();
-        this.close();
     }
 
     close() {
