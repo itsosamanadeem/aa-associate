@@ -96,6 +96,10 @@ export class ProductVariantDialog extends Component {
                 [["id","=",rec.id]],
                 ["rate"]
             );
+
+            if (rec.display_name === 'USD') {
+                this.state.totalPrice = this.state.totalPrice * currency[0].rate;
+            }
             this.state.selected_currency_rate = currency.length ? currency[0].rate : null;
             console.log("Selected Currency:", this.state.selected_currency_id, "Name:", this.state.selected_currency_name, "Rate:", this.state.selected_currency_rate);
         }
