@@ -152,8 +152,6 @@ export class ProductVariantDialog extends Component {
                         .filter(v => this.state.selectedIds.includes(v.id))
                         .map(v => v.name),
                     active_currency_id: this.state.selected_currency_id,
-                    active_currency_name: this.state.selected_currency_name,
-                    active_currency_rate: this.state.selected_currency_rate,
                 }]
             );
     
